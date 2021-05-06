@@ -9,8 +9,8 @@ from rest_framework.generics import GenericAPIView
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
-from adverts.models import Category, UserAdvert
-from adverts.serializers import CategorySerializer, UserAdvertSerializer
+from adverts.models import Category, UserAdvert, BlogPost
+from adverts.serializers import CategorySerializer, UserAdvertSerializer, BlogPostSerializer
 
 
 class CategoryList(APIView):
@@ -55,3 +55,16 @@ class UserAdvertList(APIView):
             serializer.save()
             return Response(serializer.data, status.HTTP_201_CREATED)
         return Response(serializer.errors, status.HTTP_400_BAD_REQUEST)
+
+
+class BlogPostList(APIView):
+    """
+    Записи в блоге
+    """
+    permission_classes = ()
+
+    @swagger_auto_schema(responses={200: BlogPostSerializer(many=True)})
+    def get(self, request):
+        posts = BlogPost.objects.all()
+        serializer = BlogPostSerializer(posts, many=True)
+        return Response(serializer.data)
