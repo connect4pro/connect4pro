@@ -39,7 +39,7 @@ class UserAdvert(models.Model):
     name = models.CharField(max_length=200)
     category = models.ForeignKey(Category, on_delete=models.CASCADE, related_name='advert_category')
     description = models.TextField()
-    price = models.DecimalField(decimal_places=1, max_digits=9, default=0)
+    price = models.DecimalField(decimal_places=2, max_digits=9, default=0)
     currency = models.CharField(max_length=3, choices=CURRENCY_CHOICES, default=usd, blank=True)
     completed = models.CharField(max_length=8, choices=COMPLETE_CHOICES, default=no)
     skills = models.TextField(blank=True)
