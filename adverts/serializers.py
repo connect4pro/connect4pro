@@ -1,6 +1,7 @@
 from rest_framework import serializers
 
-from adverts.models import Category, UserAdvert, BlogPost
+from adverts.models import Category, UserAdvert
+from blog.models import BlogPost
 
 
 class CategorySerializer(serializers.ModelSerializer):

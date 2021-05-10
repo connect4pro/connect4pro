@@ -16,7 +16,8 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 from rest_framework.urlpatterns import format_suffix_patterns
-from adverts.views import CategoryList, UserAdvertList, BlogPostList
+from adverts.views import CategoryList, UserAdvertList
+from blog.views import BlogPostList
 from .yasg import urlpatterns as yasg_urls
 
 urlpatterns = [
