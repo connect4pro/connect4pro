@@ -21,8 +21,8 @@ from .yasg import urlpatterns as yasg_urls
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('api/categories', CategoryList.as_view()),
-    path('api/useradverts', UserAdvertList.as_view()),
+    path('api/categories', CategoryList.as_view(), name='category-list'),
+    path('api/useradverts', UserAdvertList.as_view(), name='useradverts'),
     path('api/blogposts', BlogPostList.as_view()),
     path('api-auth/', include('rest_framework.urls')),
 ]
