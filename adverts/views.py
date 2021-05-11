@@ -2,8 +2,8 @@
 from rest_framework.generics import ListAPIView, ListCreateAPIView
 
 
-from adverts.models import Category, UserAdvert
-from adverts.serializers import CategorySerializer, UserAdvertSerializer, BlogPostSerializer
+from adverts.models import Category, BusinessAdvert
+from adverts.serializers import CategorySerializer, UserAdvertSerializer
 
 
 class CategoryList(ListAPIView):
@@ -15,12 +15,12 @@ class CategoryList(ListAPIView):
     serializer_class = CategorySerializer
 
 
-class UserAdvertList(ListCreateAPIView):
+class BusinessAdvertList(ListCreateAPIView):
     """
     Список объявлений пользователя
     methods = GET, POST
     """
-    queryset = UserAdvert.objects.all()
+    queryset = BusinessAdvert.objects.all()
     serializer_class = UserAdvertSerializer
 
 
