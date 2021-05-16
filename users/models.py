@@ -1,10 +1,12 @@
+from django.contrib.auth import get_user_model
 from django.contrib.auth.base_user import BaseUserManager
 from django.contrib.auth.models import AbstractUser
 from django.db import models
 from django.utils.translation import ugettext_lazy as _
 from phonenumber_field.modelfields import PhoneNumberField
+from .choices import TURNOVER_CHOICES, REGION_CHOICES
 
-TURNOVER_CHOICES = ()
+
 
 
 class CustomUserManager(BaseUserManager):
@@ -49,6 +51,9 @@ class Connect4ProUser(AbstractUser):
     facebook = models.CharField(max_length=50,blank=True)
     instagram = models.CharField(max_length=50, blank=True)
     site = models.CharField(max_length=50, blank=True)
+    is_freemium = models.BooleanField(default=False)
+    is_premium = models.BooleanField(default=False)
+
 
     def __str__(self):
         return self.email
@@ -60,12 +65,12 @@ class SectorChoices(models.Model):
 
 class BusinessProfile(models.Model):
     user = models.OneToOneField(Connect4ProUser, on_delete=models.CASCADE, related_name='business_profile')
-    first_name = models.CharField(max_length=30)
-    last_name = models.CharField(max_length=30)
-    region = models.CharField(max_length=30)
-    turnover = models.CharField(choices=TURNOVER_CHOICES, max_length=20)
-    employers = models.PositiveSmallIntegerField()
-    sector = models.ManyToManyField(SectorChoices)
+    first_name = models.CharField(max_length=30, blank=True)
+    last_name = models.CharField(max_length=30, blank=True)
+    region = models.CharField(choices=REGION_CHOICES, max_length=30, default=1)
+    turnover = models.CharField(choices=TURNOVER_CHOICES, max_length=20, default=1)
+    employers = models.PositiveSmallIntegerField(blank=True)
+    sector = models.ManyToManyField(SectorChoices, blank=True)
     demand = models.CharField(max_length=50, blank=True)
     supply = models.CharField(max_length=50, blank=True)
 
@@ -75,10 +80,13 @@ class BusinessProfile(models.Model):
 
 class ProviderProfile(models.Model):
     user = models.OneToOneField(Connect4ProUser, on_delete=models.CASCADE, related_name='provider_profile')
-    manager = models.CharField(max_length=100)
-    description = models.CharField(max_length=300)
-    year = models.DateField()
+    manager = models.CharField(max_length=100,blank=True)
+    description = models.CharField(max_length=300, blank=True)
+    year = models.DateField(blank=True)
     logo = models.ImageField(upload_to='images/provider/logo/%d%m%Y/')
     address = models.CharField(max_length=200, blank=True, null=True)
-    services = models.CharField(max_length=200)
-    scope = models.CharField(max_length=200)
+    services = models.CharField(max_length=200, blank=True)
+    scope = models.CharField(max_length=200, blank=True)
+
+    def __str__(self):
+        return self.user.email

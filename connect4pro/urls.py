@@ -15,16 +15,23 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
-from adverts.views import CategoryList, BusinessAdvertList
+from adverts.views import CategoryList, BusinessAdvertList, ProviderAdvertList
 from blog.views import BlogPostList
 from .yasg import urlpatterns as yasg_urls
+from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('api/categories', CategoryList.as_view(), name='category-list'),
-    path('api/useradverts', BusinessAdvertList.as_view(), name='useradverts'),
+    path('api/businessadverts', BusinessAdvertList.as_view(), name='businessadverts'),
+    path('api/provideradverts', ProviderAdvertList.as_view(), name='provideradverts'),
     path('api/blogposts', BlogPostList.as_view()),
     path('api-auth/', include('rest_framework.urls')),
+
+    path('', include('users.urls')),
+    path('api/token/', TokenObtainPairView.as_view(), name='token_obtain_pair'),
+    path('api/token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
+
 ]
 
 urlpatterns += yasg_urls
