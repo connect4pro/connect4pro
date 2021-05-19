@@ -38,7 +38,7 @@ class Category(models.Model):
 
 class BusinessAdvert(models.Model):
     """Объявление от МСБ"""
-
+    #TODO:  связать с пользователем
     title = models.CharField(max_length=200)
     category = models.ForeignKey(Category, on_delete=models.CASCADE, related_name='business_advert_category')
     description = models.TextField()

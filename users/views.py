@@ -6,11 +6,10 @@ from users.serializers import Connect4ProUserBPSerializer, BusinessProfileSerial
 
 
 class BusinessUserList(ListAPIView):
-    queryset = Connect4ProUser.objects.filter()
+    queryset = Connect4ProUser.objects.filter(business_profile__as_business=True)
     serializer_class = Connect4ProUserBPSerializer
 
-    # def get_serializer_class(self):
-    #     pass
+
 
 
 class BusinessUserRegister(CreateAPIView):
@@ -18,7 +17,7 @@ class BusinessUserRegister(CreateAPIView):
 
 
 class ProviderUserList(ListAPIView):
-    queryset = Connect4ProUser.objects.filter()
+    queryset = Connect4ProUser.objects.filter(provider_profile__as_provider=True)
     serializer_class = Connect4ProUserPPSerializer
 
 

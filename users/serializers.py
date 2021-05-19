@@ -36,7 +36,7 @@ class Connect4ProUserBPSerializer(serializers.ModelSerializer):
     class Meta:
         model = Connect4ProUser
         fields = (
-            'email', 'password', 'company_name', 'facebook', 'instagram', 'site', 'is_freemium', 'is_premium',
+            'id', 'email', 'password', 'company_name', 'facebook', 'instagram', 'site', 'is_freemium', 'is_premium',
             'business_profile')
 
 
@@ -63,5 +63,5 @@ class Connect4ProUserPPSerializer(serializers.ModelSerializer):
     class Meta:
         model = Connect4ProUser
         fields = (
-            'email', 'password', 'company_name', 'facebook', 'instagram', 'site', 'is_freemium', 'is_premium',
+            'id', 'email', 'password', 'company_name', 'facebook', 'instagram', 'site', 'is_freemium', 'is_premium',
             'provider_profile')

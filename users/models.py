@@ -69,10 +69,11 @@ class BusinessProfile(models.Model):
     last_name = models.CharField(max_length=30, blank=True)
     region = models.CharField(choices=REGION_CHOICES, max_length=30, default=1)
     turnover = models.CharField(choices=TURNOVER_CHOICES, max_length=20, default=1)
-    employers = models.PositiveSmallIntegerField(blank=True)
+    employers = models.PositiveSmallIntegerField(blank=True, null=True)
     sector = models.ManyToManyField(SectorChoices, blank=True)
     demand = models.CharField(max_length=50, blank=True)
     supply = models.CharField(max_length=50, blank=True)
+    as_business = models.BooleanField(default=True)
 
     def __str__(self):
         return self.user.email
@@ -82,11 +83,12 @@ class ProviderProfile(models.Model):
     user = models.OneToOneField(Connect4ProUser, on_delete=models.CASCADE, related_name='provider_profile')
     manager = models.CharField(max_length=100,blank=True)
     description = models.CharField(max_length=300, blank=True)
-    year = models.DateField(blank=True)
-    logo = models.ImageField(upload_to='images/provider/logo/%d%m%Y/')
+    year = models.DateField(blank=True, null=True)
+    logo = models.ImageField(upload_to='images/provider/logo/%d%m%Y/', blank=True)
     address = models.CharField(max_length=200, blank=True, null=True)
     services = models.CharField(max_length=200, blank=True)
     scope = models.CharField(max_length=200, blank=True)
+    as_provider = models.BooleanField(default=True)
 
     def __str__(self):
         return self.user.email
