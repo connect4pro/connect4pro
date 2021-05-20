@@ -1,11 +1,13 @@
 from django.db import models
+from django_resized import ResizedImageField
 
 # Create your models here.
 
 class Event(models.Model):
     """Мероприятие (тема, дата, время, сумма (вход))"""
-    picture = models.ImageField()
     name = models.CharField(max_length = 100)
+    event_image = ResizedImageField(size=[250, 250], upload_to=f'images/events_images/{name}-%d%m%Y', blank=True,
+                                   null=True)
     date = models.DateField()
     time = models.TimeField()
     location = models.CharField(max_length = 100)
