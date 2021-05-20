@@ -33,6 +33,7 @@ INSTALLED_APPS = [
     # Apps
     'adverts',
     'events',
+    'faq',
 
     # Django
     'django.contrib.admin',
@@ -43,6 +44,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'rest_framework',
     'drf_yasg',
+    'phonenumber_field',
 ]
 
 MIDDLEWARE = [

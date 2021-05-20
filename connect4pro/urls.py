@@ -13,11 +13,13 @@ Including another URLconf
     1. Import the include() function: from django.urls import include, path
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
+from faq.models import WriteUs
 from django.contrib import admin
 from django.urls import path, include
 from rest_framework.urlpatterns import format_suffix_patterns
 from adverts.views import CategoryList, UserAdvertList
 from events.views import EventList
+from faq.views import QuestionsAndAnswersList, WriteUsList
 from .yasg import urlpatterns as yasg_urls
 
 urlpatterns = [
@@ -25,6 +27,8 @@ urlpatterns = [
     path('api/categories', CategoryList.as_view()),
     path('api/useradverts', UserAdvertList.as_view()),
     path('api/events', EventList.as_view()),
+    path('api/questions_and_answers', QuestionsAndAnswersList.as_view()),
+    path('api/write_us', WriteUsList.as_view()),
     path('api-auth/', include('rest_framework.urls')),
 ]
 # urlpatterns += router.urls
