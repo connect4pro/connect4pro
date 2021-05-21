@@ -13,13 +13,14 @@ Including another URLconf
     1. Import the include() function: from django.urls import include, path
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
-from faq.models import WriteUs
+
 from django.contrib import admin
 from django.urls import path, include
 from rest_framework.urlpatterns import format_suffix_patterns
 from adverts.views import CategoryList, UserAdvertList
-from events.views import EventList
-from faq.views import QuestionsAndAnswersList, WriteUsList
+from events.views import EventList, EventCreate
+from faq.views import QuestionsAndAnswersList, QuestionsAndAnswersCreate, WriteUsList, WriteUsCreate
+from grants_and_investments.views import GrantList, GrantCreate, InvestmentList, InvestmentCreate
 from .yasg import urlpatterns as yasg_urls
 
 urlpatterns = [
@@ -27,8 +28,15 @@ urlpatterns = [
     path('api/categories', CategoryList.as_view()),
     path('api/useradverts', UserAdvertList.as_view()),
     path('api/events', EventList.as_view()),
+    path('api/events/create', EventCreate.as_view()),
     path('api/questions_and_answers', QuestionsAndAnswersList.as_view()),
+    path('api/questions_and_answers/create', QuestionsAndAnswersCreate.as_view()),
     path('api/write_us', WriteUsList.as_view()),
+    path('api/write_us/create', WriteUsCreate.as_view()),
+    path('api/grants', GrantList.as_view(), name = 'grants'),
+    path('api/grants/create', GrantCreate.as_view()),
+    path('api/investments', InvestmentList.as_view(), name = 'investments'),
+    path('api/investments/create', InvestmentCreate.as_view()),
     path('api-auth/', include('rest_framework.urls')),
 ]
 # urlpatterns += router.urls

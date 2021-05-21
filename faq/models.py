@@ -5,10 +5,10 @@ from phonenumber_field.modelfields import PhoneNumberField
 # Create your models here.
 class WriteUs(models.Model):
     """Модель для отправки сообщения через форму обратной связи"""
-    full_name = models.CharField(max_length = 50)
-    phone = PhoneNumberField()
-    email = models.EmailField()
-    message = models.TextField(max_length = 300)
+    full_name = models.CharField(max_length = 50, verbose_name = 'Фамилия, имя, отчество')
+    phone = PhoneNumberField(verbose_name = 'Контактный номер телефона')
+    email = models.EmailField(verbose_name = 'Контактный адрес почты')
+    message = models.TextField(max_length = 300, verbose_name = 'Ваше сообщение')
 
     class Meta:
         verbose_name = 'Сообщение от пользователя'
@@ -21,8 +21,8 @@ class WriteUs(models.Model):
 
 class QuestionsAndAnswers(models.Model):
     """Модель, предназначенная для основных вопросов и ответов"""
-    question = models.CharField(max_length = 100)
-    answer = models.CharField(max_length = 255)
+    question = models.CharField(max_length = 100, verbose_name = 'Вопрос')
+    answer = models.CharField(max_length = 255, verbose_name = 'Ответ')
 
     class Meta:
         verbose_name = 'Вопрос - ответ'

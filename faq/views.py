@@ -4,7 +4,7 @@ from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
 from drf_yasg.utils import swagger_auto_schema
 from rest_framework import serializers, status, generics
-from rest_framework.generics import GenericAPIView
+from rest_framework.generics import GenericAPIView, CreateAPIView
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
@@ -18,8 +18,8 @@ class QuestionsAndAnswersList(APIView):
 
     @swagger_auto_schema(responses={200: QuestionsAndAnswersSerializer(many=True)})
     def get(self, request):
-        categories = QuestionsAndAnswers.objects.all()
-        serializer = QuestionsAndAnswersSerializer(categories, many=True)
+        questions_and_answers = QuestionsAndAnswers.objects.all()
+        serializer = QuestionsAndAnswersSerializer(questions_and_answers, many=True)
         return Response(serializer.data)
 
     @swagger_auto_schema(responses={200: QuestionsAndAnswersSerializer()})
@@ -32,14 +32,19 @@ class QuestionsAndAnswersList(APIView):
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
+class QuestionsAndAnswersCreate(CreateAPIView):
+    """Создание вопроса и ответа"""
+    serializer_class = QuestionsAndAnswersSerializer
+
+
 class WriteUsList(APIView):
     """Список сообщений, присланные пользователями через форму <<Напишите нам>>"""
     permission_classes = ()
 
     @swagger_auto_schema(responses={200: WriteUsSerializer(many=True)})
     def get(self, request):
-        adverts = WriteUs.objects.all()
-        serializer = WriteUsSerializer(adverts, many=True)
+        write_us = WriteUs.objects.all()
+        serializer = WriteUsSerializer(write_us, many=True)
         return Response(serializer.data)
 
     @swagger_auto_schema(responses={200: WriteUsSerializer()})
@@ -50,3 +55,7 @@ class WriteUsList(APIView):
             serializer.save()
             return Response(serializer.data, status.HTTP_201_CREATED)
         return Response(serializer.errors, status.HTTP_400_BAD_REQUEST)
+
+class WriteUsCreate(CreateAPIView):
+    """Создание сообщения через форму <<Напишите нам>>"""
+    serializer_class = WriteUsSerializer
