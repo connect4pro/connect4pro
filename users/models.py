@@ -1,11 +1,14 @@
 from django.contrib.auth import get_user_model
 from django.contrib.auth.base_user import BaseUserManager
-from django.contrib.auth.models import AbstractUser
+from django.contrib.auth.models import AbstractUser, User
 from django.db import models
 from django.utils.translation import ugettext_lazy as _
 from phonenumber_field.modelfields import PhoneNumberField
 from .choices import TURNOVER_CHOICES, REGION_CHOICES
 
+
+
+User._meta.get_field('email')._unique = True
 
 
 
@@ -51,7 +54,6 @@ class Connect4ProUser(AbstractUser):
     facebook = models.CharField(max_length=50,blank=True)
     instagram = models.CharField(max_length=50, blank=True)
     site = models.CharField(max_length=50, blank=True)
-    is_freemium = models.BooleanField(default=False)
     is_premium = models.BooleanField(default=False)
 
 
