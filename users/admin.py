@@ -1,5 +1,5 @@
 from django.contrib import admin
-from users.models import Connect4ProUser, BusinessProfile, ProviderProfile
+from users.models import Connect4ProUser, BusinessProfile, ProviderProfile, Sector
 
 
 @admin.register(Connect4ProUser)
@@ -15,3 +15,7 @@ class BusinessProfileAdmin(admin.ModelAdmin):
 @admin.register(ProviderProfile)
 class ProviderProfileAdmin(admin.ModelAdmin):
     list_display = ['manager']
+
+@admin.register(Sector)
+class ProviderProfileAdmin(admin.ModelAdmin):
+    list_display = ['description']

@@ -23,3 +23,5 @@ class ProviderUserList(ListAPIView):
 
 class ProviderUserRegister(CreateAPIView):
     serializer_class = Connect4ProUserPPSerializer
+
+

@@ -1,43 +1,48 @@
+from django.contrib.auth.hashers import make_password
 from rest_framework import serializers
 from rest_framework.authtoken.models import Token
 
-from users.models import Connect4ProUser, BusinessProfile, SectorChoices, ProviderProfile
+from users.models import Connect4ProUser, BusinessProfile, Sector, ProviderProfile
 
 
-class SectorChoicesSerializer(serializers.ModelSerializer):
+class SectorSerializer(serializers.ModelSerializer):
     class Meta:
-        model = SectorChoices
-        fields = '__all__'
+        model = Sector
+        fields = ['description']
 
 
 class BusinessProfileSerializer(serializers.ModelSerializer):
-    sector = SectorChoicesSerializer(many=True)
+    sector = SectorSerializer(many=True)
 
     class Meta:
         model = BusinessProfile
         fields = (
             'first_name', 'last_name', 'region', 'turnover', 'employers', 'sector', 'demand', 'supply',)
+        depth = 1
 
 
 class Connect4ProUserBPSerializer(serializers.ModelSerializer):
     password = serializers.CharField(write_only=True)
     business_profile = BusinessProfileSerializer(required=True)
-    is_freemium = serializers.BooleanField(read_only=True)
     is_premium = serializers.BooleanField(read_only=True)
 
     def create(self, validated_data):
+        profile_data = validated_data.pop('business_profile')
+
         user = Connect4ProUser.objects.create_user(
             email=validated_data['email'],
             password=validated_data['password'],
         )
+        BusinessProfile.objects.create(user=user, **profile_data)
 
         return user
 
     class Meta:
         model = Connect4ProUser
         fields = (
-            'id', 'email', 'password', 'company_name', 'facebook', 'instagram', 'site', 'is_freemium', 'is_premium',
+            'id', 'email', 'password', 'company_name', 'facebook', 'instagram', 'site', 'is_premium',
             'business_profile')
+        depth = 2
 
 
 class ProviderProfileSerializer(serializers.ModelSerializer):
@@ -49,19 +54,19 @@ class ProviderProfileSerializer(serializers.ModelSerializer):
 class Connect4ProUserPPSerializer(serializers.ModelSerializer):
     password = serializers.CharField(write_only=True)
     provider_profile = ProviderProfileSerializer(required=True)
-    is_freemium = serializers.BooleanField(read_only=True)
     is_premium = serializers.BooleanField(read_only=True)
 
     def create(self, validated_data):
+        profile_data = validated_data.pop('provider_profile')
         user = Connect4ProUser.objects.create_user(
             email=validated_data['email'],
             password=validated_data['password'],
         )
-
+        ProviderProfile.objects.create(user=user, **profile_data)
         return user
 
     class Meta:
         model = Connect4ProUser
         fields = (
-            'id', 'email', 'password', 'company_name', 'facebook', 'instagram', 'site', 'is_freemium', 'is_premium',
+            'id', 'email', 'password', 'company_name', 'facebook', 'instagram', 'site', 'is_premium',
             'provider_profile')
