@@ -1,4 +1,5 @@
 from django.contrib.auth.hashers import make_password
+from django.shortcuts import get_object_or_404
 from rest_framework import serializers
 from rest_framework.authtoken.models import Token
 
@@ -6,9 +7,10 @@ from users.models import Connect4ProUser, BusinessProfile, Sector, ProviderProfi
 
 
 class SectorSerializer(serializers.ModelSerializer):
+
     class Meta:
         model = Sector
-        fields = ['description']
+        fields = ('description',)
 
 
 class BusinessProfileSerializer(serializers.ModelSerializer):
@@ -18,7 +20,7 @@ class BusinessProfileSerializer(serializers.ModelSerializer):
         model = BusinessProfile
         fields = (
             'first_name', 'last_name', 'region', 'turnover', 'employers', 'sector', 'demand', 'supply',)
-        depth = 1
+
 
 
 class Connect4ProUserBPSerializer(serializers.ModelSerializer):
@@ -29,12 +31,18 @@ class Connect4ProUserBPSerializer(serializers.ModelSerializer):
     def create(self, validated_data):
         profile_data = validated_data.pop('business_profile')
 
+        sector_data = profile_data.pop('sector')
+
         user = Connect4ProUser.objects.create_user(
             email=validated_data['email'],
             password=validated_data['password'],
         )
-        BusinessProfile.objects.create(user=user, **profile_data)
+        profile = BusinessProfile.objects.create(user=user, **profile_data)
 
+        for sect in sector_data:
+            sector = get_object_or_404(Sector, description=sect['description'])
+            profile.save()
+            profile.sector.add(sector)
         return user
 
     class Meta:
@@ -42,7 +50,7 @@ class Connect4ProUserBPSerializer(serializers.ModelSerializer):
         fields = (
             'id', 'email', 'password', 'company_name', 'facebook', 'instagram', 'site', 'is_premium',
             'business_profile')
-        depth = 2
+
 
 
 class ProviderProfileSerializer(serializers.ModelSerializer):

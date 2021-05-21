@@ -10,8 +10,6 @@ class BusinessUserList(ListAPIView):
     serializer_class = Connect4ProUserBPSerializer
 
 
-
-
 class BusinessUserRegister(CreateAPIView):
     serializer_class = Connect4ProUserBPSerializer
 
@@ -23,5 +21,3 @@ class ProviderUserList(ListAPIView):
 
 class ProviderUserRegister(CreateAPIView):
     serializer_class = Connect4ProUserPPSerializer
-
-
