@@ -21,8 +21,8 @@ COMPLETE_CHOICES = (
 class Category(models.Model):
     """Категория объявления"""
 
-    name = models.CharField(max_length=60)
-    description = models.CharField(max_length=300)
+    name = models.CharField(max_length=60, verbose_name = 'Название категории')
+    description = models.CharField(max_length=300, verbose_name = 'Описание категории')
 
     def __str__(self):
         return f'{self.name}'
