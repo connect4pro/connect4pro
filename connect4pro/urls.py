@@ -32,11 +32,11 @@ urlpatterns = [
     path('api/questions_and_answers', QuestionsAndAnswersList.as_view()),
     path('api/questions_and_answers/create', QuestionsAndAnswersCreate.as_view()),
     path('api/write_us', WriteUsList.as_view()),
-    path('api/write_us/create', WriteUsCreate.as_view()),
+    path('api/write_us/create_message', WriteUsCreate.as_view()),
     path('api/grants', GrantList.as_view(), name = 'grants'),
-    path('api/grants/create', GrantCreate.as_view()),
+    path('api/grants/create_grant', GrantCreate.as_view()),
     path('api/investments', InvestmentList.as_view(), name = 'investments'),
-    path('api/investments/create', InvestmentCreate.as_view()),
+    path('api/investments/create_investment', InvestmentCreate.as_view()),
     path('api-auth/', include('rest_framework.urls')),
 ]
 # urlpatterns += router.urls

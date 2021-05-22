@@ -18,8 +18,8 @@ class GrantList(APIView):
 
     @swagger_auto_schema(responses={200: GrantSerializer(many=True)})
     def get(self, request):
-        categories = Grant.objects.all()
-        serializer = GrantSerializer(categories, many=True)
+        grants = Grant.objects.all()
+        serializer = GrantSerializer(grants, many=True)
         return Response(serializer.data)
 
     @swagger_auto_schema(responses={200: GrantSerializer()})
@@ -43,8 +43,8 @@ class InvestmentList(APIView):
 
     @swagger_auto_schema(responses={200: InvestmentSerializer(many=True)})
     def get(self, request):
-        adverts = Investment.objects.all()
-        serializer = InvestmentSerializer(adverts, many=True)
+        investments = Investment.objects.all()
+        serializer = InvestmentSerializer(investments, many=True)
         return Response(serializer.data)
 
     @swagger_auto_schema(responses={200: InvestmentSerializer()})
