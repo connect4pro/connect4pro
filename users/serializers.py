@@ -1,8 +1,9 @@
 from django.contrib.auth.hashers import make_password
 from django.shortcuts import get_object_or_404
-from rest_framework import serializers
+from serializer_permissions  import serializers
 from rest_framework.authtoken.models import Token
-
+from .permissions import PremiumPermission
+from rest_framework.permissions import AllowAny, IsAuthenticated
 from users.models import Connect4ProUser, BusinessProfile, Sector, ProviderProfile
 
 
@@ -14,7 +15,9 @@ class SectorSerializer(serializers.ModelSerializer):
 
 
 class BusinessProfileSerializer(serializers.ModelSerializer):
+    first_name = serializers.CharField(permission_classes=(PremiumPermission,))
     sector = SectorSerializer(many=True)
+
 
     class Meta:
         model = BusinessProfile
