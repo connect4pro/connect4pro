@@ -17,7 +17,7 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 from rest_framework.urlpatterns import format_suffix_patterns
-from adverts.views import CategoryList, UserAdvertList
+from adverts.views import CategoryList, CategoryCreate, UserAdvertList, UserAdvertCreate
 from events.views import EventList, EventCreate
 from faq.views import QuestionsAndAnswersList, QuestionsAndAnswersCreate, WriteUsList, WriteUsCreate
 from grants_and_investments.views import GrantList, GrantCreate, InvestmentList, InvestmentCreate
@@ -26,7 +26,9 @@ from .yasg import urlpatterns as yasg_urls
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('api/categories', CategoryList.as_view()),
+    path('api/categories/create_category', CategoryCreate.as_view()),
     path('api/useradverts', UserAdvertList.as_view()),
+    path('api/useradverts/create_advert', UserAdvertCreate.as_view()),
     path('api/events', EventList.as_view()),
     path('api/events/create', EventCreate.as_view()),
     path('api/questions_and_answers', QuestionsAndAnswersList.as_view()),

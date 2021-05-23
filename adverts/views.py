@@ -5,7 +5,7 @@ from django.shortcuts import render
 from django.views.decorators.csrf import csrf_exempt
 from drf_yasg.utils import swagger_auto_schema
 from rest_framework import status
-from rest_framework.generics import GenericAPIView
+from rest_framework.generics import GenericAPIView, CreateAPIView
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
@@ -35,6 +35,11 @@ class CategoryList(APIView):
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
+class CategoryCreate(CreateAPIView):
+    serializer_class = CategorySerializer
+
+
+
 class UserAdvertList(APIView):
     """
     Список объявлений пользователя
@@ -55,3 +60,7 @@ class UserAdvertList(APIView):
             serializer.save()
             return Response(serializer.data, status.HTTP_201_CREATED)
         return Response(serializer.errors, status.HTTP_400_BAD_REQUEST)
+
+
+class UserAdvertCreate(CreateAPIView):
+    serializer_class = UserAdvertSerializer
