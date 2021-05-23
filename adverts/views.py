@@ -1,4 +1,4 @@
-from rest_framework.generics import ListAPIView, ListCreateAPIView
+from rest_framework.generics import ListAPIView, ListCreateAPIView, UpdateAPIView
 
 from adverts.models import Category, BusinessAdvert, ProviderAdvert
 from adverts.serializers import CategorySerializer, BusinessAdvertSerializer, ProviderAdvertSerializer
@@ -22,7 +22,7 @@ class BusinessAdvertList(ListCreateAPIView):
     serializer_class = BusinessAdvertSerializer
 
     def perform_create(self, serializer):
-        serializer.save(user=self.request.user)
+        serializer.save(user=self.request.user.business_profile)
 
 
 class ProviderAdvertList(ListCreateAPIView):
@@ -34,4 +34,12 @@ class ProviderAdvertList(ListCreateAPIView):
     serializer_class = ProviderAdvertSerializer
 
     def perform_create(self, serializer):
-        serializer.save(user=self.request.user)
+        serializer.save(user=self.request.user.provider_profile)
+
+
+class BusinessAdvertUpdate(UpdateAPIView):
+    serializer_class = BusinessAdvertSerializer
+    lookup_field = 'id'
+    queryset = BusinessAdvert.objects.all()
+    def perform_update(self, serializer):
+        serializer.save(user=self.request.user.business_profile)
