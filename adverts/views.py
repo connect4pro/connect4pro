@@ -1,57 +1,61 @@
-from django.http import JsonResponse
-from django.shortcuts import render
+from rest_framework import permissions
+from rest_framework.generics import ListAPIView, ListCreateAPIView, UpdateAPIView
 
-# Create your views here.
-from django.views.decorators.csrf import csrf_exempt
-from drf_yasg.utils import swagger_auto_schema
-from rest_framework import status
-from rest_framework.generics import GenericAPIView
-from rest_framework.response import Response
-from rest_framework.views import APIView
-
-from adverts.models import Category, UserAdvert
-from adverts.serializers import CategorySerializer, UserAdvertSerializer
+from adverts.models import Category, BusinessAdvert, ProviderAdvert
+from adverts.permissions import IsOwnerOrReadOnly
+from adverts.serializers import CategorySerializer, BusinessAdvertSerializer, ProviderAdvertSerializer
 
 
-class CategoryList(APIView):
+class CategoryList(ListAPIView):
     """
     Список всех категорий.
+    methods = GET
     """
-    permission_classes = ()
-
-    @swagger_auto_schema(responses={200: CategorySerializer(many=True)})
-    def get(self, request):
-        categories = Category.objects.all()
-        serializer = CategorySerializer(categories, many=True)
-        return Response(serializer.data)
-
-    @swagger_auto_schema(responses={200: CategorySerializer()})
-    def post(self, request):
-        """Создание категории"""
-        serializer = CategorySerializer(data=request.data)
-        if serializer.is_valid():
-            serializer.save()
-            return Response(serializer.data, status=status.HTTP_201_CREATED)
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+    queryset = Category.objects.all()
+    serializer_class = CategorySerializer
 
 
-class UserAdvertList(APIView):
+class BusinessAdvertList(ListCreateAPIView):
     """
-    Список объявлений пользователя
+    Список объявлений МСБ
+    methods = GET, POST
     """
-    permission_classes = ()
+    queryset = BusinessAdvert.objects.all()
+    serializer_class = BusinessAdvertSerializer
 
-    @swagger_auto_schema(responses={200: UserAdvertSerializer(many=True)})
-    def get(self, request):
-        adverts = UserAdvert.objects.all()
-        serializer = UserAdvertSerializer(adverts, many=True)
-        return Response(serializer.data)
+    def perform_create(self, serializer):
+        serializer.save(user=self.request.user.business_profile)
 
-    @swagger_auto_schema(responses={200: UserAdvertSerializer()})
-    def post(self, request):
-        """Создание объявления"""
-        serializer = UserAdvertSerializer(data=request.data)
-        if serializer.is_valid():
-            serializer.save()
-            return Response(serializer.data, status.HTTP_201_CREATED)
-        return Response(serializer.errors, status.HTTP_400_BAD_REQUEST)
+
+class ProviderAdvertList(ListCreateAPIView):
+    """
+    Список объявлений Консультантов
+    methods = GET, POST
+    """
+    queryset = ProviderAdvert.objects.all()
+    serializer_class = ProviderAdvertSerializer
+
+    def perform_create(self, serializer):
+        serializer.save(user=self.request.user.provider_profile)
+
+
+class BusinessAdvertUpdate(UpdateAPIView):
+    serializer_class = BusinessAdvertSerializer
+    lookup_field = 'id'
+    queryset = BusinessAdvert.objects.all()
+    permission_classes = [permissions.IsAuthenticatedOrReadOnly,
+                          IsOwnerOrReadOnly]
+
+    def perform_update(self, serializer):
+        serializer.save(user=self.request.user.business_profile)
+
+
+class ProviderAdvertUpdate(UpdateAPIView):
+    serializer_class = ProviderAdvertSerializer
+    lookup_field = 'id'
+    queryset = ProviderAdvert.objects.all()
+    permission_classes = [permissions.IsAuthenticatedOrReadOnly,
+                          IsOwnerOrReadOnly]
+
+    def perform_update(self, serializer):
+        serializer.save(user=self.request.user.provider_profile)

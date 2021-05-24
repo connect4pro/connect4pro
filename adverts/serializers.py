@@ -1,18 +1,24 @@
 from rest_framework import serializers
-
-from adverts.models import Category, UserAdvert
+from adverts.models import Category, BusinessAdvert, ProviderAdvert
 
 
 class CategorySerializer(serializers.ModelSerializer):
     """Category serialize"""
-    id = serializers.IntegerField(read_only=True)
 
     class Meta:
         model = Category
-        fields = ['id', 'name', 'description']
-
-
-class UserAdvertSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = UserAdvert
         fields = '__all__'
+
+
+class BusinessAdvertSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = BusinessAdvert
+        fields = '__all__'
+        read_only_fields = ('user',)
+
+
+class ProviderAdvertSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = ProviderAdvert
+        fields = '__all__'
+        read_only_fields = ('user',)

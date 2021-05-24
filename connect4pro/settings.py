@@ -32,6 +32,11 @@ INSTALLED_APPS = [
 
     # Apps
     'adverts',
+    'blog',
+    'users.apps.UsersConfig',
+    'events',
+    'faq',
+    'grants_and_investments',
 
     # Django
     'django.contrib.admin',
@@ -42,6 +47,9 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'rest_framework',
     'drf_yasg',
+    'phonenumber_field',
+
+
 ]
 
 MIDDLEWARE = [
@@ -134,11 +142,26 @@ REST_FRAMEWORK = {
     # Use Django's standard `django.contrib.auth` permissions,
     # or allow read-only access for unauthenticated users.
     'DEFAULT_PERMISSION_CLASSES': [
-        'rest_framework.permissions.IsAuthenticated'
+        'rest_framework.permissions.AllowAny'
     ],
     'DEFAULT_AUTHENTICATION_CLASSES': (
         # 'rest_framework.authentication.TokenAuthentication',
         'rest_framework.authentication.SessionAuthentication',
+        'rest_framework_simplejwt.authentication.JWTAuthentication',
     ),
     'DEFAULT_SCHEMA_CLASS': 'rest_framework.schemas.coreapi.AutoSchema'
 }
+
+PHONENUMBER_DB_FORMAT = 'INTERNATIONAL'
+PHONENUMBER_DEFAULT_REGION = 'KG'
+
+AUTH_USER_MODEL = 'users.Connect4ProUser'
+AUTHENTICATION_BACKENDS = (
+
+    "django.contrib.auth.backends.ModelBackend",
+)
+SWAGGER_SETTINGS = {
+    'LOGIN_URL': 'rest_framework:login',
+    'LOGOUT_URL': 'rest_framework:logout',
+}
+
