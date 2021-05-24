@@ -34,6 +34,9 @@ INSTALLED_APPS = [
     'adverts',
     'blog',
     'users.apps.UsersConfig',
+    'events',
+    'faq',
+    'grants_and_investments',
 
     # Django
     'django.contrib.admin',
@@ -45,6 +48,7 @@ INSTALLED_APPS = [
     'rest_framework',
     'drf_yasg',
     'phonenumber_field',
+
 
 ]
 
@@ -147,6 +151,7 @@ REST_FRAMEWORK = {
     ),
     'DEFAULT_SCHEMA_CLASS': 'rest_framework.schemas.coreapi.AutoSchema'
 }
+
 PHONENUMBER_DB_FORMAT = 'INTERNATIONAL'
 PHONENUMBER_DEFAULT_REGION = 'KG'
 
@@ -159,3 +164,4 @@ SWAGGER_SETTINGS = {
     'LOGIN_URL': 'rest_framework:login',
     'LOGOUT_URL': 'rest_framework:logout',
 }
+

@@ -1,0 +1,18 @@
+from django.db.models import fields
+from rest_framework import serializers
+from grants_and_investments.models import Grant, Investment
+
+class GrantSerializer(serializers.ModelSerializer):
+    """Grant serialize"""
+    class Meta:
+        model = Grant
+        fields = ('id','grant_name', 'grant_sum', 'currency', 'grant_deadline', 'grant_description')
+        read_only_fields = ('user',)
+
+
+class InvestmentSerializer(serializers.ModelSerializer):
+    """Investment serialize"""
+    class Meta:
+        model = Investment
+        fields = ('id', 'invest_name', 'invest_sum', 'currency', 'invest_deadline', 'invest_description')
+        read_only_fields = ('user',)
