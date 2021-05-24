@@ -1,6 +1,8 @@
+from rest_framework import permissions
 from rest_framework.generics import ListAPIView, ListCreateAPIView, UpdateAPIView
 
 from adverts.models import Category, BusinessAdvert, ProviderAdvert
+from adverts.permissions import IsOwnerOrReadOnly
 from adverts.serializers import CategorySerializer, BusinessAdvertSerializer, ProviderAdvertSerializer
 
 
@@ -41,5 +43,19 @@ class BusinessAdvertUpdate(UpdateAPIView):
     serializer_class = BusinessAdvertSerializer
     lookup_field = 'id'
     queryset = BusinessAdvert.objects.all()
+    permission_classes = [permissions.IsAuthenticatedOrReadOnly,
+                          IsOwnerOrReadOnly]
+
     def perform_update(self, serializer):
         serializer.save(user=self.request.user.business_profile)
+
+
+class ProviderAdvertUpdate(UpdateAPIView):
+    serializer_class = ProviderAdvertSerializer
+    lookup_field = 'id'
+    queryset = ProviderAdvert.objects.all()
+    permission_classes = [permissions.IsAuthenticatedOrReadOnly,
+                          IsOwnerOrReadOnly]
+
+    def perform_update(self, serializer):
+        serializer.save(user=self.request.user.provider_profile)
