@@ -42,7 +42,7 @@ class CategoryCreate(CreateAPIView):
 
 class UserAdvertList(APIView):
     """
-    Список объявлений пользователя
+    Список объявлений обычного пользователя
     """
     permission_classes = ()
 

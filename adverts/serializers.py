@@ -9,10 +9,12 @@ class CategorySerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Category
-        fields = ['id', 'name', 'description']
+        fields = ['name', 'description']
 
 
 class UserAdvertSerializer(serializers.ModelSerializer):
+    id = serializers.IntegerField(read_only=True)
+
     class Meta:
         model = UserAdvert
-        fields = '__all__'
+        fields = ['name', 'category', 'description', 'price', 'currency', 'completed', 'skills']

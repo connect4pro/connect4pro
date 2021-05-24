@@ -6,11 +6,13 @@ class GrantSerializer(serializers.ModelSerializer):
     """Grant serialize"""
     class Meta:
         model = Grant
-        fields = ('grant_name', 'grant_sum', 'currency', 'grant_deadline', 'grant_description')
+        fields = ('id','grant_name', 'grant_sum', 'currency', 'grant_deadline', 'grant_description')
+        read_only_fields = ('user',)
 
 
 class InvestmentSerializer(serializers.ModelSerializer):
     """Investment serialize"""
     class Meta:
         model = Investment
-        fields = ('invest_name', 'invest_sum', 'currency', 'invest_deadline', 'invest_description')
+        fields = ('id', 'invest_name', 'invest_sum', 'currency', 'invest_deadline', 'invest_description')
+        read_only_fields = ('user',)

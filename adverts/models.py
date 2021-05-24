@@ -33,12 +33,12 @@ class Category(models.Model):
 
 
 class UserAdvert(models.Model):
-    """Объявление от пользователя"""
+    """Объявление от обычного пользователя"""
 
     name = models.CharField(max_length=200, verbose_name = 'Название объявления')
-    category = models.ForeignKey(Category, on_delete=models.CASCADE, related_name='advert_category', verbose_name = 'Категория объявления')
+    category = models.ForeignKey(Category, on_delete=models.CASCADE, related_name='user_advert_category', verbose_name = 'Категория объявления')
     description = models.TextField(verbose_name = 'Описание объявления')
-    price = models.DecimalField(decimal_places=1, max_digits=9, default=0, verbose_name = 'Цена')
+    price = models.DecimalField(decimal_places=2, max_digits=9, default=0, verbose_name = 'Цена')
     currency = models.CharField(max_length=3, choices=CURRENCY_CHOICES, default=usd, blank=True, verbose_name = 'Валюта')
     completed = models.CharField(max_length=8, choices=COMPLETE_CHOICES, default=no, verbose_name = 'Актуальность объявления')
     skills = models.TextField(blank=True, verbose_name = 'Умения')
