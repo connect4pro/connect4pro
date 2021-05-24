@@ -15,7 +15,8 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
-from adverts.views import CategoryList, BusinessAdvertList, ProviderAdvertList, BusinessAdvertUpdate
+from adverts.views import CategoryList, BusinessAdvertList, ProviderAdvertList, BusinessAdvertUpdate, \
+    ProviderAdvertUpdate
 from blog.views import BlogPostList
 from .yasg import urlpatterns as yasg_urls
 from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
@@ -26,6 +27,8 @@ urlpatterns = [
     path('api/businessadverts', BusinessAdvertList.as_view(), name='businessadverts'),
     path('api/businessadverts/update/<id>', BusinessAdvertUpdate
          .as_view(), name='businessadverts_update'),
+    path('api/provideradverts/update/<id>', ProviderAdvertUpdate
+         .as_view(), name='provideradverts_update'),
     path('api/provideradverts', ProviderAdvertList.as_view(), name='provideradverts'),
     path('api/blogposts', BlogPostList.as_view()),
     path('api-auth/', include('rest_framework.urls')),
