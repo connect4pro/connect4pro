@@ -59,6 +59,8 @@ class Connect4ProUserBPSerializer(serializers.ModelSerializer):
             profile.sector.add(sector)
         return user
 
+
+
     class Meta:
         model = Connect4ProUser
         fields = (

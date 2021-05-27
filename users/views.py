@@ -1,7 +1,10 @@
 from django.shortcuts import render
-from rest_framework.generics import CreateAPIView, ListCreateAPIView, ListAPIView
+from rest_framework import status
+from rest_framework.generics import CreateAPIView, ListCreateAPIView, ListAPIView, UpdateAPIView, RetrieveAPIView
+from rest_framework.response import Response
 
 from users.models import BusinessProfile, Connect4ProUser
+from users.permissions import IsOwnerOrReadOnly
 from users.serializers import Connect4ProUserBPSerializer, BusinessProfileSerializer, Connect4ProUserPPSerializer
 
 
@@ -21,3 +24,9 @@ class ProviderUserList(ListAPIView):
 
 class ProviderUserRegister(CreateAPIView):
     serializer_class = Connect4ProUserPPSerializer
+
+
+class BusinessProfileDetail(RetrieveAPIView):
+    serializer_class = Connect4ProUserBPSerializer
+    queryset = Connect4ProUser.objects.all()
+    lookup_field = 'id'
