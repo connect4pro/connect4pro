@@ -37,6 +37,7 @@ INSTALLED_APPS = [
     'events',
     'faq',
     'grants_and_investments',
+    'forum',
 
     # Django
     'django.contrib.admin',
@@ -48,8 +49,11 @@ INSTALLED_APPS = [
     'rest_framework',
     'drf_yasg',
     'phonenumber_field',
-
-
+    'tinymce',
+    'hitcount',
+    'taggit',
+    'rest_framework_serializer_field_permissions',
+    'pytils',
 ]
 
 MIDDLEWARE = [
@@ -86,14 +90,21 @@ WSGI_APPLICATION = 'connect4pro.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/3.2/ref/settings/#databases
 
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.postgresql_psycopg2',
+#         'NAME': 'connect4pro',
+#         'USER': 'drf',
+#         'PASSWORD': '120666',
+#         'HOST': 'localhost',
+#         'PORT': '5432',
+#     }
+# }
+
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'connect4pro',
-        'USER': 'drf',
-        'PASSWORD': '120666',
-        'HOST': 'localhost',
-        'PORT': '5432',
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': 'mydatabase',
     }
 }
 
@@ -132,6 +143,7 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/3.2/howto/static-files/
 
 STATIC_URL = '/static/'
+
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field

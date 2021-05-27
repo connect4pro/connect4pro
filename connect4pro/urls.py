@@ -14,6 +14,7 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 
+from django import urls
 from django.contrib import admin
 from django.urls import path, include
 
@@ -25,6 +26,7 @@ from rest_framework.urlpatterns import format_suffix_patterns
 from events.views import EventList, EventCreate
 from faq.views import QuestionsAndAnswersList, QuestionsAndAnswersCreate, WriteUsList, WriteUsCreate
 from grants_and_investments.views import GrantList, GrantCreate, InvestmentList, InvestmentCreate
+from forum.views import AuthorList, AuthorCreate, CategoryList, CategoryCreate, PostList, PostCreate
 
 from .yasg import urlpatterns as yasg_urls
 from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
@@ -49,7 +51,15 @@ urlpatterns = [
     path('api/grants/create_grant', GrantCreate.as_view(), name = 'create-grant'),
     path('api/investments', InvestmentList.as_view(), name = 'investments'),
     path('api/investments/create_investment', InvestmentCreate.as_view(), name = 'create-investment'),
+    path('api/forum_author_list/', AuthorList.as_view(), name = 'forum_author_list'),
+    path('api/forum_author_list/create_author', AuthorCreate.as_view(), name = 'create_author'),
+    path('api/forum_category/', CategoryList.as_view(), name = 'forum_category'),
+    path('api/forum_category/create_category', CategoryCreate.as_view(), name = 'create_category'),
+    path('api/forum_post_list/', PostList.as_view(), name = 'post_list'),
+    path('api/forum_post_list/post_create', PostCreate.as_view(), name = 'create_post'),
     path('api-auth/', include('rest_framework.urls')),
+    path('tinymce/', include('tinymce.urls')),
+    path('hitcount/', include('hitcount.urls', namespace = 'hitcount')),
 
     path('', include('users.urls')),
     path('api/token', TokenObtainPairView.as_view(), name='token_obtain_pair'),
