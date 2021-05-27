@@ -30,3 +30,8 @@ class BusinessProfileDetail(RetrieveAPIView):
     serializer_class = Connect4ProUserBPSerializer
     queryset = Connect4ProUser.objects.all()
     lookup_field = 'id'
+
+class ProviderProfileDetail(RetrieveAPIView):
+    serializer_class = Connect4ProUserPPSerializer
+    queryset = Connect4ProUser.objects.all()
+    lookup_field = 'id'
