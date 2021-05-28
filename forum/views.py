@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
 from django.http import JsonResponse
 from drf_yasg.utils import swagger_auto_schema
 from .models import Author, Category, Post
@@ -7,6 +7,7 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework.generics import ListAPIView, ListCreateAPIView, UpdateAPIView, CreateAPIView
 from forum.serializers import AuthorSerializer, CategorySerializer, PostSerializer
+from .utils import update_views
 # Create your views here.
 
 class AuthorList(APIView):
@@ -73,3 +74,5 @@ class PostList(APIView):
 
 class PostCreate(CreateAPIView):
     serializer_class = PostSerializer
+
+
