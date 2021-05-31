@@ -8,8 +8,7 @@ from hitcount.models import HitCountMixin, HitCount
 from django.contrib.contenttypes.fields import GenericRelation
 from taggit.managers import TaggableManager
 from pytils.translit import slugify
-from django_resized import ResizedImageField
-from django.shortcuts import reverse 
+from django.shortcuts import reverse
 # Create your models here.
 
 User = get_user_model()
@@ -17,10 +16,9 @@ User = get_user_model()
 class Author(models.Model):
     '''Модель пользователя форума'''
     user = models.ForeignKey(User, on_delete = models.CASCADE, verbose_name = 'Пользователь')
-    fullname = models.CharField(max_length = 40, blank = True, verbose_name = 'Настоящее имя пользователя')
-    slug = slug = models.SlugField(max_length = 400, unique = True, blank = True)
+    fullname = models.CharField(max_length = 40, verbose_name = 'Настоящее имя пользователя')
+    slug = models.SlugField(max_length = 400, unique = True, blank = True)
     bio = models.TextField(max_length = 150, verbose_name = 'Немного о себе')
-    profile_pic = ResizedImageField(size = [50, 80], quality = 100, upload_to='authors', default = None, null = True, verbose_name = 'Изображение профиля')
 
     class Meta:
         verbose_name = 'Автор'
@@ -32,14 +30,14 @@ class Author(models.Model):
         super(Author, self).save(*args, **kwargs)
 
     def __str__(self):
-        return self.fullname
+        return self.fullname + f' ({self.user})'
 
 
 class Category(models.Model):
     '''Модель категории форума'''
     title = models.CharField(max_length = 50, verbose_name = 'Название категории')
     slug = models.CharField(max_length = 400, unique = True, blank = True)
-    description = models.TextField(default = 'Описание категории:', verbose_name = 'Описание категории')
+    description = models.TextField(verbose_name = 'Описание категории')
 
     class Meta:
         verbose_name = 'Категория'
@@ -89,7 +87,7 @@ class Comment(models.Model):
     user = models.ForeignKey(Author, on_delete = models.CASCADE, verbose_name = 'Юзер, которому вы напишите комментарий')
     content = models.TextField(verbose_name = 'Ваш комментарий')
     date = models.DateTimeField(auto_now_add = True)
-    replies = models.ManyToManyField(Reply, blank = True, verbose_name = 'Комментарии других юзеров')
+    replies = models.ManyToManyField(Reply, blank = True, verbose_name = 'Комментарии юзеров')
 
     def __str__(self):
         return self.content[:100]
@@ -103,9 +101,9 @@ class Comment(models.Model):
 
 class Post(models.Model):
     '''Модель сообщений на форуме'''
+    user = models.ForeignKey(Author, on_delete = models.CASCADE, verbose_name = ' Имя юзера, создающий пост')
     title = models.CharField(max_length = 400, verbose_name = 'Имя поста')
     slug = models.SlugField(max_length = 400, unique = True, blank = True)
-    user = models.ForeignKey(Author, on_delete = models.CASCADE, verbose_name = ' Имя юзера, создающий пост')
     content = models.TextField(max_length = 300, verbose_name = 'Содержание поста')
     categories = models.ManyToManyField(Category, verbose_name = 'Категория поста')
     date = models.DateTimeField(auto_now_add = True)
