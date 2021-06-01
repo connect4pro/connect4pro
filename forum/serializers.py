@@ -2,40 +2,39 @@ from django.contrib.auth.models import User
 from django.db.models import fields
 from rest_framework import serializers
 from rest_framework.relations import StringRelatedField
-from forum.models import Author, Category, Post, Reply, Comment
+from forum.models import Author, Category, Post, Comment
 
 
 class AuthorSerializer(serializers.ModelSerializer):
-    user = serializers.StringRelatedField()
-    # user = serializers.SerializerMethodField(source='get_user')
+    user = StringRelatedField()
+
     class Meta:
         model = Author
-        fields = ('user','fullname', 'bio')
+        fields = ['user','fullname', 'bio']
         read_only_fields = ('id', 'slug')
 
-    # def get_user(self, obj):
-    #     return obj.user.username
 
 class CategorySerializer(serializers.ModelSerializer):
-    title = serializers.StringRelatedField()
+
     class Meta:
         model = Category
-        fields = ('title', 'slug', 'description')
+        fields = ['title', 'slug', 'description']
         read_only_fields = ('id', 'slug')
 
 
 class PostSerializer(serializers.ModelSerializer):
+    user = StringRelatedField()
+    category = StringRelatedField()
     class Meta:
         model = Post
         fields = '__all__'
 
-class ReplySerializer(serializers.ModelSerializer):
 
-    class Meta:
-        model = Reply
-        fields = '__all__'
 
 class CommentSerializer(serializers.ModelSerializer):
+    user = StringRelatedField()
+    post = StringRelatedField()
+    parent = StringRelatedField()
     class Meta:
         model = Comment
         fields = '__all__'

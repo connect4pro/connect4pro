@@ -1,14 +1,14 @@
 from django.shortcuts import render, get_object_or_404
+from rest_framework.decorators import api_view
 from django.http import JsonResponse
 from drf_yasg.utils import swagger_auto_schema
 from rest_framework.relations import StringRelatedField
-from .models import Author, Category, Post, Reply, Comment
+from .models import Author, Category, Post, Comment
 from rest_framework import serializers, status
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework.generics import ListAPIView, ListCreateAPIView, UpdateAPIView, CreateAPIView
-from forum.serializers import AuthorSerializer, CategorySerializer, PostSerializer, ReplySerializer, CommentSerializer
-from .utils import update_views
+from forum.serializers import AuthorSerializer, CategorySerializer, PostSerializer, CommentSerializer
 
 
 
@@ -81,29 +81,6 @@ class PostCreate(CreateAPIView):
     serializer_class = PostSerializer
 
 
-#ReplyList
-class ReplyList(APIView):
-    permission_classes = ()
-
-    @swagger_auto_schema(responses = {200: ReplySerializer(many = True)})
-    def get(self, request):
-        replies = Reply.objects.all()
-        serializer = ReplySerializer(replies, many = True)
-        return Response(serializer.data)
-
-    def post(self, request):
-        serializer = ReplySerializer(data=request.data)
-        if serializer.is_valid():
-            serializer.save()
-            return Response(serializer.data, status=status.HTTP_201_CREATED)
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-
-#ReplyCreate
-class ReplyCreate(CreateAPIView):
-    serializer_class = ReplySerializer
-
-
-
 #CommentList
 class CommentList(APIView):
     permission_classes = ()
@@ -111,7 +88,7 @@ class CommentList(APIView):
     @swagger_auto_schema(responses = {200: CommentSerializer(many = True)})
     def get(self, request):
         comments = Comment.objects.all()
-        serializer = ReplySerializer(comments, many = True)
+        serializer = CommentSerializer(comments, many = True)
         return Response(serializer.data)
 
     def post(self, request):

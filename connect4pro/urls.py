@@ -26,7 +26,7 @@ from rest_framework.urlpatterns import format_suffix_patterns
 from events.views import EventList, EventCreate
 from faq.views import QuestionsAndAnswersList, QuestionsAndAnswersCreate, WriteUsList, WriteUsCreate
 from grants_and_investments.views import GrantList, GrantCreate, InvestmentList, InvestmentCreate
-from forum.views import AuthorList, AuthorCreate, CategoryList, CategoryCreate, PostList, PostCreate
+from forum.views import AuthorList, AuthorCreate, CategoryList, CategoryCreate, PostList, PostCreate, CommentList, CommentCreate
 
 from .yasg import urlpatterns as yasg_urls
 from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
@@ -55,13 +55,14 @@ urlpatterns = [
     path('api/forum/authors/create_author', AuthorCreate.as_view(), name = 'create_author'),
     path('api/forum/categories', CategoryList.as_view(), name = 'forum_category'),
     path('api/forum/categories/create_category', CategoryCreate.as_view(), name = 'create_category'),
+    path('api/forum/comments', CommentList.as_view(), name = 'forum_comments'),
+    path('api/forum/comments/create_comment', CommentCreate.as_view(), name = 'create_comments'),
     path('api/forum/posts', PostList.as_view(), name = 'post_list'),
     path('api/forum/posts/create_post', PostCreate.as_view(), name = 'create_post'),
-    path('api-auth/', include('rest_framework.urls')),
-    path('tinymce/', include('tinymce.urls')),
-    path('hitcount/', include('hitcount.urls', namespace = 'hitcount')),
 
+    path('api-auth/', include('rest_framework.urls')),
     path('', include('users.urls')),
+
     path('api/token', TokenObtainPairView.as_view(), name='token_obtain_pair'),
     path('api/token/refresh', TokenRefreshView.as_view(), name='token_refresh'),
 
