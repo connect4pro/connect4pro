@@ -6,8 +6,6 @@ from forum.models import Author, Category, Post, Comment
 
 
 class AuthorSerializer(serializers.ModelSerializer):
-    user = StringRelatedField()
-
     class Meta:
         model = Author
         fields = ['user','fullname', 'bio']
@@ -15,7 +13,6 @@ class AuthorSerializer(serializers.ModelSerializer):
 
 
 class CategorySerializer(serializers.ModelSerializer):
-
     class Meta:
         model = Category
         fields = ['title', 'slug', 'description']
@@ -23,18 +20,15 @@ class CategorySerializer(serializers.ModelSerializer):
 
 
 class PostSerializer(serializers.ModelSerializer):
-    user = StringRelatedField()
-    category = StringRelatedField()
     class Meta:
         model = Post
-        fields = '__all__'
+        fields = ['user', 'title', 'category', 'content']
+        read_only_fields = ('id', 'slug')
 
 
 
 class CommentSerializer(serializers.ModelSerializer):
-    user = StringRelatedField()
-    post = StringRelatedField()
-    parent = StringRelatedField()
     class Meta:
         model = Comment
         fields = '__all__'
+        read_only_fields = ('id',)
