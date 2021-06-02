@@ -6,6 +6,7 @@ from django.db.models.signals import post_save
 from django.dispatch import receiver
 from django.utils.translation import ugettext_lazy as _
 from phonenumber_field.modelfields import PhoneNumberField
+from rest_framework_simplejwt.tokens import RefreshToken
 
 from connect4pro import settings
 from .choices import TURNOVER_CHOICES, REGION_CHOICES
@@ -60,6 +61,13 @@ class Connect4ProUser(AbstractUser):
     instagram = models.CharField(verbose_name='Instagram', max_length=50, blank=True)
     site = models.CharField(verbose_name='Сайт', max_length=50, blank=True)
     is_premium = models.BooleanField(default=False)
+
+    def tokens(self):
+        refresh = RefreshToken.for_user(self)
+        return {
+            'refresh': str(refresh),
+            'access': str(refresh.access_token)
+        }
 
     def __str__(self):
         return self.email

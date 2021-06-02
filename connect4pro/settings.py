@@ -48,7 +48,7 @@ INSTALLED_APPS = [
     'rest_framework',
     'drf_yasg',
     'phonenumber_field',
-
+    'social_django',
 
 ]
 
@@ -157,6 +157,8 @@ PHONENUMBER_DEFAULT_REGION = 'KG'
 
 AUTH_USER_MODEL = 'users.Connect4ProUser'
 AUTHENTICATION_BACKENDS = (
+    'social_core.backends.google.GoogleOAuth2',
+    'social_core.backends.facebook.FacebookOAuth2',
 
     "django.contrib.auth.backends.ModelBackend",
 )
@@ -165,3 +167,15 @@ SWAGGER_SETTINGS = {
     'LOGOUT_URL': 'rest_framework:logout',
 }
 
+SOCIAL_AUTH_POSTGRES_JSONFIELD = True
+SOCIAL_AUTH_URL_NAMESPACE = 'social'
+
+SOCIAL_AUTH_FACEBOOK_KEY = '536255600884632'
+SOCIAL_AUTH_FACEBOOK_SECRET = '78f6f8614555f0b32b7898aec95b3772'
+
+SOCIAL_AUTH_FACEBOOK_SCOPE = ['email']
+
+SOCIAL_AUTH_FACEBOOK_PROFILE_EXTRA_PARAMS = {
+    'locale': 'ru_RU',
+    'fields': 'name, email'
+}

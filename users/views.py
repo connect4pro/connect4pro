@@ -35,3 +35,6 @@ class ProviderProfileDetail(RetrieveAPIView):
     serializer_class = Connect4ProUserPPSerializer
     queryset = Connect4ProUser.objects.all()
     lookup_field = 'id'
+
+def facebook_auth(request):
+    return render(request, 'facebook.html')
