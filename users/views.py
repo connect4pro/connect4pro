@@ -38,3 +38,6 @@ class ProviderProfileDetail(RetrieveAPIView):
 
 def facebook_auth(request):
     return render(request, 'facebook.html')
+
+def google_auth(request):
+    return render(request, 'google.html')

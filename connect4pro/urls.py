@@ -25,7 +25,7 @@ from rest_framework.urlpatterns import format_suffix_patterns
 from events.views import EventList, EventCreate
 from faq.views import QuestionsAndAnswersList, QuestionsAndAnswersCreate, WriteUsList, WriteUsCreate
 from grants_and_investments.views import GrantList, GrantCreate, InvestmentList, InvestmentCreate
-from users.views import facebook_auth
+from users.views import facebook_auth, google_auth
 
 from .yasg import urlpatterns as yasg_urls
 from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
@@ -55,8 +55,9 @@ urlpatterns = [
     path('', include('users.urls')),
     path('api/login', TokenObtainPairView.as_view(), name='token_obtain_pair'),
     path('api/login/refresh', TokenRefreshView.as_view(), name='token_refresh'),
-    path('social-auth/', include('social_django.urls', namespace="social")),
-    path('auth/facebook', facebook_auth)
+    path('', include('social_django.urls', namespace="social")),
+    path('auth/facebook', facebook_auth),
+    path('auth/google',google_auth),
 
 ]
 

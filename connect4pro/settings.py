@@ -179,3 +179,21 @@ SOCIAL_AUTH_FACEBOOK_PROFILE_EXTRA_PARAMS = {
     'locale': 'ru_RU',
     'fields': 'name, email'
 }
+
+SOCIAL_AUTH_GOOGLE_OAUTH2_KEY = '308198633157-tfstj711dckoojmk7ptpbsl18tfbhnqb.apps.googleusercontent.com'
+SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET = 'VGCc7RAOfzwJijbvNiXiMRBX'
+
+SOCIALACCOUNT_PROVIDERS = {
+    'google': {
+        'SCOPE': [
+            'profile',
+            'email',
+        ],
+        'AUTH_PARAMS': {
+            'access_type': 'online',
+            'redirect_uri': 'http://127.0.0.1:8000/<custom-url>'
+        }
+    }
+}
+LOGIN_REDIRECT_URL = '/'
+LOGOUT_REDIRECT_URL = '/'
