@@ -50,7 +50,7 @@ class Category(models.Model):
 
 
 class Post(models.Model):
-    '''Модель сообщений на форуме'''
+    '''Модель постов на форуме'''
     user = models.ForeignKey(Author, on_delete = models.CASCADE, verbose_name = ' Имя юзера, создающий пост')
     title = models.CharField(max_length = 400, verbose_name = 'Имя поста')
     slug = models.SlugField(max_length = 400, unique = True, blank = True)

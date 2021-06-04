@@ -6,11 +6,11 @@ from forum.models import Author, Category, Post, Comment
 
 
 class AuthorSerializer(serializers.ModelSerializer):
+
     class Meta:
         model = Author
         fields = ['user','fullname', 'bio']
         read_only_fields = ('id', 'slug')
-
 
 class CategorySerializer(serializers.ModelSerializer):
     class Meta:
@@ -24,7 +24,6 @@ class PostSerializer(serializers.ModelSerializer):
         model = Post
         fields = ['user', 'title', 'category', 'content']
         read_only_fields = ('id', 'slug')
-
 
 
 class CommentSerializer(serializers.ModelSerializer):

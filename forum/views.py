@@ -18,7 +18,7 @@ class AuthorList(APIView):
 
     @swagger_auto_schema(responses = {200: AuthorSerializer(many = True)})
     def get(self, request):
-        authors = Author.objects.all()
+        authors = Author.objects.select_related("user").all()
         serializer = AuthorSerializer(authors, many = True)
         return Response(serializer.data)
 

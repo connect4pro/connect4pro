@@ -29,9 +29,9 @@ class Event(models.Model):
         verbose_name_plural = 'Мероприятия'
 
 class EventComment(models.Model):
-    commentator_text = models.TextField(max_length = 500, verbose_name = 'Ваш комментарий')
-    commentator_name = models.CharField(max_length = 50, verbose_name = 'Ваше имя')
-    commentator_email = models.EmailField(verbose_name = 'Ваш контактный адрес почты')
+    commentator_text = models.TextField(max_length = 500, verbose_name = 'Комментарий')
+    commentator_name = models.CharField(max_length = 50, verbose_name = 'Имя')
+    commentator_email = models.EmailField(verbose_name = 'Контактный адрес почты')
 
     def __str__(self):
         return f'Имя: {self.commentator_name}, контактная почта: {self.commentator_email}'

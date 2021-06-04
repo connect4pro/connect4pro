@@ -16,7 +16,9 @@ Including another URLconf
 
 from django import urls
 from django.contrib import admin
+from django.conf import settings
 from django.urls import path, include
+import debug_toolbar
 
 from adverts.views import CategoryList, BusinessAdvertList, ProviderAdvertList, BusinessAdvertUpdate, \
     ProviderAdvertUpdate
@@ -65,6 +67,7 @@ urlpatterns = [
     path('api/forum/posts/create_post', PostCreate.as_view(), name = 'create_post'),
 
     path('api-auth/', include('rest_framework.urls')),
+    path('__debug__/', include(debug_toolbar.urls)),
     path('', include('users.urls')),
 
     path('api/token', TokenObtainPairView.as_view(), name='token_obtain_pair'),

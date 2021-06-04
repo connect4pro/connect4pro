@@ -54,6 +54,7 @@ INSTALLED_APPS = [
     # 'taggit',
     'rest_framework_serializer_field_permissions',
     'pytils',
+    'debug_toolbar',
 ]
 
 MIDDLEWARE = [
@@ -64,6 +65,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'debug_toolbar.middleware.DebugToolbarMiddleware',
 ]
 
 ROOT_URLCONF = 'connect4pro.urls'
@@ -101,12 +103,6 @@ DATABASES = {
     }
 }
 
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.sqlite3',
-#         'NAME': 'mydatabase',
-#     }
-# }
 
 
 # Password validation
@@ -178,3 +174,6 @@ SWAGGER_SETTINGS = {
     'LOGOUT_URL': 'rest_framework:logout',
 }
 
+INTERNAL_IPS = [
+    '127.0.0.1',
+]
