@@ -20,55 +20,23 @@ from django.conf import settings
 from django.urls import path, include
 import debug_toolbar
 
-from adverts.views import CategoryList, BusinessAdvertList, ProviderAdvertList, BusinessAdvertUpdate, \
-    ProviderAdvertUpdate
-from blog.views import BlogPostList
 
 from rest_framework.urlpatterns import format_suffix_patterns
-from events.views import EventList, EventCreate, EventCommentsList, EventCommentCreate
-from faq.views import QuestionsAndAnswersList, QuestionsAndAnswersCreate, WriteUsList, WriteUsCreate
-from grants_and_investments.views import GrantList, GrantCreate, InvestmentList, InvestmentCreate, GrantInvestmentCommentList, GrantInvestmentCommentCreate
-from forum.views import AuthorList, AuthorCreate, CategoryList, CategoryCreate, PostList, PostCreate, CommentList, CommentCreate
 
 from .yasg import urlpatterns as yasg_urls
 from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('api/categories', CategoryList.as_view(), name='category-list'),
-    path('api/businessadverts', BusinessAdvertList.as_view(), name='businessadverts'),
-    path('api/businessadverts/update/<id>', BusinessAdvertUpdate
-         .as_view(), name='businessadverts_update'),
-    path('api/provideradverts/update/<id>', ProviderAdvertUpdate
-         .as_view(), name='provideradverts_update'),
-    path('api/provideradverts', ProviderAdvertList.as_view(), name='provideradverts'),
-    path('api/blogposts', BlogPostList.as_view()),
-    path('api/events', EventList.as_view(), name = 'events'),
-    path('api/events/create_event', EventCreate.as_view(), name = 'event_create'),
-    path('api/events/comments', EventCommentsList.as_view(), name = 'event_comments'),
-    path('api/events/comments/create_comment', EventCommentCreate.as_view(), name = 'event_comments_create'),
-    path('api/questions_and_answers', QuestionsAndAnswersList.as_view(), name = 'questions_and_answers'),
-    path('api/questions_and_answers/create', QuestionsAndAnswersCreate.as_view(),name = 'questions_and_answers_create'),
-    path('api/write_us', WriteUsList.as_view(), name = 'write_us'),
-    path('api/write_us/create_message', WriteUsCreate.as_view(), name = 'create_message'),
-    path('api/grants', GrantList.as_view(), name = 'grants'),
-    path('api/grants/create_grant', GrantCreate.as_view(), name = 'create_grant'),
-    path('api/investments', InvestmentList.as_view(), name = 'investments'),
-    path('api/investments/create_investment', InvestmentCreate.as_view(), name = 'create_investment'),
-    path('api/grants_and_investments/comments', GrantInvestmentCommentList.as_view(), name = 'grants_and_investments_comments'),
-    path('api/grants_and_investments/comments/create_comment', GrantInvestmentCommentCreate.as_view(), name = 'grants_and_investments_comments_create'),
-    path('api/forum/authors', AuthorList.as_view(), name = 'forum_author_list'),
-    path('api/forum/authors/create_author', AuthorCreate.as_view(), name = 'create_author'),
-    path('api/forum/categories', CategoryList.as_view(), name = 'forum_category'),
-    path('api/forum/categories/create_category', CategoryCreate.as_view(), name = 'create_category'),
-    path('api/forum/comments', CommentList.as_view(), name = 'forum_comments'),
-    path('api/forum/comments/create_comment', CommentCreate.as_view(), name = 'create_comments'),
-    path('api/forum/posts', PostList.as_view(), name = 'post_list'),
-    path('api/forum/posts/create_post', PostCreate.as_view(), name = 'create_post'),
 
     path('api-auth/', include('rest_framework.urls')),
     path('__debug__/', include(debug_toolbar.urls)),
     path('', include('users.urls')),
+    path('', include('events.urls')),
+    path('', include('faq.urls')),
+    path('', include('forum.urls')),
+    path('', include('grants_and_investments.urls')),
+    path('', include('adverts.urls')),
 
     path('api/token', TokenObtainPairView.as_view(), name='token_obtain_pair'),
     path('api/token/refresh', TokenRefreshView.as_view(), name='token_refresh'),
