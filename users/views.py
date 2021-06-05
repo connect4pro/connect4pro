@@ -7,7 +7,7 @@ from rest_framework.response import Response
 from users.models import BusinessProfile, Connect4ProUser
 from users.permissions import IsOwnerOrReadOnly
 from users.serializers import Connect4ProUserBPSerializer, BusinessProfileSerializer, Connect4ProUserPPSerializer, \
-    UpdateBusinessProfile
+    UpdateBusinessProfile, UpdateProviderProfile
 
 
 class BusinessUserList(ListAPIView):
@@ -44,6 +44,13 @@ class UpdateBusinessProfileView(UpdateAPIView):
     queryset = Connect4ProUser.objects.all()
     permission_classes = (IsAuthenticated, IsOwnerOrReadOnly)
     serializer_class = UpdateBusinessProfile
+    lookup_field = 'id'
+
+
+class UpdateProviderProfileView(UpdateAPIView):
+    queryset = Connect4ProUser.objects.all()
+    permission_classes = (IsAuthenticated, IsOwnerOrReadOnly)
+    serializer_class = UpdateProviderProfile
     lookup_field = 'id'
 
 
