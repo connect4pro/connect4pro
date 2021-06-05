@@ -2,7 +2,7 @@ from django.urls import path
 from django.views.decorators.http import require_POST
 
 from users.views import BusinessUserList, BusinessUserRegister, ProviderUserRegister, ProviderUserList, \
-    BusinessProfileDetail, ProviderProfileDetail
+    BusinessProfileDetail, ProviderProfileDetail, UpdateBusinessProfileView
 
 app_name = 'users'
 
@@ -13,4 +13,5 @@ urlpatterns = [
     path('api/users/register/provider', ProviderUserRegister.as_view(), name='provider_register'),
     path('api/users/business/detail/<id>', BusinessProfileDetail.as_view(), name='business_profile_detail'),
     path('api/users/provider/detail/<id>', ProviderProfileDetail.as_view(), name='provider_profile_detail'),
+    path('api/users/business/update/<id>', UpdateBusinessProfileView.as_view(), name='business_profile_update'),
 ]
