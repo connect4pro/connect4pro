@@ -1,5 +1,4 @@
 from django.urls import path
-from django.urls import path
 from forum.views import AuthorList, AuthorCreate, CategoryList, CategoryCreate, PostList, PostCreate, CommentList, CommentCreate
 
 app_name = 'forum'

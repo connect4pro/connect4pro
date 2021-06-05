@@ -1,5 +1,4 @@
 from django.urls import path
-from django.urls import path
 from grants_and_investments.views import GrantList, GrantCreate, InvestmentList, InvestmentCreate, GrantInvestmentCommentList, GrantInvestmentCommentCreate
 
 app_name = 'grants_and_investments'
