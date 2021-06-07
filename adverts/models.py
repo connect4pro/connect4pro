@@ -22,6 +22,18 @@ COMPLETE_CHOICES = (
 )
 
 
+class ImageSet(models.Model):
+    class Meta:
+        verbose_name = 'Набор изображений'
+        verbose_name_plural = 'Наборы изображений'
+
+
+class Image(models.Model):
+    image = ResizedImageField(size=[350, 250], upload_to=f'images/adverts/%d%m%Y', blank=True,
+                              null=True)
+    image_set = models.ForeignKey(ImageSet, on_delete=models.CASCADE)
+
+
 class Category(models.Model):
     """Категория объявления"""
 
@@ -38,7 +50,7 @@ class Category(models.Model):
 
 class BusinessAdvert(models.Model):
     """Объявление от МСБ"""
-    #TODO:  связать с пользователем
+
     title = models.CharField(max_length=200)
     category = models.ForeignKey(Category, on_delete=models.CASCADE, related_name='business_advert_category')
     description = models.TextField()
@@ -46,7 +58,6 @@ class BusinessAdvert(models.Model):
     currency = models.CharField(max_length=3, choices=CURRENCY_CHOICES, default=usd, blank=True)
     completed = models.CharField(max_length=8, choices=COMPLETE_CHOICES, default=no)
     user = models.ForeignKey(BusinessProfile, on_delete=models.CASCADE, related_name='business_profile')
-
 
     def __str__(self):
         return f'{self.title}'
@@ -62,15 +73,10 @@ class ProviderAdvert(models.Model):
     title = models.CharField(max_length=200)
     description = models.TextField()
     user = models.ForeignKey(ProviderProfile, on_delete=models.CASCADE, related_name='provider_profile')
-    image_1 = ResizedImageField(size=[350, 250], upload_to=f'images/blog_images/%d%m%Y', blank=True,
-                                   null=True)
-    image_2 = ResizedImageField(size=[350, 250], upload_to=f'images/blog_images/%d%m%Y', blank=True,
-                                null=True)
+    images = models.ForeignKey(ImageSet, on_delete=models.CASCADE)
     category = models.ForeignKey(Category, on_delete=models.CASCADE, related_name='provider_advert_category')
     price = models.DecimalField(decimal_places=2, max_digits=9, default=0)
     currency = models.CharField(max_length=3, choices=CURRENCY_CHOICES, default=usd, blank=True)
-
-
 
     def __str__(self):
         return self.title
