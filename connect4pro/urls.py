@@ -57,7 +57,8 @@ urlpatterns = [
     path('api/login/refresh', TokenRefreshView.as_view(), name='token_refresh'),
     path('', include('social_django.urls', namespace="social")),
     path('auth/facebook', facebook_auth),
-    path('auth/google',google_auth),
+    path('auth/google/',google_auth),
+
 
 ]
 

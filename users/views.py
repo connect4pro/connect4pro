@@ -1,13 +1,13 @@
 from django.shortcuts import render
-from rest_framework import status
+
 from rest_framework.generics import CreateAPIView, ListCreateAPIView, ListAPIView, UpdateAPIView, RetrieveAPIView
 from rest_framework.permissions import IsAuthenticated
-from rest_framework.response import Response
 
 from users.models import BusinessProfile, Connect4ProUser
 from users.permissions import IsOwnerOrReadOnly
 from users.serializers import Connect4ProUserBPSerializer, BusinessProfileSerializer, Connect4ProUserPPSerializer, \
     UpdateBusinessProfile, UpdateProviderProfile
+
 
 
 class BusinessUserList(ListAPIView):
@@ -55,8 +55,11 @@ class UpdateProviderProfileView(UpdateAPIView):
 
 
 def facebook_auth(request):
+
     return render(request, 'facebook.html')
 
 
 def google_auth(request):
+
     return render(request, 'google.html')
+

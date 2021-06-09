@@ -21,7 +21,7 @@ class CustomUserManager(BaseUserManager):
     с username на email
     """
 
-    def create_user(self, email, password, **extra_fields):
+    def create_user(self, email, password=None, **extra_fields):
         """
         Создать и сохранить пользователя с введенным email и паролем
         """
@@ -32,6 +32,7 @@ class CustomUserManager(BaseUserManager):
         user.set_password(password)
         user.is_active = True
         user.save()
+
         return user
 
     def create_superuser(self, email, password):
@@ -111,8 +112,8 @@ class ProviderProfile(models.Model):
     user = models.OneToOneField(Connect4ProUser, on_delete=models.CASCADE, related_name='provider_profile')
     manager = models.CharField(verbose_name='ФИО руководителя', max_length=100, blank=True)
     description = models.CharField(verbose_name='Описание', max_length=300, blank=True)
-    year = models.DateField(verbose_name='Год основания', blank=True)
-    logo = models.ImageField(verbose_name='Логотип', upload_to='images/provider/logo/%d%m%Y/', blank=True)
+    year = models.DateField(verbose_name='Год основания', blank=True, null=True)
+    logo = models.ImageField(verbose_name='Логотип', upload_to='images/provider/logo/%d%m%Y/', blank=True, null=True)
     address = models.CharField(verbose_name='Адрес', max_length=200, blank=True, default='')
     services = models.CharField(verbose_name='Список услуг', max_length=200, blank=True)
     scope = models.CharField(verbose_name='Сфера деятельности', max_length=200, blank=True)
