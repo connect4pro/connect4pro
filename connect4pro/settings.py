@@ -37,6 +37,7 @@ INSTALLED_APPS = [
     'events',
     'faq',
     'grants_and_investments',
+    'newsletter',
 
     # Django
     'django.contrib.admin',
@@ -45,11 +46,14 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django.contrib.sites',
     'rest_framework',
     'drf_yasg',
     'phonenumber_field',
     'social_django',
     'dbmail',
+    'ckeditor',
+
 
 ]
 
@@ -119,7 +123,7 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 # https://docs.djangoproject.com/en/3.2/topics/i18n/
 
-LANGUAGE_CODE = 'en-us'
+LANGUAGE_CODE = 'ru-ru'
 
 TIME_ZONE = 'UTC'
 
