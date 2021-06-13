@@ -37,6 +37,7 @@ urlpatterns = [
     path('', include('forum.urls')),
     path('', include('grants_and_investments.urls')),
     path('', include('adverts.urls')),
+    path('', include('polls.urls')),
 
     path('api/token', TokenObtainPairView.as_view(), name='token_obtain_pair'),
     path('api/token/refresh', TokenRefreshView.as_view(), name='token_refresh'),
