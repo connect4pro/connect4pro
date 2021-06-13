@@ -22,7 +22,8 @@ COMPLETE_CHOICES = (
 )
 
 
-class ImageSet(models.Model):
+class Album(models.Model):
+    id = models.IntegerField(primary_key=True)
     class Meta:
         verbose_name = 'Набор изображений'
         verbose_name_plural = 'Наборы изображений'
@@ -31,7 +32,7 @@ class ImageSet(models.Model):
 class Image(models.Model):
     image = ResizedImageField(size=[350, 250], upload_to=f'images/adverts/%d%m%Y', blank=True,
                               null=True)
-    image_set = models.ForeignKey(ImageSet, on_delete=models.CASCADE)
+    album = models.ForeignKey(Album, on_delete=models.CASCADE, related_name='album')
 
 
 class Category(models.Model):
@@ -73,7 +74,7 @@ class ProviderAdvert(models.Model):
     title = models.CharField(max_length=200)
     description = models.TextField()
     user = models.ForeignKey(ProviderProfile, on_delete=models.CASCADE, related_name='provider_profile')
-    images = models.ForeignKey(ImageSet, on_delete=models.CASCADE)
+    images = models.ForeignKey(Album, on_delete=models.CASCADE, related_name='image_set')
     category = models.ForeignKey(Category, on_delete=models.CASCADE, related_name='provider_advert_category')
     price = models.DecimalField(decimal_places=2, max_digits=9, default=0)
     currency = models.CharField(max_length=3, choices=CURRENCY_CHOICES, default=usd, blank=True)

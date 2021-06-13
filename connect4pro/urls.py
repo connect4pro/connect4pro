@@ -58,6 +58,7 @@ urlpatterns = [
     path('', include('social_django.urls', namespace="social")),
     path('auth/facebook', facebook_auth),
     path('auth/google/',google_auth),
+    path('', include('newsletter.urls', namespace='newsletter')),
 
 
 ]
