@@ -20,3 +20,7 @@ def get_template():
     }
     email_template = render_to_string('email/newsletter.html', context)
     return email_template
+
+
+def send_newsletter():
+    pass

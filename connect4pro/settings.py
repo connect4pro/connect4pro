@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     'faq',
     'grants_and_investments',
     'newsletter',
+    'payments',
 
     # Django
     'django.contrib.admin',

@@ -103,6 +103,10 @@ class BusinessProfile(models.Model):
     def __str__(self):
         return self.user.email
 
+    class Meta:
+        verbose_name = 'Профиль МСБ'
+        verbose_name_plural = 'Профили МСБ'
+
 
 
 
