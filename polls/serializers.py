@@ -8,24 +8,14 @@ class QuestionSerializer(serializers.ModelSerializer):
         fields = ['id', 'title']
 
 
-class ChoiceSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Choice
-        fields = ['id', 'question', 'possible_answer']
-
-
 class AnswerSerializer(serializers.ModelSerializer):
     class Meta:
         model = Answer
         fields = ['id', 'question', 'final_answer']
 
-class AnswerSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Answer
-        fields = ['id', 'question', 'final_answer']
 
 class ResultPollSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = ResultPoll
-        fields = ['id', 'user', 'questions', 'answers', 'date_pass_poll', 'avg_points']
+        fields = ['id', 'user', 'date_pass_poll', 'avg_points']

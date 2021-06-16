@@ -16,19 +16,8 @@ class QuestionList(APIView):
          serializer = QuestionSerializer(questions, many = True)
          return Response(serializer.data)
 
-class QuestionCreate(CreateAPIView):
-    serializer_class = QuestionSerializer
-
-
-
-class ChoiceList(APIView):
-     def get(self, request):
-         choices = Choice.objects.all()
-         serializer = ChoiceSerializer(choices, many = True)
-         return Response(serializer.data)
-
-class ChoiceCreate(CreateAPIView):
-    serializer_class = ChoiceSerializer
+# class QuestionCreate(CreateAPIView):
+#     serializer_class = QuestionSerializer
 
 
 class AnswerList(APIView):
@@ -37,23 +26,23 @@ class AnswerList(APIView):
          serializer = AnswerSerializer(answer, many = True)
          return Response(serializer.data)
 
-class AnswerCreate(CreateAPIView):
-    serializer_class = AnswerSerializer
+class AnswerCreate(APIView):
+    def post(self, request, question_id, poll_id):
+
+        question = Question.objects.get(id = question_id)
+        poll = ResultPoll.objects.get(id = poll_id)
+        answer = Answer.objects.create(question = question, poll_result = poll, final_answer = request.data["choice"])
+        serializer = AnswerSerializer(answer)
+        return Response(serializer.data, status.HTTP_201_CREATED)
+
+        # if serializer.is_valid():
+        #     serializer.save()
+        #     return Response(serializer.data, status.HTTP_201_CREATED)
+        # return Response(serializer.errors, status.HTTP_400_BAD_REQUEST)
 
 
 
-class PollResultList(APIView):
-    def get(self, request):
-        poll_results = ResultPoll.objects.all()
-        serializer = ResultPollSerializer(poll_results, many = True)
-        # total_points = ResultPoll.objects.aggregate(Sum('answers'))['answers__sum']
-        # num_matches = Answer.objects.count()
-        # average_points_per_match = total_points / num_matches
-        # print(average_points_per_match)
-        count_answers = ResultPoll.objects.get(id = 1)
-        print(count_answers)
-        return Response(serializer.data)
-
+class PollResultId(APIView):
     def post(self, request):
         serializer = ResultPollSerializer(data = request.data)
         if serializer.is_valid():
