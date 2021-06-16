@@ -1,14 +1,19 @@
 from django.contrib import admin
-from .models import Choices, GetPoll, Question
+from .models import *
+
+class ChoiceInlineModel(admin.TabularInline):
+    model = Choice
+    fields = ['possible_answer']
 
 @admin.register(Question)
-class PollAdmin(admin.ModelAdmin):
-    list_display = ('id', 'question',)
+class QuestionAdmin(admin.ModelAdmin):
+    inlines = [ChoiceInlineModel]
+    list_display = ['id', 'title']
 
-@admin.register(Choices)
-class GetResultAdmin(admin.ModelAdmin):
-    list_display = ('id', 'option_count',)
+@admin.register(Answer)
+class AnswerAdmin(admin.ModelAdmin):
+    list_display = ['id', 'question', 'final_answer']
 
-@admin.register(GetPoll)
-class GetPollAdmin(admin.ModelAdmin):
-    list_display = ('question_id', 'choose_option',)
+@admin.register(ResultPoll)
+class ResultPollAdmin(admin.ModelAdmin):
+    list_display = ['id', 'user', 'questions', 'answers', 'avg_points']

@@ -1,23 +1,31 @@
 from django.db.models import fields
 from rest_framework import serializers
-from .models import Question, Choices, GetPoll
+from .models import *
 
 class QuestionSerializer(serializers.ModelSerializer):
     class Meta:
         model = Question
-        fields = ['id', 'question',]
-        read_only = ('id',)
+        fields = ['id', 'title']
 
-class ChoicesSerializer(serializers.ModelSerializer):
+
+class ChoiceSerializer(serializers.ModelSerializer):
     class Meta:
-        model = Choices
-        fields = ['id', 'option_count',]
-        read_only = ('id',)
+        model = Choice
+        fields = ['id', 'question', 'possible_answer']
 
-class GetPollSerializer(serializers.ModelSerializer):
+
+class AnswerSerializer(serializers.ModelSerializer):
     class Meta:
-        model = GetPoll
-        fields = ['question_id', 'choose_option',]
-        read_only = ('id',)
+        model = Answer
+        fields = ['id', 'question', 'final_answer']
 
-        
+class AnswerSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Answer
+        fields = ['id', 'question', 'final_answer']
+
+class ResultPollSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = ResultPoll
+        fields = ['id', 'user', 'questions', 'answers', 'date_pass_poll', 'avg_points']
