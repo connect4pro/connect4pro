@@ -55,6 +55,7 @@ INSTALLED_APPS = [
     'social_django',
     'dbmail',
     'ckeditor',
+    'django_cron',
 
 ]
 
@@ -174,7 +175,7 @@ SWAGGER_SETTINGS = {
     'LOGOUT_URL': 'rest_framework:logout',
 }
 
-SOCIAL_AUTH_POSTGRES_JSONFIELD = True
+# SOCIAL_AUTH_POSTGRES_JSONFIELD = True
 SOCIAL_AUTH_URL_NAMESPACE = 'social'
 
 SOCIAL_AUTH_FACEBOOK_KEY = '536255600884632'
@@ -210,3 +211,8 @@ LOGOUT_REDIRECT_URL = '/'
 #     'users.pipelines.create_user',    # custom method
 #
 # )
+
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+CRON_CLASSES = [
+    "newsletter.cron.Newsletter",
+]
