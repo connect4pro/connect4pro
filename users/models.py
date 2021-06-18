@@ -6,6 +6,7 @@ from django.db.models.signals import post_save
 from django.dispatch import receiver
 from django.utils.translation import ugettext_lazy as _
 from phonenumber_field.modelfields import PhoneNumberField
+from rest_framework_simplejwt.tokens import RefreshToken
 
 from connect4pro import settings
 from .choices import TURNOVER_CHOICES, REGION_CHOICES
@@ -20,7 +21,7 @@ class CustomUserManager(BaseUserManager):
     с username на email
     """
 
-    def create_user(self, email, password, **extra_fields):
+    def create_user(self, email, password=None, **extra_fields):
         """
         Создать и сохранить пользователя с введенным email и паролем
         """
@@ -31,6 +32,7 @@ class CustomUserManager(BaseUserManager):
         user.set_password(password)
         user.is_active = True
         user.save()
+
         return user
 
     def create_superuser(self, email, password):
@@ -60,6 +62,13 @@ class Connect4ProUser(AbstractUser):
     instagram = models.CharField(verbose_name='Instagram', max_length=50, blank=True)
     site = models.CharField(verbose_name='Сайт', max_length=50, blank=True)
     is_premium = models.BooleanField(default=False)
+
+    def tokens(self):
+        refresh = RefreshToken.for_user(self)
+        return {
+            'refresh': str(refresh),
+            'access': str(refresh.access_token)
+        }
 
     def __str__(self):
         return self.email
@@ -94,6 +103,10 @@ class BusinessProfile(models.Model):
     def __str__(self):
         return self.user.email
 
+    class Meta:
+        verbose_name = 'Профиль МСБ'
+        verbose_name_plural = 'Профили МСБ'
+
 
 
 
@@ -103,8 +116,8 @@ class ProviderProfile(models.Model):
     user = models.OneToOneField(Connect4ProUser, on_delete=models.CASCADE, related_name='provider_profile')
     manager = models.CharField(verbose_name='ФИО руководителя', max_length=100, blank=True)
     description = models.CharField(verbose_name='Описание', max_length=300, blank=True)
-    year = models.DateField(verbose_name='Год основания', blank=True)
-    logo = models.ImageField(verbose_name='Логотип', upload_to='images/provider/logo/%d%m%Y/', blank=True)
+    year = models.DateField(verbose_name='Год основания', blank=True, null=True)
+    logo = models.ImageField(verbose_name='Логотип', upload_to='images/provider/logo/%d%m%Y/', blank=True, null=True)
     address = models.CharField(verbose_name='Адрес', max_length=200, blank=True, default='')
     services = models.CharField(verbose_name='Список услуг', max_length=200, blank=True)
     scope = models.CharField(verbose_name='Сфера деятельности', max_length=200, blank=True)

@@ -1,6 +1,12 @@
 from rest_framework import serializers
-from adverts.models import Category, BusinessAdvert, ProviderAdvert
+from adverts.models import Category, BusinessAdvert, ProviderAdvert, Album
 
+
+class ImageSetSerializer(serializers.ModelSerializer):
+    image = serializers.ImageField()
+    class Meta:
+        model = Album
+        fields = ('image',)
 
 class CategorySerializer(serializers.ModelSerializer):
     """Category serialize"""
@@ -18,7 +24,8 @@ class BusinessAdvertSerializer(serializers.ModelSerializer):
 
 
 class ProviderAdvertSerializer(serializers.ModelSerializer):
+    images = ImageSetSerializer()
     class Meta:
         model = ProviderAdvert
-        fields = '__all__'
+        fields = ('images', 'title', 'description', 'price', 'currency', 'category')
         read_only_fields = ('user',)

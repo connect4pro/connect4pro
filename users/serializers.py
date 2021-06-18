@@ -1,6 +1,6 @@
 from django.shortcuts import get_object_or_404
 from rest_framework.exceptions import ValidationError
-from serializer_permissions  import serializers
+from serializer_permissions import serializers
 from rest_framework.authtoken.models import Token
 from .permissions import PremiumPermission
 from rest_framework.permissions import AllowAny, IsAuthenticated
@@ -8,7 +8,6 @@ from users.models import Connect4ProUser, BusinessProfile, Sector, ProviderProfi
 
 
 class SectorSerializer(serializers.ModelSerializer):
-
     class Meta:
         model = Sector
         fields = ('description',)
@@ -22,12 +21,10 @@ class BusinessProfileSerializer(serializers.ModelSerializer):
     employers = serializers.IntegerField(permission_classes=(PremiumPermission,))
     sector = SectorSerializer(permission_classes=(PremiumPermission,), many=True)
 
-
     class Meta:
         model = BusinessProfile
         fields = (
             'first_name', 'last_name', 'region', 'turnover', 'employers', 'sector', 'demand', 'supply',)
-
 
 
 class Connect4ProUserBPSerializer(serializers.ModelSerializer):
@@ -66,12 +63,12 @@ class Connect4ProUserBPSerializer(serializers.ModelSerializer):
             'business_profile')
 
 
-
 class ProviderProfileSerializer(serializers.ModelSerializer):
     manager = serializers.CharField(permission_classes=(PremiumPermission,))
     description = serializers.CharField(permission_classes=(PremiumPermission,))
     year = serializers.DateField(permission_classes=(PremiumPermission,))
     address = serializers.CharField(permission_classes=(PremiumPermission,))
+
     class Meta:
         model = ProviderProfile
         fields = ('manager', 'description', 'year', 'logo', 'address', 'services', 'scope')
@@ -104,3 +101,39 @@ class Connect4ProUserPPSerializer(serializers.ModelSerializer):
         fields = (
             'id', 'email', 'password', 'password2', 'company_name', 'facebook', 'instagram', 'site', 'is_premium',
             'provider_profile')
+
+
+class UpdateBusinessProfile(serializers.ModelSerializer):
+    business_profile = BusinessProfileSerializer(required=True)
+
+    class Meta:
+        model = Connect4ProUser
+        fields = ('company_name', 'facebook', 'instagram', 'site', 'business_profile')
+
+    def update(self, instance, validated_data):
+        instance.company_name = validated_data['company_name']
+        instance.facebook = validated_data['facebook']
+        instance.instagram = validated_data['instagram']
+        instance.site = validated_data['site']
+        instance.business_profile = validated_data['business_profile']
+        instance.save()
+
+        return instance
+
+
+class UpdateProviderProfile(serializers.ModelSerializer):
+    provider_profile = ProviderProfileSerializer(required=True)
+
+    class Meta:
+        model = Connect4ProUser
+        fields = ('company_name', 'facebook', 'instagram', 'site', 'provider_profile')
+
+    def update(self, instance, validated_data):
+        instance.company_name = validated_data['company_name']
+        instance.facebook = validated_data['facebook']
+        instance.instagram = validated_data['instagram']
+        instance.site = validated_data['site']
+        instance.business_profile = validated_data['provider_profile']
+        instance.save()
+
+        return instance
