@@ -8,8 +8,8 @@ from rest_framework.generics import GenericAPIView, CreateAPIView
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
-from grants_and_investments.models import Grant, Investment
-from grants_and_investments.serializers import GrantSerializer, InvestmentSerializer
+from grants_and_investments.models import Grant, Investment, GrantInvestmentComment
+from grants_and_investments.serializers import GrantSerializer, InvestmentSerializer, GrantInvestmentCommentSerializer
 # Create your views here.
 
 class GrantList(APIView):
@@ -60,3 +60,30 @@ class InvestmentList(APIView):
 
 class InvestmentCreate(CreateAPIView):
     serializer_class = InvestmentSerializer
+
+
+
+
+class GrantInvestmentCommentList(APIView):
+    """Список комментарий на гранты/инвестиции"""
+    permission_classes = ()
+
+    @swagger_auto_schema(responses={200: GrantInvestmentCommentSerializer(many=True)})
+    def get(self, request):
+        grant_invest_comments = GrantInvestmentComment.objects.all()
+        serializer = GrantInvestmentCommentSerializer(grant_invest_comments, many=True)
+        return Response(serializer.data)
+
+    @swagger_auto_schema(responses={200: GrantInvestmentCommentSerializer()})
+    def post(self, request):
+        """Создание комментария на гранты/инвестиции"""
+        serializer = GrantInvestmentCommentSerializer(data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status.HTTP_201_CREATED)
+        return Response(serializer.errors, status.HTTP_400_BAD_REQUEST)
+
+
+
+class GrantInvestmentCommentCreate(CreateAPIView):
+    serializer_class = GrantInvestmentCommentSerializer

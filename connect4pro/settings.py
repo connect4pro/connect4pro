@@ -38,8 +38,8 @@ INSTALLED_APPS = [
     'events',
     'faq',
     'grants_and_investments',
-    'newsletter',
-    'payments',
+    'forum',
+    'polls',
 
     # Django
     'django.contrib.admin',
@@ -52,10 +52,11 @@ INSTALLED_APPS = [
     'rest_framework',
     'drf_yasg',
     'phonenumber_field',
-    'social_django',
-    'dbmail',
-    'ckeditor',
-
+    # 'tinymce',
+    # 'hitcount',
+    # 'taggit',
+    'rest_framework_serializer_field_permissions',
+    'pytils',
 ]
 
 MIDDLEWARE = [
@@ -66,7 +67,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    'django.contrib.sites.middleware.CurrentSiteMiddleware',
+    'debug_toolbar.middleware.DebugToolbarMiddleware',
 ]
 
 ROOT_URLCONF = 'connect4pro.urls'
@@ -104,6 +105,7 @@ DATABASES = {
     }
 }
 
+
 # Password validation
 # https://docs.djangoproject.com/en/3.2/ref/settings/#auth-password-validators
 
@@ -140,6 +142,7 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
+
 # Default primary key field type
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
 
@@ -173,6 +176,7 @@ SWAGGER_SETTINGS = {
     'LOGIN_URL': 'rest_framework:login',
     'LOGOUT_URL': 'rest_framework:logout',
 }
+
 
 # SOCIAL_AUTH_POSTGRES_JSONFIELD = True
 SOCIAL_AUTH_URL_NAMESPACE = 'social'

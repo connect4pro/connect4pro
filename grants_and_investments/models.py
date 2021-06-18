@@ -47,3 +47,16 @@ class Investment(models.Model):
     class Meta:
         verbose_name = 'Инвестиция'
         verbose_name_plural = 'Инвестиции'
+
+
+class GrantInvestmentComment(models.Model):
+    commentator_text = models.TextField(max_length = 500, verbose_name = 'Ваш комментарий')
+    commentator_name = models.CharField(max_length = 50, verbose_name = 'Ваше имя')
+    commentator_email = models.EmailField(verbose_name = 'Ваш контактный адрес почты')
+
+    def __str__(self):
+        return f'Имя: {self.commentator_name}, контактная почта: {self.commentator_email}'
+
+    class Meta:
+        verbose_name = 'Комментарий гранта/инвестиции'
+        verbose_name_plural = 'Комментарии грантов/инвестиций'
