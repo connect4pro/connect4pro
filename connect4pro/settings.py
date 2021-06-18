@@ -12,6 +12,7 @@ https://docs.djangoproject.com/en/3.2/ref/settings/
 import os
 from pathlib import Path
 
+SITE_ID = 1
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -47,6 +48,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django.contrib.sites',
     'rest_framework',
     'drf_yasg',
     'phonenumber_field',
@@ -55,7 +57,6 @@ INSTALLED_APPS = [
     # 'taggit',
     'rest_framework_serializer_field_permissions',
     'pytils',
-    'debug_toolbar',
 ]
 
 MIDDLEWARE = [
@@ -126,7 +127,7 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 # https://docs.djangoproject.com/en/3.2/topics/i18n/
 
-LANGUAGE_CODE = 'en-us'
+LANGUAGE_CODE = 'ru-ru'
 
 TIME_ZONE = 'UTC'
 
@@ -166,6 +167,8 @@ PHONENUMBER_DEFAULT_REGION = 'KG'
 
 AUTH_USER_MODEL = 'users.Connect4ProUser'
 AUTHENTICATION_BACKENDS = (
+    'social_core.backends.google.GoogleOAuth2',
+    'social_core.backends.facebook.FacebookOAuth2',
 
     "django.contrib.auth.backends.ModelBackend",
 )
@@ -174,6 +177,43 @@ SWAGGER_SETTINGS = {
     'LOGOUT_URL': 'rest_framework:logout',
 }
 
-INTERNAL_IPS = [
-    '127.0.0.1',
-]
+
+# SOCIAL_AUTH_POSTGRES_JSONFIELD = True
+SOCIAL_AUTH_URL_NAMESPACE = 'social'
+
+SOCIAL_AUTH_FACEBOOK_KEY = '536255600884632'
+SOCIAL_AUTH_FACEBOOK_SECRET = '78f6f8614555f0b32b7898aec95b3772'
+
+SOCIAL_AUTH_FACEBOOK_SCOPE = ['email']
+FIELDS_STORED_IN_SESSION = ['user_type']
+
+SOCIAL_AUTH_FACEBOOK_PROFILE_EXTRA_PARAMS = {
+    'locale': 'ru_RU',
+    'fields': 'name, email'
+}
+
+SOCIAL_AUTH_GOOGLE_OAUTH2_KEY = '308198633157-tfstj711dckoojmk7ptpbsl18tfbhnqb.apps.googleusercontent.com'
+SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET = 'VGCc7RAOfzwJijbvNiXiMRBX'
+
+SOCIALACCOUNT_PROVIDERS = {
+    'google': {
+        'SCOPE': [
+            'profile',
+            'email',
+        ],
+        'AUTH_PARAMS': {
+            'access_type': 'online',
+            'redirect_uri': 'http://127.0.0.1:8000/<custom-url>'
+        }
+    }
+}
+LOGIN_REDIRECT_URL = '/'
+LOGOUT_REDIRECT_URL = '/'
+
+# SOCIAL_AUTH_PIPELINE = (
+#     'users.pipelines.create_user',    # custom method
+#
+# )
+
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+CELERY_BROKER_URL = 'redis://localhost:6379/0'
