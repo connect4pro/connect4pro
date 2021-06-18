@@ -55,7 +55,6 @@ INSTALLED_APPS = [
     'social_django',
     'dbmail',
     'ckeditor',
-    'django_cron',
 
 ]
 
@@ -213,6 +212,4 @@ LOGOUT_REDIRECT_URL = '/'
 # )
 
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
-CRON_CLASSES = [
-    "newsletter.cron.Newsletter",
-]
+CELERY_BROKER_URL = 'redis://localhost:6379/0'
