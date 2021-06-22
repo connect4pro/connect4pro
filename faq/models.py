@@ -8,7 +8,7 @@ class WriteUs(models.Model):
     full_name = models.CharField(max_length = 50, verbose_name = 'Фамилия, имя, отчество')
     phone = PhoneNumberField(verbose_name = 'Контактный номер телефона')
     email = models.EmailField(verbose_name = 'Контактный адрес почты')
-    message = models.TextField(max_length = 300, verbose_name = 'Ваше сообщение')
+    message = models.TextField(max_length = 300, verbose_name = 'Сообщение')
 
     class Meta:
         verbose_name = 'Сообщение от пользователя'
