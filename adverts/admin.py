@@ -1,28 +1,16 @@
 from django.contrib import admin
-from django.contrib.admin.options import ModelAdmin
 from adverts.models import BusinessAdvert, Category, ProviderAdvert
 
-
-@admin.register(Category)
-class CategoryAdmin(admin.ModelAdmin):
-    list_display = ('name', 'description')
+admin.site.register(Category)
 
 
 @admin.register(BusinessAdvert)
 class BusinessAdvertAdmin(admin.ModelAdmin):
-    list_display = ('title', 'category', 'description', 'price', 'currency', 'completed', 'user')
-
-    def get_queryset(self, request):
-        queryset = super().get_queryset(request)
-        queryset = queryset.prefetch_related('user').all()
-        return queryset
+    list_display = ['user', 'title', 'price', 'currency', 'category', 'completed']
+    list_filter = ['currency', 'category__name', 'completed']
 
 
 @admin.register(ProviderAdvert)
 class ProviderAdvertAdmin(admin.ModelAdmin):
-    list_display = ('title', 'description', 'image_1', 'image_2', 'category', 'price', 'currency', 'user')
-
-    def get_queryset(self, request):
-        queryset = super().get_queryset(request)
-        queryset = queryset.prefetch_related('category').all()
-        return queryset
+    list_display = ['user', 'title', 'price', 'currency', 'category']
+    list_filter = ['currency', 'category__name']
