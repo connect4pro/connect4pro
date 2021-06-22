@@ -24,6 +24,7 @@ COMPLETE_CHOICES = (
 
 class Album(models.Model):
     id = models.IntegerField(primary_key=True)
+
     class Meta:
         verbose_name = 'Набор изображений'
         verbose_name_plural = 'Наборы изображений'
@@ -38,8 +39,8 @@ class Image(models.Model):
 class Category(models.Model):
     """Категория объявления"""
 
-    name = models.CharField(max_length=60)
-    description = models.CharField(max_length=300)
+    name = models.CharField(verbose_name='Категория', max_length=60)
+    description = models.CharField(verbose_name='Описание', max_length=300)
 
     def __str__(self):
         return f'{self.name}'
@@ -52,13 +53,15 @@ class Category(models.Model):
 class BusinessAdvert(models.Model):
     """Объявление от МСБ"""
 
-    title = models.CharField(max_length=200)
-    category = models.ForeignKey(Category, on_delete=models.CASCADE, related_name='business_advert_category')
-    description = models.TextField()
-    price = models.DecimalField(decimal_places=2, max_digits=9, default=0)
-    currency = models.CharField(max_length=3, choices=CURRENCY_CHOICES, default=usd, blank=True)
-    completed = models.CharField(max_length=8, choices=COMPLETE_CHOICES, default=no)
-    user = models.ForeignKey(BusinessProfile, on_delete=models.CASCADE, related_name='business_profile')
+    title = models.CharField(max_length=200, verbose_name='Заголовок')
+    category = models.ForeignKey(Category, verbose_name='Категория', on_delete=models.CASCADE,
+                                 related_name='business_advert_category')
+    description = models.TextField(verbose_name='Описание')
+    price = models.DecimalField(decimal_places=2, verbose_name='Цена', max_digits=9, default=0)
+    currency = models.CharField(max_length=3, verbose_name='Валюта', choices=CURRENCY_CHOICES, default=usd, blank=True)
+    completed = models.CharField(max_length=8,verbose_name='Завершено', choices=COMPLETE_CHOICES, default=no)
+    user = models.ForeignKey(BusinessProfile, verbose_name='Пользователь', on_delete=models.CASCADE,
+                             related_name='business_profile')
 
     def __str__(self):
         return f'{self.title}'
@@ -71,13 +74,13 @@ class BusinessAdvert(models.Model):
 class ProviderAdvert(models.Model):
     """Объявление от провайдера\консультанта"""
 
-    title = models.CharField(max_length=200)
-    description = models.TextField()
-    user = models.ForeignKey(ProviderProfile, on_delete=models.CASCADE, related_name='provider_profile')
-    images = models.ForeignKey(Album, on_delete=models.CASCADE, related_name='image_set')
-    category = models.ForeignKey(Category, on_delete=models.CASCADE, related_name='provider_advert_category')
-    price = models.DecimalField(decimal_places=2, max_digits=9, default=0)
-    currency = models.CharField(max_length=3, choices=CURRENCY_CHOICES, default=usd, blank=True)
+    title = models.CharField(max_length=200, verbose_name='Заголовок')
+    description = models.TextField(verbose_name='Описание')
+    user = models.ForeignKey(ProviderProfile, verbose_name='Пользователь',on_delete=models.CASCADE, related_name='provider_profile')
+    images = models.ForeignKey(Album, verbose_name='Фото', on_delete=models.CASCADE, related_name='image_set')
+    category = models.ForeignKey(Category, verbose_name='Категория', on_delete=models.CASCADE, related_name='provider_advert_category')
+    price = models.DecimalField(decimal_places=2, verbose_name='Цена', max_digits=9, default=0)
+    currency = models.CharField(max_length=3, verbose_name='Валюта', choices=CURRENCY_CHOICES, default=usd, blank=True)
 
     def __str__(self):
         return self.title

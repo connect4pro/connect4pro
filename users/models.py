@@ -61,7 +61,7 @@ class Connect4ProUser(AbstractUser):
     facebook = models.CharField(verbose_name='Facebook', max_length=50, blank=True)
     instagram = models.CharField(verbose_name='Instagram', max_length=50, blank=True)
     site = models.CharField(verbose_name='Сайт', max_length=50, blank=True)
-    is_premium = models.BooleanField(default=False)
+    is_premium = models.BooleanField(default=False, verbose_name='Премиум-статус')
 
     def tokens(self):
         refresh = RefreshToken.for_user(self)
@@ -89,16 +89,17 @@ class Sector(models.Model):
 class BusinessProfile(models.Model):
     """Профиль пользователя МСБ"""
 
-    user = models.OneToOneField(Connect4ProUser, on_delete=models.CASCADE, related_name='business_profile')
+    user = models.OneToOneField(Connect4ProUser, verbose_name='Пользователь', on_delete=models.CASCADE,
+                                related_name='business_profile')
     first_name = models.CharField(verbose_name='Имя', max_length=30, blank=True)
     last_name = models.CharField(verbose_name='Фамилия', max_length=30, blank=True)
-    region = models.CharField(choices=REGION_CHOICES, max_length=30, default=1)
+    region = models.CharField(choices=REGION_CHOICES, verbose_name='Регион', max_length=30, default=1)
     turnover = models.CharField(choices=TURNOVER_CHOICES, verbose_name='Примерный оборот', max_length=20, default=1)
     employers = models.PositiveSmallIntegerField(verbose_name='Число сотрудников', blank=True, default=1)
     sector = models.ManyToManyField(Sector, verbose_name='Сектор деятельности', blank=True)
     demand = models.CharField(verbose_name='Ищу', max_length=50, blank=True)
     supply = models.CharField(verbose_name='Предлагаю', max_length=50, blank=True)
-    as_business = models.BooleanField(default=True)
+    as_business = models.BooleanField(default=True, verbose_name='Профиль МСБ')
 
     def __str__(self):
         return self.user.email
@@ -106,8 +107,6 @@ class BusinessProfile(models.Model):
     class Meta:
         verbose_name = 'Профиль МСБ'
         verbose_name_plural = 'Профили МСБ'
-
-
 
 
 class ProviderProfile(models.Model):
@@ -121,9 +120,7 @@ class ProviderProfile(models.Model):
     address = models.CharField(verbose_name='Адрес', max_length=200, blank=True, default='')
     services = models.CharField(verbose_name='Список услуг', max_length=200, blank=True)
     scope = models.CharField(verbose_name='Сфера деятельности', max_length=200, blank=True)
-    as_provider = models.BooleanField(default=True)
-
-
+    as_provider = models.BooleanField(default=True, verbose_name='Профиль консультанта')
 
     def __str__(self):
         return self.user.email
