@@ -8,8 +8,8 @@ from rest_framework.generics import GenericAPIView, CreateAPIView
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
-from events.models import Event
-from events.serializers import EventSerializer
+from events.models import Event, EventComment
+from events.serializers import EventSerializer, EventCommentSerializer
 
 # Create your views here.
 """Список мероприятий"""
@@ -32,3 +32,26 @@ class EventList(APIView):
 
 class EventCreate(CreateAPIView):
     serializer_class = EventSerializer
+
+
+
+"""Список комментариев мероприятий"""
+class EventCommentsList(APIView):
+    permission_classes = ()
+
+    @swagger_auto_schema(responses = {200: EventCommentSerializer(many = True)})
+    def get(self, request):
+        event_comments = EventComment.objects.all()
+        serializer = EventCommentSerializer(event_comments, many = True)
+        return Response(serializer.data)
+
+    def post(self, request):
+        """Создание мероприятия"""
+        serializer = EventCommentSerializer(data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+class EventCommentCreate(CreateAPIView):
+    serializer_class = EventCommentSerializer

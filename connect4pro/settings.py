@@ -12,6 +12,7 @@ https://docs.djangoproject.com/en/3.2/ref/settings/
 import os
 from pathlib import Path
 from dotenv import load_dotenv
+
 load_dotenv()
 
 SITE_ID = 1
@@ -40,8 +41,8 @@ INSTALLED_APPS = [
     'events',
     'faq',
     'grants_and_investments',
-    'newsletter',
-    'payments',
+    'forum',
+    'polls',
 
     # Django
     'django.contrib.admin',
@@ -54,10 +55,11 @@ INSTALLED_APPS = [
     'rest_framework',
     'drf_yasg',
     'phonenumber_field',
-    'social_django',
-    'dbmail',
-    'ckeditor',
-
+    # 'tinymce',
+    # 'hitcount',
+    # 'taggit',
+    'rest_framework_serializer_field_permissions',
+    'pytils',
 ]
 
 MIDDLEWARE = [
@@ -68,7 +70,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    'django.contrib.sites.middleware.CurrentSiteMiddleware',
+    'debug_toolbar.middleware.DebugToolbarMiddleware',
 ]
 
 ROOT_URLCONF = 'connect4pro.urls'
@@ -214,4 +216,5 @@ LOGOUT_REDIRECT_URL = '/'
 # )
 
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+
 CELERY_BROKER_URL = os.environ.get('CELERY_BROKER_URL')
