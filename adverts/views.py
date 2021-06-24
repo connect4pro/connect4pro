@@ -3,7 +3,7 @@ from rest_framework.generics import ListAPIView, ListCreateAPIView, UpdateAPIVie
 
 from adverts.models import Category, BusinessAdvert, ProviderAdvert
 from adverts.permissions import IsOwnerOrReadOnly
-from adverts.serializers import CategorySerializer, BusinessAdvertSerializer, ProviderAdvertSerializer
+from adverts.serializers import AdvertCategorySerializer, BusinessAdvertSerializer, ProviderAdvertSerializer
 
 
 class CategoryList(ListAPIView):
@@ -12,7 +12,7 @@ class CategoryList(ListAPIView):
     methods = GET
     """
     queryset = Category.objects.all()
-    serializer_class = CategorySerializer
+    serializer_class = AdvertCategorySerializer
 
 
 class BusinessAdvertList(ListCreateAPIView):

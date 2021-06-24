@@ -8,7 +8,7 @@ class ImageSetSerializer(serializers.ModelSerializer):
         model = Album
         fields = ('image',)
 
-class CategorySerializer(serializers.ModelSerializer):
+class AdvertCategorySerializer(serializers.ModelSerializer):
     """Category serialize"""
 
     class Meta:
