@@ -11,6 +11,8 @@ https://docs.djangoproject.com/en/3.2/ref/settings/
 """
 import os
 from pathlib import Path
+from dotenv import load_dotenv
+load_dotenv()
 
 SITE_ID = 1
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -20,10 +22,10 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/3.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-l=ny#ecso2y)vd3fq2)&t0f(j69q0npk$0burapc@g=$duyo1$'
+SECRET_KEY = os.environ.get('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = os.environ.get('DEBUG')
 
 ALLOWED_HOSTS = []
 
@@ -95,12 +97,12 @@ WSGI_APPLICATION = 'connect4pro.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'connect4pro',
-        'USER': 'drf',
-        'PASSWORD': '120666',
-        'HOST': 'localhost',
-        'PORT': '5432',
+        'ENGINE': os.environ.get('ENGINE'),
+        'NAME': os.environ.get('NAME'),
+        'USER': os.environ.get('USER'),
+        'PASSWORD': os.environ.get('PASSWORD'),
+        'HOST': os.environ.get('HOST'),
+        'PORT': os.environ.get('PORT'),
     }
 }
 
@@ -177,8 +179,8 @@ SWAGGER_SETTINGS = {
 # SOCIAL_AUTH_POSTGRES_JSONFIELD = True
 SOCIAL_AUTH_URL_NAMESPACE = 'social'
 
-SOCIAL_AUTH_FACEBOOK_KEY = '536255600884632'
-SOCIAL_AUTH_FACEBOOK_SECRET = '78f6f8614555f0b32b7898aec95b3772'
+SOCIAL_AUTH_FACEBOOK_KEY = os.environ.get('SOCIAL_AUTH_FACEBOOK_KEY')
+SOCIAL_AUTH_FACEBOOK_SECRET = os.environ.get('SOCIAL_AUTH_FACEBOOK_SECRET')
 
 SOCIAL_AUTH_FACEBOOK_SCOPE = ['email']
 FIELDS_STORED_IN_SESSION = ['user_type']
@@ -188,8 +190,8 @@ SOCIAL_AUTH_FACEBOOK_PROFILE_EXTRA_PARAMS = {
     'fields': 'name, email'
 }
 
-SOCIAL_AUTH_GOOGLE_OAUTH2_KEY = '308198633157-tfstj711dckoojmk7ptpbsl18tfbhnqb.apps.googleusercontent.com'
-SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET = 'VGCc7RAOfzwJijbvNiXiMRBX'
+SOCIAL_AUTH_GOOGLE_OAUTH2_KEY = os.environ.get('SOCIAL_AUTH_GOOGLE_OAUTH2_KEY')
+SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET = os.environ.get('SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET')
 
 SOCIALACCOUNT_PROVIDERS = {
     'google': {
@@ -212,4 +214,4 @@ LOGOUT_REDIRECT_URL = '/'
 # )
 
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
-CELERY_BROKER_URL = 'redis://localhost:6379/0'
+CELERY_BROKER_URL = os.environ.get('CELERY_BROKER_URL')
