@@ -43,6 +43,8 @@ INSTALLED_APPS = [
     'grants_and_investments',
     'forum',
     'polls',
+    'newsletter',
+    'payments',
 
     # Django
     'django.contrib.admin',
@@ -131,7 +133,7 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGE_CODE = 'ru-ru'
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'Asia/Almaty'
 
 USE_I18N = True
 
@@ -218,3 +220,6 @@ LOGOUT_REDIRECT_URL = '/'
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 
 CELERY_BROKER_URL = os.environ.get('CELERY_BROKER_URL')
+CELERY_IMPORTS = [
+    'newsletter.tasks',
+]
