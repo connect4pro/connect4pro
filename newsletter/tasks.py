@@ -1,3 +1,4 @@
+from celery import shared_task
 from django.core.mail import send_mass_mail, send_mail
 from django.template.loader import render_to_string
 
@@ -25,7 +26,7 @@ def get_template():
     return email_template
 
 
-@app.task
+@shared_task
 def send_newsletter():
     emails = Contacts.objects.values_list('email', flat=True)
     email_template = get_template()
