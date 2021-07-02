@@ -47,6 +47,7 @@ class Connect4ProUserBPSerializer(serializers.ModelSerializer):
                 facebook=validated_data['facebook'],
                 instagram=validated_data['instagram'],
                 site=validated_data['site'],
+                avatar=validated_data['avatar']
             )
         profile = BusinessProfile.objects.create(user=user, **profile_data)
 
@@ -59,7 +60,7 @@ class Connect4ProUserBPSerializer(serializers.ModelSerializer):
     class Meta:
         model = Connect4ProUser
         fields = (
-            'id', 'email', 'password', 'password2', 'company_name', 'facebook', 'instagram', 'site', 'is_premium',
+            'id', 'email', 'password', 'password2', 'avatar', 'company_name', 'facebook', 'instagram', 'site', 'is_premium',
             'business_profile')
 
 
@@ -92,6 +93,7 @@ class Connect4ProUserPPSerializer(serializers.ModelSerializer):
                 facebook=validated_data['facebook'],
                 instagram=validated_data['instagram'],
                 site=validated_data['site'],
+                avatar=validated_data['avatar']
             )
         ProviderProfile.objects.create(user=user, **profile_data)
         return user

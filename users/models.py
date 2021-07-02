@@ -5,6 +5,7 @@ from django.db import models
 from django.db.models.signals import post_save
 from django.dispatch import receiver
 from django.utils.translation import ugettext_lazy as _
+from django_resized import ResizedImageField
 from phonenumber_field.modelfields import PhoneNumberField
 from rest_framework_simplejwt.tokens import RefreshToken
 
@@ -55,7 +56,8 @@ class Connect4ProUser(AbstractUser):
     REQUIRED_FIELDS = []
 
     objects = CustomUserManager()
-
+    avatar = ResizedImageField(size=[350, 350], upload_to=f'images/users/avatars/%d%m%Y', blank=True,
+                               null=True)
     company_name = models.CharField(verbose_name='Название компании', blank=True, max_length=100)
     phone = PhoneNumberField(verbose_name='Телефон/Telegram', blank=True)
     facebook = models.CharField(verbose_name='Facebook', max_length=50, blank=True)
