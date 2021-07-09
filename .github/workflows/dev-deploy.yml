@@ -33,6 +33,9 @@ jobs:
           git checkout .
           git pull
 
+      - name: Setup virtual env
+        run: source venv/bin/activate
+
       # Run migrations
       - name: Run migrations
         run: |
