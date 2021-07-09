@@ -35,16 +35,16 @@ ALLOWED_HOSTS = ['*']
 INSTALLED_APPS = [
 
     # Apps
-    'adverts',
-    'blog',
+    'adverts.apps.AdvertsConfig',
+    'blog.apps.BlogConfig',
     'users.apps.UsersConfig',
-    'events',
-    'faq',
-    'grants_and_investments',
-    'forum',
-    'polls',
-    'newsletter',
-    'payments',
+    'events.apps.EventsConfig',
+    'faq.apps.FaqConfig',
+    'grants_and_investments.apps.GrantsAndInvestmentsConfig',
+    'forum.apps.ForumConfig',
+    'polls.apps.PollsConfig',
+    'newsletter.apps.NewsletterConfig',
+    'payments.apps.PaymentsConfig',
 
     # Django
     'django.contrib.admin',
