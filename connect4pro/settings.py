@@ -223,3 +223,5 @@ CELERY_BROKER_URL = os.environ.get('CELERY_BROKER_URL')
 CELERY_IMPORTS = [
     'newsletter.tasks',
 ]
+
+PAYBOX_KEY = os.environ.get('PAYBOX_KEY')

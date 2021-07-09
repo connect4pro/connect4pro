@@ -1,3 +1,17 @@
 from django.shortcuts import render
 
-# Create your views here.
+
+def check(request):
+    pass
+
+
+def result(request):
+    pass
+
+
+def success(request):
+    pass
+
+
+def failure(request):
+    pass
