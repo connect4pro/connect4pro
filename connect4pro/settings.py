@@ -62,6 +62,7 @@ INSTALLED_APPS = [
     # 'taggit',
     'rest_framework_serializer_field_permissions',
     'pytils',
+    'social_django',
 ]
 
 MIDDLEWARE = [
