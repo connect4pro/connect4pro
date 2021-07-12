@@ -45,4 +45,7 @@ def pay_premium(request):
 
 def pay_result(request):
     print(request.GET)
+    return HttpResponse('payments confirm')
+
+def pay_success(request):
     return HttpResponse('payments success')
