@@ -1,16 +1,19 @@
 import os
+from datetime import datetime, timedelta
 
 from django.http import HttpResponse
-from django.shortcuts import render, redirect
+from django.shortcuts import redirect
 import requests
 import hashlib
 from xml.etree import ElementTree as ET
 
 from django.urls import reverse
+from django.utils import timezone
 from django.views.decorators.csrf import csrf_exempt
 
 from connect4pro import settings
 from payments.models import Order, Customer
+from users.models import Connect4ProUser
 
 
 def pay_premium(request):
@@ -24,8 +27,9 @@ def pay_premium(request):
     order.save()
     payload = {'pg_merchant_id': 540612, 'pg_amount': 100, 'pg_salt': 'string', 'pg_order_id': order.id,
                'pg_description': 'Оплата премиум-аккаунта на сайте connect4pro.kg',
-               'pg_result_url': 'http://127.0.0.1:8000' + reverse('payments:paybox_result'),
+               'pg_result_url': 'http://73b24fb81aa0.ngrok.io/paybox-result',
                'pg_success_url_method': 'GET',
+               'pg_failure_url_method': 'GET'
                }
 
     payload = dict(sorted(payload.items()))  # сортировка словаря
@@ -37,15 +41,35 @@ def pay_premium(request):
     status = responseXml.find('pg_status')
     if status.text == 'ok':
         redirect_url = responseXml.find('pg_redirect_url').text
-        print(redirect_url)
+
         return redirect(redirect_url)
 
     return HttpResponse('ok')
 
 
-def pay_result(request):
-    print(request.GET)
-    return HttpResponse('payments confirm')
-
 def pay_success(request):
-    return HttpResponse('payments success')
+    return HttpResponse('ok')
+
+def pay_failure(request):
+    order = Order.objects.get(id=request.GET.get('pg_order_id'))
+    order.pg_payment_id = int(request.GET.get('pg_payment_id'))
+    order.status = '3'
+    order.save()
+    return HttpResponse('Failure')
+
+
+def pay_result(request):
+    if request.GET.get('pg_result') == '1':
+        order = Order.objects.get(id=request.GET.get('pg_order_id'))
+        order.pg_payment_id = int(request.GET.get('pg_payment_id'))
+        order.status = '2'
+        order.save()
+        user = Connect4ProUser.objects.get(id=order.customer.user.id)
+        if user.is_premium:
+            user.end_date += timedelta(days=365)
+        else:
+            user.is_premium = True
+            user.start_date = str(timezone.now())
+            user.end_date = str(timezone.now() + timedelta(days=365))
+        user.save()
+    return HttpResponse('ok')

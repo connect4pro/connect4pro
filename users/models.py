@@ -64,6 +64,8 @@ class Connect4ProUser(AbstractUser):
     instagram = models.CharField(verbose_name='Instagram', max_length=50, blank=True)
     site = models.CharField(verbose_name='Сайт', max_length=50, blank=True)
     is_premium = models.BooleanField(default=False, verbose_name='Премиум-статус')
+    start_date = models.DateTimeField(verbose_name='Дата начала премиум',null=True)
+    end_date = models.DateTimeField(verbose_name='Дата окончания премиум', null=True)
 
     def tokens(self):
         refresh = RefreshToken.for_user(self)
