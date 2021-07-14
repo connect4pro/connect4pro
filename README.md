@@ -9,6 +9,7 @@ python manage.py makemigrations - создание миграций
 python manage.py migrate - применение миграций
 
 python manage.py createsuperuser - создание суперпользователя (после применения первоначальных миграций)
+просит ввести email и пароль с подтверждением
 
 запуск celery-beat - celery -A connect4pro beat
 
