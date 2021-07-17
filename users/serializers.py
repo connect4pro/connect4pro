@@ -32,21 +32,25 @@ class Connect4ProUserBPSerializer(serializers.ModelSerializer):
     password2 = serializers.CharField(write_only=True)
     business_profile = BusinessProfileSerializer(required=True)
     is_premium = serializers.BooleanField(read_only=True)
-    avatar = serializers.ImageField(required=False)
+    avatar = serializers.SerializerMethodField('get_avatar_url', required=False)
 
     def create(self, validated_data):
+
         profile_data = validated_data.pop('business_profile')
         sector_data = profile_data.pop('sector')
         if validated_data['password'] != validated_data['password2']:
             raise ValidationError('Passwords must match')
         else:
+            validated_data.pop('password2')
             user = Connect4ProUser.objects.create_user(
-                email=validated_data['email'],
-                password=validated_data['password'],
-                company_name=validated_data['company_name'],
-                facebook=validated_data['facebook'],
-                instagram=validated_data['instagram'],
-                site=validated_data['site'],
+                # email=validated_data['email'],
+                # password=validated_data['password'],
+                # company_name=validated_data['company_name'],
+                # facebook=validated_data['facebook'],
+                # instagram=validated_data['instagram'],
+                # site=validated_data['site'],
+                **validated_data
+
             )
         profile = BusinessProfile.objects.create(user=user, **profile_data)
 
@@ -55,6 +59,13 @@ class Connect4ProUserBPSerializer(serializers.ModelSerializer):
             profile.save()
             profile.sector.add(sector)
         return user
+
+    def get_avatar_url(self, obj):
+        if obj.avatar and hasattr(obj.avatar, 'url'):
+            return obj.avatar.url
+        else:
+            return "/static/images/user.jpg"
+
 
     class Meta:
         model = Connect4ProUser
@@ -83,20 +94,29 @@ class Connect4ProUserPPSerializer(serializers.ModelSerializer):
     avatar = serializers.ImageField(required=False)
 
     def create(self, validated_data):
+
         profile_data = validated_data.pop('provider_profile')
         if validated_data['password'] != validated_data['password2']:
             raise ValidationError('Passwords must match')
         else:
+            validated_data.pop('password2')
             user = Connect4ProUser.objects.create_user(
-                email=validated_data['email'],
-                password=validated_data['password'],
-                company_name=validated_data['company_name'],
-                facebook=validated_data['facebook'],
-                instagram=validated_data['instagram'],
-                site=validated_data['site'],
+                # email=validated_data['email'],
+                # password=validated_data['password'],
+                # company_name=validated_data['company_name'],
+                # facebook=validated_data['facebook'],
+                # instagram=validated_data['instagram'],
+                # site=validated_data['site'],
+                **validated_data
             )
         ProviderProfile.objects.create(user=user, **profile_data)
         return user
+
+    def get_avatar_url(self, obj):
+        if obj.avatar and hasattr(obj.avatar, 'url'):
+            return obj.avatar.url
+        else:
+            return "/static/images/user.jpg"
 
     class Meta:
         model = Connect4ProUser
