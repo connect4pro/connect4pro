@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 
 from rest_framework.generics import CreateAPIView, ListCreateAPIView, ListAPIView, UpdateAPIView, RetrieveAPIView
 from rest_framework.permissions import IsAuthenticated
@@ -17,6 +17,10 @@ class BusinessUserList(ListAPIView):
 
 class BusinessUserRegister(CreateAPIView):
     serializer_class = Connect4ProUserBPSerializer
+
+    def post(self, *args, **kwargs):
+        super().post(*args, **kwargs)
+        return redirect('users:business')
 
 
 class ProviderUserList(ListAPIView):

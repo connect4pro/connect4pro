@@ -210,8 +210,8 @@ SOCIALACCOUNT_PROVIDERS = {
         }
     }
 }
-LOGIN_REDIRECT_URL = '/'
-LOGOUT_REDIRECT_URL = '/'
+LOGIN_REDIRECT_URL = '/api'
+LOGOUT_REDIRECT_URL = '/api'
 
 # SOCIAL_AUTH_PIPELINE = (
 #     'users.pipelines.create_user',    # custom method
