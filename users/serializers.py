@@ -30,7 +30,7 @@ class BusinessProfileSerializer(serializers.ModelSerializer):
 class Connect4ProUserBPSerializer(serializers.ModelSerializer):
     password = serializers.CharField(write_only=True)
     password2 = serializers.CharField(write_only=True)
-    business_profile = BusinessProfileSerializer(required=True)
+    business_profile = BusinessProfileSerializer()
     is_premium = serializers.BooleanField(read_only=True)
     # avatar = serializers.SerializerMethodField('get_avatar_url')
     avatar = serializers.ImageField(required=False, allow_empty_file=True)
@@ -44,7 +44,7 @@ class Connect4ProUserBPSerializer(serializers.ModelSerializer):
         else:
             validated_data.pop('password2')
             user = Connect4ProUser.objects.create_user(
-                **validated_data)
+                **validated_data,)
         profile = BusinessProfile.objects.create(user=user, **profile_data)
 
         for sect in sector_data:
