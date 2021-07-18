@@ -30,14 +30,12 @@ class BusinessProfileSerializer(serializers.ModelSerializer):
 class Connect4ProUserBPSerializer(serializers.ModelSerializer):
     password = serializers.CharField(write_only=True)
     password2 = serializers.CharField(write_only=True)
-    business_profile = BusinessProfileSerializer(required=True)
+    business_profile = BusinessProfileSerializer()
     is_premium = serializers.BooleanField(read_only=True)
     # avatar = serializers.SerializerMethodField('get_avatar_url')
     avatar = serializers.ImageField(required=False, allow_empty_file=True)
 
-
     def create(self, validated_data):
-        print(validated_data)
         profile_data = validated_data.pop('business_profile')
         sector_data = profile_data.pop('sector')
         if validated_data['password'] != validated_data['password2']:
@@ -45,15 +43,7 @@ class Connect4ProUserBPSerializer(serializers.ModelSerializer):
         else:
             validated_data.pop('password2')
             user = Connect4ProUser.objects.create_user(
-                # email=validated_data['email'],
-                # password=validated_data['password'],
-                # company_name=validated_data['company_name'],
-                # facebook=validated_data['facebook'],
-                # instagram=validated_data['instagram'],
-                # site=validated_data['site'],
-                **validated_data
-
-            )
+                **validated_data, )
         profile = BusinessProfile.objects.create(user=user, **profile_data)
 
         for sect in sector_data:
@@ -61,12 +51,6 @@ class Connect4ProUserBPSerializer(serializers.ModelSerializer):
             profile.save()
             profile.sector.add(sector)
         return user
-
-    # def get_avatar_url(self, obj):
-    #     if obj.avatar and hasattr(obj.avatar, 'url'):
-    #         return obj.avatar.url
-    #     else:
-    #         return "/static/images/user.jpg"
 
 
     class Meta:
@@ -104,22 +88,10 @@ class Connect4ProUserPPSerializer(serializers.ModelSerializer):
         else:
             validated_data.pop('password2')
             user = Connect4ProUser.objects.create_user(
-                # email=validated_data['email'],
-                # password=validated_data['password'],
-                # company_name=validated_data['company_name'],
-                # facebook=validated_data['facebook'],
-                # instagram=validated_data['instagram'],
-                # site=validated_data['site'],
-                **validated_data
-            )
+                **validated_data)
         ProviderProfile.objects.create(user=user, **profile_data)
         return user
 
-        # def get_avatar_url(self, obj):
-        #     if obj.avatar and hasattr(obj.avatar, 'url'):
-        #         return obj.avatar.url
-        #     else:
-        #         return "/static/images/user.jpg"
 
     class Meta:
         model = Connect4ProUser

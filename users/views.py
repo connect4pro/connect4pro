@@ -6,8 +6,7 @@ from rest_framework.permissions import IsAuthenticated
 from users.models import BusinessProfile, Connect4ProUser
 from users.permissions import IsOwnerOrReadOnly
 from users.serializers import Connect4ProUserBPSerializer, BusinessProfileSerializer, Connect4ProUserPPSerializer, \
-    UpdateBusinessProfile, UpdateProviderProfile
-
+    UpdateBusinessProfile, UpdateProviderProfile, SectorSerializer
 
 
 class BusinessUserList(ListAPIView):
@@ -18,9 +17,7 @@ class BusinessUserList(ListAPIView):
 class BusinessUserRegister(CreateAPIView):
     serializer_class = Connect4ProUserBPSerializer
 
-    def post(self, *args, **kwargs):
-        super().post(*args, **kwargs)
-        return redirect('users:business')
+    # def create(self, request, *args, **kwargs):
 
 
 class ProviderUserList(ListAPIView):
@@ -67,3 +64,6 @@ def google_auth(request):
 
     return render(request, 'google.html')
 
+
+class SectorCreate(CreateAPIView):
+    serializer_class = SectorSerializer

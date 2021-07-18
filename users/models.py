@@ -58,6 +58,7 @@ class Connect4ProUser(AbstractUser):
     objects = CustomUserManager()
     avatar = ResizedImageField(size=[350, 350], upload_to=f'images/users/avatars/%d%m%Y', blank=True,
                                null=True)
+
     company_name = models.CharField(verbose_name='Название компании', blank=True, max_length=100)
     phone = PhoneNumberField(verbose_name='Телефон/Telegram', blank=True)
     facebook = models.CharField(verbose_name='Facebook', max_length=50, blank=True)
