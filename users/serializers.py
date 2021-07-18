@@ -33,10 +33,11 @@ class Connect4ProUserBPSerializer(serializers.ModelSerializer):
     business_profile = BusinessProfileSerializer(required=True)
     is_premium = serializers.BooleanField(read_only=True)
     # avatar = serializers.SerializerMethodField('get_avatar_url')
-    avatar = serializers.ImageField()
+    avatar = serializers.ImageField(required=False, allow_empty_file=True)
+
 
     def create(self, validated_data):
-
+        print(validated_data)
         profile_data = validated_data.pop('business_profile')
         sector_data = profile_data.pop('sector')
         if validated_data['password'] != validated_data['password2']:
@@ -93,7 +94,7 @@ class Connect4ProUserPPSerializer(serializers.ModelSerializer):
     provider_profile = ProviderProfileSerializer(required=True)
     is_premium = serializers.BooleanField(read_only=True)
     # avatar = serializers.SerializerMethodField('get_avatar_url')
-    avatar = serializers.ImageField()
+    avatar = serializers.ImageField(required=False, allow_empty_file=True)
 
     def create(self, validated_data):
 
@@ -114,11 +115,11 @@ class Connect4ProUserPPSerializer(serializers.ModelSerializer):
         ProviderProfile.objects.create(user=user, **profile_data)
         return user
 
-    # def get_avatar_url(self, obj):
-    #     if obj.avatar and hasattr(obj.avatar, 'url'):
-    #         return obj.avatar.url
-    #     else:
-    #         return "/static/images/user.jpg"
+        # def get_avatar_url(self, obj):
+        #     if obj.avatar and hasattr(obj.avatar, 'url'):
+        #         return obj.avatar.url
+        #     else:
+        #         return "/static/images/user.jpg"
 
     class Meta:
         model = Connect4ProUser
