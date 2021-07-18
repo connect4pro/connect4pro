@@ -18,9 +18,7 @@ class BusinessUserList(ListAPIView):
 class BusinessUserRegister(CreateAPIView):
     serializer_class = Connect4ProUserBPSerializer
 
-    def post(self, *args, **kwargs):
-        super().post(*args, **kwargs)
-        return redirect('users:business')
+    # def create(self, request, *args, **kwargs):
 
 
 class ProviderUserList(ListAPIView):

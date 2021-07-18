@@ -36,7 +36,6 @@ class Connect4ProUserBPSerializer(serializers.ModelSerializer):
     avatar = serializers.ImageField(required=False, allow_empty_file=True)
 
     def create(self, validated_data):
-        print(validated_data)
         profile_data = validated_data.pop('business_profile')
         sector_data = profile_data.pop('sector')
         if validated_data['password'] != validated_data['password2']:
@@ -44,7 +43,7 @@ class Connect4ProUserBPSerializer(serializers.ModelSerializer):
         else:
             validated_data.pop('password2')
             user = Connect4ProUser.objects.create_user(
-                **validated_data,)
+                **validated_data, )
         profile = BusinessProfile.objects.create(user=user, **profile_data)
 
         for sect in sector_data:
