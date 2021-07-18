@@ -32,7 +32,8 @@ class Connect4ProUserBPSerializer(serializers.ModelSerializer):
     password2 = serializers.CharField(write_only=True)
     business_profile = BusinessProfileSerializer(required=True)
     is_premium = serializers.BooleanField(read_only=True)
-    avatar = serializers.SerializerMethodField('get_avatar_url', required=False)
+    # avatar = serializers.SerializerMethodField('get_avatar_url')
+    avatar = serializers.ImageField()
 
     def create(self, validated_data):
 
@@ -60,11 +61,11 @@ class Connect4ProUserBPSerializer(serializers.ModelSerializer):
             profile.sector.add(sector)
         return user
 
-    def get_avatar_url(self, obj):
-        if obj.avatar and hasattr(obj.avatar, 'url'):
-            return obj.avatar.url
-        else:
-            return "/static/images/user.jpg"
+    # def get_avatar_url(self, obj):
+    #     if obj.avatar and hasattr(obj.avatar, 'url'):
+    #         return obj.avatar.url
+    #     else:
+    #         return "/static/images/user.jpg"
 
 
     class Meta:
@@ -91,7 +92,8 @@ class Connect4ProUserPPSerializer(serializers.ModelSerializer):
     password2 = serializers.CharField(write_only=True)
     provider_profile = ProviderProfileSerializer(required=True)
     is_premium = serializers.BooleanField(read_only=True)
-    avatar = serializers.ImageField(required=False)
+    # avatar = serializers.SerializerMethodField('get_avatar_url')
+    avatar = serializers.ImageField()
 
     def create(self, validated_data):
 
@@ -112,11 +114,11 @@ class Connect4ProUserPPSerializer(serializers.ModelSerializer):
         ProviderProfile.objects.create(user=user, **profile_data)
         return user
 
-    def get_avatar_url(self, obj):
-        if obj.avatar and hasattr(obj.avatar, 'url'):
-            return obj.avatar.url
-        else:
-            return "/static/images/user.jpg"
+    # def get_avatar_url(self, obj):
+    #     if obj.avatar and hasattr(obj.avatar, 'url'):
+    #         return obj.avatar.url
+    #     else:
+    #         return "/static/images/user.jpg"
 
     class Meta:
         model = Connect4ProUser
