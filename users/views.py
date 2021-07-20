@@ -1,69 +1,69 @@
-from django.shortcuts import render, redirect
-
-from rest_framework.generics import CreateAPIView, ListCreateAPIView, ListAPIView, UpdateAPIView, RetrieveAPIView
+from rest_framework.generics import CreateAPIView, ListAPIView, UpdateAPIView, RetrieveAPIView
 from rest_framework.permissions import IsAuthenticated
 
-from users.models import BusinessProfile, Connect4ProUser
+from users.models import Connect4ProUser, Sector, Knowledge, Skill, Method
 from users.permissions import IsOwnerOrReadOnly
-from users.serializers import Connect4ProUserBPSerializer, BusinessProfileSerializer, Connect4ProUserPPSerializer, \
-    UpdateBusinessProfile, UpdateProviderProfile, SectorSerializer
+from users.serializers import SectorSerializer, UserBusinessProfileSerializer, \
+    UserProviderProfileSerializer, UpdateProviderProfile, UpdateBusinessProfile, SkillSerializer, KnowledgeSerializer, \
+    MethodSerializer
 
 
 class BusinessUserList(ListAPIView):
-    queryset = Connect4ProUser.objects.filter(business_profile__as_business=True)
-    serializer_class = Connect4ProUserBPSerializer
+    queryset = Connect4ProUser.objects.filter(is_business=True)
+    serializer_class = UserBusinessProfileSerializer
 
 
 class BusinessUserRegister(CreateAPIView):
-    serializer_class = Connect4ProUserBPSerializer
-
-    # def create(self, request, *args, **kwargs):
+    serializer_class = UserBusinessProfileSerializer
 
 
 class ProviderUserList(ListAPIView):
-    queryset = Connect4ProUser.objects.filter(provider_profile__as_provider=True)
-    serializer_class = Connect4ProUserPPSerializer
+    queryset = Connect4ProUser.objects.filter(is_provider=True)
+    serializer_class = UserProviderProfileSerializer
 
 
 class ProviderUserRegister(CreateAPIView):
-    serializer_class = Connect4ProUserPPSerializer
+    serializer_class = UserProviderProfileSerializer
 
 
-class BusinessProfileDetail(RetrieveAPIView):
-    serializer_class = Connect4ProUserBPSerializer
-    queryset = Connect4ProUser.objects.all()
-    lookup_field = 'id'
-
-
-class ProviderProfileDetail(RetrieveAPIView):
-    serializer_class = Connect4ProUserPPSerializer
-    queryset = Connect4ProUser.objects.all()
-    lookup_field = 'id'
-
-
-class UpdateBusinessProfileView(UpdateAPIView):
-    queryset = Connect4ProUser.objects.all()
+class BusinessUserUpdate(UpdateAPIView):
+    queryset = Connect4ProUser.objects.filter(is_business=True)
     permission_classes = (IsAuthenticated, IsOwnerOrReadOnly)
     serializer_class = UpdateBusinessProfile
     lookup_field = 'id'
 
 
-class UpdateProviderProfileView(UpdateAPIView):
-    queryset = Connect4ProUser.objects.all()
+class ProviderUserUpdate(UpdateAPIView):
+    queryset = Connect4ProUser.objects.filter(is_provider=True)
     permission_classes = (IsAuthenticated, IsOwnerOrReadOnly)
     serializer_class = UpdateProviderProfile
     lookup_field = 'id'
 
 
-def facebook_auth(request):
-
-    return render(request, 'facebook.html')
-
-
-def google_auth(request):
-
-    return render(request, 'google.html')
+class BusinessProfileDetail(RetrieveAPIView):
+    serializer_class = UserBusinessProfileSerializer
+    queryset = Connect4ProUser.objects.filter(is_business=True)
+    lookup_field = 'id'
 
 
-class SectorCreate(CreateAPIView):
+class ProviderProfileDetail(RetrieveAPIView):
+    serializer_class = UserProviderProfileSerializer
+    queryset = Connect4ProUser.objects.filter(is_provider=True)
+    lookup_field = 'id'
+
+
+class SectorList(ListAPIView):
+    queryset = Sector.objects.all()
     serializer_class = SectorSerializer
+
+class SkillList(ListAPIView):
+    queryset = Skill.objects.all()
+    serializer_class = SkillSerializer
+
+class KnowledgeList(ListAPIView):
+    queryset = Knowledge.objects.all()
+    serializer_class = KnowledgeSerializer
+
+class MethodList(ListAPIView):
+    queryset = Method.objects.all()
+    serializer_class = MethodSerializer
