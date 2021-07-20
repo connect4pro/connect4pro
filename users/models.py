@@ -1,16 +1,11 @@
-from django.contrib.auth import get_user_model
+from datetime import datetime
+
 from django.contrib.auth.base_user import BaseUserManager
 from django.contrib.auth.models import AbstractUser, User
 from django.db import models
-from django.db.models.signals import post_save
-from django.dispatch import receiver
 from django.utils.translation import ugettext_lazy as _
 from django_resized import ResizedImageField
-from phonenumber_field.modelfields import PhoneNumberField
 from rest_framework_simplejwt.tokens import RefreshToken
-
-from connect4pro import settings
-from .choices import TURNOVER_CHOICES, REGION_CHOICES
 
 # Поле email теперь уникально
 User._meta.get_field('email')._unique = True
@@ -49,6 +44,7 @@ class CustomUserManager(BaseUserManager):
 class Connect4ProUser(AbstractUser):
     """Общая для всех основа пользователя"""
 
+    # По умолчанию основное поле - email
     username = None
     email = models.EmailField(_('email address'), unique=True)
 
@@ -56,17 +52,23 @@ class Connect4ProUser(AbstractUser):
     REQUIRED_FIELDS = []
 
     objects = CustomUserManager()
+
+    first_name = models.CharField(verbose_name='Имя', max_length=30, blank=True)
+    last_name = models.CharField(verbose_name='Фамилия', max_length=30, blank=True)
+    birth_date = models.DateField(verbose_name='Дата рождения')
+    gender = models.CharField(verbose_name='Пол', max_length=8, blank=True)
+    country = models.CharField(verbose_name='Страна', max_length=25, blank=True)
+    city = models.CharField(verbose_name='Город/Село', max_length=40, blank=True)
+    phone = models.CharField(verbose_name='Телефон', max_length=20, blank=True)
+    telegram = models.CharField(verbose_name='Telegram', max_length=20, blank=True)
+    site = models.CharField(verbose_name='Сайт/Соцсети', max_length=50, blank=True)
     avatar = ResizedImageField(size=[350, 350], upload_to=f'images/users/avatars/%d%m%Y', blank=True,
                                null=True)
-
-    company_name = models.CharField(verbose_name='Название компании', blank=True, max_length=100)
-    phone = PhoneNumberField(verbose_name='Телефон/Telegram', blank=True)
-    facebook = models.CharField(verbose_name='Facebook', max_length=50, blank=True)
-    instagram = models.CharField(verbose_name='Instagram', max_length=50, blank=True)
-    site = models.CharField(verbose_name='Сайт', max_length=50, blank=True)
     is_premium = models.BooleanField(default=False, verbose_name='Премиум-статус')
-    start_date = models.DateTimeField(verbose_name='Дата начала премиум',null=True)
+    start_date = models.DateTimeField(verbose_name='Дата начала премиум', null=True)
     end_date = models.DateTimeField(verbose_name='Дата окончания премиум', null=True)
+    is_business = models.BooleanField(default=False, verbose_name='Профиль МСБ')
+    is_provider = models.BooleanField(default=False, verbose_name='Профиль провайдера')
 
     def tokens(self):
         refresh = RefreshToken.for_user(self)
@@ -76,19 +78,64 @@ class Connect4ProUser(AbstractUser):
         }
 
     def __str__(self):
-        return self.email
+        if self.is_premium and self.is_business:
+            return f'{self.email} - Премиум - Бизнес'
+        elif self.is_premium and self.is_provider:
+            return f'{self.email} - Премиум - Провайдер'
+        elif not self.is_premium and self.is_business:
+            return f'{self.email} - Базовый - Бизнес'
+        elif not self.is_premium and self.is_provider:
+            return f'{self.email} - Базовый - Провайдер'
+        else:
+            return self.email
 
 
 class Sector(models.Model):
     """Сектор деятельности"""
-    description = models.CharField(verbose_name='Описание', max_length=300)
+    name = models.CharField(verbose_name='Название', max_length=300, default='')
 
     def __str__(self):
-        return self.description
+        return self.name
 
     class Meta:
         verbose_name = 'Сектор деятельности'
         verbose_name_plural = 'Секторы деятельности'
+
+
+class Knowledge(models.Model):
+    """Знания"""
+    name = models.CharField(verbose_name='Название', max_length=300)
+
+    def __str__(self):
+        return self.name
+
+    class Meta:
+        verbose_name = 'Знание'
+        verbose_name_plural = 'Знания'
+
+
+class Skill(models.Model):
+    """Навыки"""
+    name = models.CharField(verbose_name='Название', max_length=300)
+
+    def __str__(self):
+        return self.name
+
+    class Meta:
+        verbose_name = 'Навык'
+        verbose_name_plural = 'Навыки'
+
+
+class Method(models.Model):
+    """Методологии"""
+    name = models.CharField(verbose_name='Название', max_length=300)
+
+    def __str__(self):
+        return self.name
+
+    class Meta:
+        verbose_name = 'Методология'
+        verbose_name_plural = 'Методологии'
 
 
 class BusinessProfile(models.Model):
@@ -96,15 +143,9 @@ class BusinessProfile(models.Model):
 
     user = models.OneToOneField(Connect4ProUser, verbose_name='Пользователь', on_delete=models.CASCADE,
                                 related_name='business_profile')
-    first_name = models.CharField(verbose_name='Имя', max_length=30, blank=True)
-    last_name = models.CharField(verbose_name='Фамилия', max_length=30, blank=True)
-    region = models.CharField(choices=REGION_CHOICES, verbose_name='Регион', max_length=30, default=1)
-    turnover = models.CharField(choices=TURNOVER_CHOICES, verbose_name='Примерный оборот', max_length=20, default=1)
-    employers = models.PositiveSmallIntegerField(verbose_name='Число сотрудников', blank=True, default=1)
     sector = models.ManyToManyField(Sector, verbose_name='Сектор деятельности', blank=True)
-    demand = models.CharField(verbose_name='Ищу', max_length=50, blank=True)
-    supply = models.CharField(verbose_name='Предлагаю', max_length=50, blank=True)
-    as_business = models.BooleanField(default=True, verbose_name='Профиль МСБ')
+    turnover = models.CharField(verbose_name='Примерный оборот', max_length=20, blank=True)
+    employers = models.PositiveSmallIntegerField(verbose_name='Число сотрудников', blank=True, default=1)
 
     def __str__(self):
         return self.user.email
@@ -117,15 +158,11 @@ class BusinessProfile(models.Model):
 class ProviderProfile(models.Model):
     """Профиль провайдера/консультанта"""
 
-    user = models.OneToOneField(Connect4ProUser, on_delete=models.CASCADE, related_name='provider_profile')
-    manager = models.CharField(verbose_name='ФИО руководителя', max_length=100, blank=True)
-    description = models.CharField(verbose_name='Описание', max_length=300, blank=True)
-    year = models.DateField(verbose_name='Год основания', blank=True, null=True)
-    logo = models.ImageField(verbose_name='Логотип', upload_to='images/provider/logo/%d%m%Y/', blank=True, null=True)
-    address = models.CharField(verbose_name='Адрес', max_length=200, blank=True, default='')
-    services = models.CharField(verbose_name='Список услуг', max_length=200, blank=True)
-    scope = models.CharField(verbose_name='Сфера деятельности', max_length=200, blank=True)
-    as_provider = models.BooleanField(default=True, verbose_name='Профиль консультанта')
+    user = models.OneToOneField(Connect4ProUser, verbose_name='Пользователь', on_delete=models.CASCADE,
+                                related_name='provider_profile')
+    skills = models.ManyToManyField(Skill, verbose_name='Навыки', blank=True)
+    knowledge = models.ManyToManyField(Knowledge, verbose_name='Знания', blank=True)
+    methods = models.ManyToManyField(Method, verbose_name='Методологии', blank=True)
 
     def __str__(self):
         return self.user.email
