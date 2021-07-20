@@ -1,8 +1,9 @@
 from django.urls import path
-from django.views.decorators.http import require_POST
+from users.views import BusinessUserList, BusinessUserRegister, ProviderUserList, ProviderUserRegister, \
+    BusinessProfileDetail, ProviderProfileDetail, ProviderUserUpdate, BusinessUserUpdate, SkillList, KnowledgeList, \
+    MethodList
 
-from users.views import BusinessUserList, BusinessUserRegister, ProviderUserRegister, ProviderUserList, \
-    BusinessProfileDetail, ProviderProfileDetail, UpdateBusinessProfileView, UpdateProviderProfileView, SectorCreate
+from users.views import SectorList
 
 app_name = 'users'
 
@@ -13,7 +14,10 @@ urlpatterns = [
     path('api/users/register/provider', ProviderUserRegister.as_view(), name='provider_register'),
     path('api/users/business/detail/<id>', BusinessProfileDetail.as_view(), name='business_profile_detail'),
     path('api/users/provider/detail/<id>', ProviderProfileDetail.as_view(), name='provider_profile_detail'),
-    path('api/users/business/update/<id>', UpdateBusinessProfileView.as_view(), name='business_profile_update'),
-    path('api/users/provider/update/<id>', UpdateProviderProfileView.as_view(), name='provider_profile_update'),
-    path('api/sector/create', SectorCreate.as_view(), name='sector_create')
+    path('api/users/business/update/<id>', BusinessUserUpdate.as_view(), name='business_profile_update'),
+    path('api/users/provider/update/<id>', ProviderUserUpdate.as_view(), name='provider_profile_update'),
+    path('api/sector', SectorList.as_view(), name='sector_list'),
+    path('api/skill', SkillList.as_view(), name='skill_list'),
+    path('api/knowledge', KnowledgeList.as_view(), name='knowledge_list'),
+    path('api/method', MethodList.as_view(), name='method_list'),
 ]

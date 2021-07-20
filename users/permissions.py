@@ -3,11 +3,15 @@ from rest_framework import permissions
 
 class PremiumPermission(permissions.BasePermission):
 
-    def has_object_permission(self, request, view, obj):
-        if (request.user.is_authenticated and request.user.is_premium) or request.user == obj.user:
+    def has_permission(self, request, view):
+
+        if request.user.is_authenticated and request.user.is_premium:
             return True
         else:
             return False
+
+    def has_object_permission(self, request, view, obj):
+        return request.user == obj.user
 
 
 class IsOwnerOrReadOnly(permissions.BasePermission):
@@ -22,4 +26,4 @@ class IsOwnerOrReadOnly(permissions.BasePermission):
             return True
 
         # Write permissions are only allowed to the owner of the snippet.
-        return obj.user == request.user
+        return obj == request.user
