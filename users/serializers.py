@@ -34,11 +34,12 @@ class MethodSerializer(serializers.ModelSerializer):
 class BusinessProfileSerializer(serializers.ModelSerializer):
     turnover = serializers.CharField(permission_classes=(PremiumPermission,), required=False)
     employers = serializers.IntegerField(permission_classes=(PremiumPermission,), required=False)
+    category = serializers.CharField(permission_classes=(PremiumPermission,), required=False)
     sector = SectorSerializer(permission_classes=(PremiumPermission,), many=True, required=False)
 
     class Meta:
         model = BusinessProfile
-        fields = ('sector', 'turnover', 'employers')
+        fields = ('sector', 'turnover', 'employers', 'category')
 
 
 class UserBusinessProfileSerializer(serializers.ModelSerializer):

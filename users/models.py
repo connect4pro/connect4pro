@@ -146,6 +146,7 @@ class BusinessProfile(models.Model):
     sector = models.ManyToManyField(Sector, verbose_name='Сектор деятельности', blank=True)
     turnover = models.CharField(verbose_name='Примерный оборот', max_length=20, blank=True)
     employers = models.PositiveSmallIntegerField(verbose_name='Число сотрудников', blank=True, default=1)
+    category = models.CharField(verbose_name='Категориясотрудников', blank=True, max_length=60)
 
     def __str__(self):
         return self.user.email
