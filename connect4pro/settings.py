@@ -233,3 +233,30 @@ CELERY_IMPORTS = [
 ]
 
 PAYBOX_KEY = os.environ['PAYBOX_KEY']
+
+
+CORS_ALLOWED_ORIGINS = [
+    'http://94.228.120.61',
+    'http://localhost:3000',
+    'http://localhost:8000',
+    'http://127.0.0.1:3000'
+]
+CORS_ALLOW_METHODS = [
+    'DELETE',
+    'GET',
+    'OPTIONS',
+    'PATCH',
+    'POST',
+    'PUT',
+]
+CORS_ALLOW_HEADERS = [
+    'accept',
+    'accept-encoding',
+    'authorization',
+    'content-type',
+    'dnt',
+    'origin',
+    'user-agent',
+    'x-csrftoken',
+    'x-requested-with',
+]
