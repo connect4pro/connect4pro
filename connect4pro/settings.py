@@ -30,7 +30,7 @@ SECRET_KEY = os.environ['SECRET_KEY']
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = os.environ['DEBUG']
 # TODO: Закрыть доступ для посторонних айпи
-ALLOWED_HOSTS = ['*', 'http://localhost:3000']
+ALLOWED_HOSTS = ['http://localhost:8000', 'http://localhost:3000', 'http://94.228.120.61/', 'http://94.228.120.61']
 CORS_ORIGIN_ALLOW_ALL = True
 
 # Application definition
