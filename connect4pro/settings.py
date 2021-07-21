@@ -29,8 +29,9 @@ SECRET_KEY = os.environ['SECRET_KEY']
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = os.environ['DEBUG']
-
-ALLOWED_HOSTS = ['*']
+# TODO: Закрыть доступ для посторонних айпи
+ALLOWED_HOSTS = ['*', 'http://localhost:3000']
+CORS_ORIGIN_ALLOW_ALL = True
 
 # Application definition
 
@@ -65,6 +66,7 @@ INSTALLED_APPS = [
     'rest_framework_serializer_field_permissions',
     'pytils',
     'social_django',
+    'corsheaders',
 ]
 
 MIDDLEWARE = [
@@ -76,6 +78,7 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'debug_toolbar.middleware.DebugToolbarMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
 ]
 
 ROOT_URLCONF = 'connect4pro.urls'
