@@ -238,7 +238,8 @@ CORS_ALLOWED_ORIGINS = [
     'http://94.228.120.61',
     'http://localhost:3000',
     'http://localhost:8000',
-    'http://127.0.0.1:3000'
+    'http://127.0.0.1:3000',
+    '127.0.0.1',
 ]
 CORS_ALLOW_METHODS = [
     'DELETE',
