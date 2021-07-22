@@ -92,7 +92,7 @@ class Connect4ProUser(AbstractUser):
 
 class Sector(models.Model):
     """Сектор деятельности"""
-    name = models.CharField(verbose_name='Название', max_length=300, default='')
+    name = models.CharField(verbose_name='Название', max_length=300, default='', null=True, blank=True)
 
     def __str__(self):
         return self.name

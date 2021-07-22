@@ -2,33 +2,41 @@ from django.shortcuts import get_object_or_404
 from rest_framework.exceptions import ValidationError
 from serializer_permissions import serializers
 from rest_framework.authtoken.models import Token
-from .permissions import PremiumPermission
+from .permissions import PremiumPermission, IsOwner
 from rest_framework.permissions import AllowAny, IsAuthenticated
 from users.models import Connect4ProUser, BusinessProfile, Sector, ProviderProfile, Skill, Knowledge, Method
 
 
 class SectorSerializer(serializers.ModelSerializer):
+    name = serializers.CharField(permission_classes=(PremiumPermission,), required=False)
+
     class Meta:
         model = Sector
         fields = ('id', 'name',)
 
 
 class SkillSerializer(serializers.ModelSerializer):
+    name = serializers.CharField(permission_classes=(PremiumPermission,), required=False)
+
     class Meta:
         model = Skill
         fields = ('id', 'name',)
 
 
 class KnowledgeSerializer(serializers.ModelSerializer):
+    name = serializers.CharField(permission_classes=(PremiumPermission,), required=False)
+
     class Meta:
         model = Knowledge
         fields = ('id', 'name',)
 
 
 class MethodSerializer(serializers.ModelSerializer):
+    name = serializers.CharField(permission_classes=(PremiumPermission,), required=False)
+
     class Meta:
         model = Method
-        fields = ('id','name',)
+        fields = ('id', 'name',)
 
 
 class BusinessProfileSerializer(serializers.ModelSerializer):
@@ -54,6 +62,7 @@ class UserBusinessProfileSerializer(serializers.ModelSerializer):
 
     def create(self, validated_data):
         profile_data = validated_data.pop('business_profile')
+
         sector_data = profile_data.pop('sector')
         if validated_data['password'] != validated_data['password2']:
             raise ValidationError('Passwords must match')
@@ -65,9 +74,14 @@ class UserBusinessProfileSerializer(serializers.ModelSerializer):
         profile = BusinessProfile.objects.create(user=user, **profile_data)
 
         for sect in sector_data:
-            sector = get_object_or_404(Sector, name=sect['name'])
-            profile.save()
-            profile.sector.add(sector)
+            try:
+                sector = get_object_or_404(Sector, name=sect['name'])
+                profile.save()
+                profile.sector.add(sector)
+            except:
+                continue
+            finally:
+                profile.save()
         return user
 
     class Meta:
@@ -89,8 +103,8 @@ class ProviderProfileSerializer(serializers.ModelSerializer):
 
 
 class UserProviderProfileSerializer(serializers.ModelSerializer):
-    first_name = serializers.CharField(required=True)
-    last_name = serializers.CharField(required=True)
+    first_name = serializers.CharField(required=True, permission_classes=(PremiumPermission,))
+    last_name = serializers.CharField(required=True, permission_classes=(PremiumPermission,))
     password = serializers.CharField(write_only=True)
     password2 = serializers.CharField(write_only=True)
     provider_profile = ProviderProfileSerializer(required=False)
@@ -114,19 +128,30 @@ class UserProviderProfileSerializer(serializers.ModelSerializer):
         profile = ProviderProfile.objects.create(user=user, **profile_data)
 
         for method in methods_data:
-            method_obj = get_object_or_404(Method, name=method['name'])
-            profile.save()
-            profile.methods.add(method_obj)
+            try:
+                method_obj = get_object_or_404(Method, name=method['name'])
+                profile.save()
+                profile.methods.add(method_obj)
+            except:
+                continue
 
         for knw in knowledge_data:
-            knw_obj = get_object_or_404(Knowledge, name=knw['name'])
-            profile.save()
-            profile.knowledge.add(knw_obj)
+            try:
+                knw_obj = get_object_or_404(Knowledge, name=knw['name'])
+                profile.save()
+                profile.knowledge.add(knw_obj)
+            except:
+                continue
 
         for skill in skills_data:
-            skill_obj = get_object_or_404(Skill, name=skill['name'])
-            profile.save()
-            profile.skills.add(skill_obj)
+            try:
+                skill_obj = get_object_or_404(Skill, name=skill['name'])
+                profile.save()
+                profile.skills.add(skill_obj)
+            except:
+                continue
+
+        profile.save()
         return user
 
     class Meta:

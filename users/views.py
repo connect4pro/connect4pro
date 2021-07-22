@@ -1,8 +1,9 @@
-from rest_framework.generics import CreateAPIView, ListAPIView, UpdateAPIView, RetrieveAPIView
+from rest_framework.generics import CreateAPIView, ListAPIView, UpdateAPIView, RetrieveAPIView, get_object_or_404
 from rest_framework.permissions import IsAuthenticated
+from rest_framework.response import Response
 
 from users.models import Connect4ProUser, Sector, Knowledge, Skill, Method
-from users.permissions import IsOwnerOrReadOnly
+from users.permissions import IsOwnerOrReadOnly, PremiumPermission
 from users.serializers import SectorSerializer, UserBusinessProfileSerializer, \
     UserProviderProfileSerializer, UpdateProviderProfile, UpdateBusinessProfile, SkillSerializer, KnowledgeSerializer, \
     MethodSerializer
@@ -56,13 +57,16 @@ class SectorList(ListAPIView):
     queryset = Sector.objects.all()
     serializer_class = SectorSerializer
 
+
 class SkillList(ListAPIView):
     queryset = Skill.objects.all()
     serializer_class = SkillSerializer
 
+
 class KnowledgeList(ListAPIView):
     queryset = Knowledge.objects.all()
     serializer_class = KnowledgeSerializer
+
 
 class MethodList(ListAPIView):
     queryset = Method.objects.all()
