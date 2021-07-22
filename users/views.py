@@ -1,6 +1,11 @@
+from rest_framework import status
 from rest_framework.generics import CreateAPIView, ListAPIView, UpdateAPIView, RetrieveAPIView, get_object_or_404
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
+from rest_framework.views import APIView
+from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
+from rest_framework_simplejwt.tokens import RefreshToken
+from rest_framework_simplejwt.views import TokenObtainPairView
 
 from users.models import Connect4ProUser, Sector, Knowledge, Skill, Method
 from users.permissions import IsOwnerOrReadOnly, PremiumPermission
@@ -71,3 +76,34 @@ class KnowledgeList(ListAPIView):
 class MethodList(ListAPIView):
     queryset = Method.objects.all()
     serializer_class = MethodSerializer
+
+
+class MyTokenObtainPairSerializer(TokenObtainPairSerializer):
+    def validate(self, attrs):
+        data = super().validate(attrs)
+        refresh = self.get_token(self.user)
+        data['refresh'] = str(refresh)
+        data['access'] = str(refresh.access_token)
+
+        # Add extra responses here
+        data['id'] = self.user.id
+        data['email'] = self.user.email
+        return data
+
+
+class MyTokenObtainPairView(TokenObtainPairView):
+    serializer_class = MyTokenObtainPairSerializer
+
+
+class LogoutView(APIView):
+    permission_classes = (IsAuthenticated,)
+
+    def post(self, request):
+        try:
+            refresh_token = request.data["refresh_token"]
+            token = RefreshToken(refresh_token)
+            token.blacklist()
+
+            return Response(status=status.HTTP_205_RESET_CONTENT)
+        except Exception as e:
+            return Response(status=status.HTTP_400_BAD_REQUEST)
