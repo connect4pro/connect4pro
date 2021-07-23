@@ -65,8 +65,8 @@ class Connect4ProUser(AbstractUser):
     avatar = ResizedImageField(size=[350, 350], upload_to=f'images/users/avatars/%d%m%Y', blank=True,
                                null=True, default='images/users/avatars/avatardefault_92824.png')
     is_premium = models.BooleanField(default=False, verbose_name='Премиум-статус')
-    start_date = models.DateTimeField(verbose_name='Дата начала премиум', null=True)
-    end_date = models.DateTimeField(verbose_name='Дата окончания премиум', null=True)
+    start_date = models.DateTimeField(verbose_name='Дата начала премиум', null=True, blank=True)
+    end_date = models.DateTimeField(verbose_name='Дата окончания премиум', null=True, blank=True)
     is_business = models.BooleanField(default=False, verbose_name='Профиль МСБ')
     is_provider = models.BooleanField(default=False, verbose_name='Профиль провайдера')
 
