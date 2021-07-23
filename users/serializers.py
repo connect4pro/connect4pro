@@ -8,7 +8,7 @@ from users.models import Connect4ProUser, BusinessProfile, Sector, ProviderProfi
 
 
 class SectorSerializer(serializers.ModelSerializer):
-    name = serializers.CharField(permission_classes=(PremiumPermission,), required=False)
+    name = serializers.CharField(required=False)
 
     class Meta:
         model = Sector
@@ -16,7 +16,7 @@ class SectorSerializer(serializers.ModelSerializer):
 
 
 class SkillSerializer(serializers.ModelSerializer):
-    name = serializers.CharField(permission_classes=(PremiumPermission,), required=False)
+    name = serializers.CharField(required=False)
 
     class Meta:
         model = Skill
@@ -24,7 +24,7 @@ class SkillSerializer(serializers.ModelSerializer):
 
 
 class KnowledgeSerializer(serializers.ModelSerializer):
-    name = serializers.CharField(permission_classes=(PremiumPermission,), required=False)
+    name = serializers.CharField(required=False)
 
     class Meta:
         model = Knowledge
@@ -32,7 +32,7 @@ class KnowledgeSerializer(serializers.ModelSerializer):
 
 
 class MethodSerializer(serializers.ModelSerializer):
-    name = serializers.CharField(permission_classes=(PremiumPermission,), required=False)
+    name = serializers.CharField(required=False)
 
     class Meta:
         model = Method
@@ -40,10 +40,10 @@ class MethodSerializer(serializers.ModelSerializer):
 
 
 class BusinessProfileSerializer(serializers.ModelSerializer):
-    turnover = serializers.CharField(permission_classes=(PremiumPermission,), required=False)
-    employers = serializers.IntegerField(permission_classes=(PremiumPermission,), required=False)
-    category = serializers.CharField(permission_classes=(PremiumPermission,), required=False)
-    sector = SectorSerializer(permission_classes=(PremiumPermission,), many=True, required=False)
+    turnover = serializers.CharField(required=False)
+    employers = serializers.IntegerField(required=False)
+    category = serializers.CharField(required=False)
+    sector = SectorSerializer(many=True, required=False)
 
     class Meta:
         model = BusinessProfile
@@ -51,8 +51,8 @@ class BusinessProfileSerializer(serializers.ModelSerializer):
 
 
 class UserBusinessProfileSerializer(serializers.ModelSerializer):
-    first_name = serializers.CharField(required=True, permission_classes=(PremiumPermission,))
-    last_name = serializers.CharField(required=True, permission_classes=(PremiumPermission,))
+    first_name = serializers.CharField(required=True)
+    last_name = serializers.CharField(required=True)
     password = serializers.CharField(write_only=True)
     password2 = serializers.CharField(write_only=True)
     business_profile = BusinessProfileSerializer(required=False)
@@ -88,14 +88,14 @@ class UserBusinessProfileSerializer(serializers.ModelSerializer):
         model = Connect4ProUser
         fields = (
             'id', 'email', 'password', 'password2', 'first_name', 'last_name', 'birth_date', 'gender', 'country',
-            'city', 'phone', 'telegram', 'avatar', 'site', 'is_premium', 'is_business', 'is_provider',
+            'city', 'phone', 'telegram', 'avatar', 'site', 'is_premium', 'start_date', 'end_date', 'is_business', 'is_provider',
             'business_profile')
 
 
 class ProviderProfileSerializer(serializers.ModelSerializer):
-    skills = SkillSerializer(permission_classes=(PremiumPermission,), many=True, required=False)
-    knowledge = KnowledgeSerializer(permission_classes=(PremiumPermission,), many=True, required=False)
-    methods = MethodSerializer(permission_classes=(PremiumPermission,), many=True, required=False)
+    skills = SkillSerializer(many=True, required=False)
+    knowledge = KnowledgeSerializer(many=True, required=False)
+    methods = MethodSerializer(many=True, required=False)
 
     class Meta:
         model = ProviderProfile
@@ -103,8 +103,8 @@ class ProviderProfileSerializer(serializers.ModelSerializer):
 
 
 class UserProviderProfileSerializer(serializers.ModelSerializer):
-    first_name = serializers.CharField(required=True, permission_classes=(PremiumPermission,))
-    last_name = serializers.CharField(required=True, permission_classes=(PremiumPermission,))
+    first_name = serializers.CharField(required=True)
+    last_name = serializers.CharField(required=True)
     password = serializers.CharField(write_only=True)
     password2 = serializers.CharField(write_only=True)
     provider_profile = ProviderProfileSerializer(required=False)
@@ -158,7 +158,7 @@ class UserProviderProfileSerializer(serializers.ModelSerializer):
         model = Connect4ProUser
         fields = (
             'id', 'email', 'password', 'password2', 'first_name', 'last_name', 'birth_date', 'gender', 'country',
-            'city', 'phone', 'telegram', 'avatar', 'site', 'is_premium', 'is_business', 'is_provider',
+            'city', 'phone', 'telegram', 'avatar', 'site', 'is_premium', 'start_date', 'end_date', 'is_business', 'is_provider',
             'provider_profile')
 
 
