@@ -55,7 +55,7 @@ class Connect4ProUser(AbstractUser):
 
     first_name = models.CharField(verbose_name='Имя', max_length=30, blank=True)
     last_name = models.CharField(verbose_name='Фамилия', max_length=30, blank=True)
-    birth_date = models.DateField(verbose_name='Дата рождения')
+    birth_date = models.DateField(verbose_name='Дата рождения', null=True)
     gender = models.CharField(verbose_name='Пол', max_length=8, blank=True)
     country = models.CharField(verbose_name='Страна', max_length=25, blank=True)
     city = models.CharField(verbose_name='Город/Село', max_length=40, blank=True)
