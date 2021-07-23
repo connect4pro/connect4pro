@@ -63,7 +63,7 @@ class Connect4ProUser(AbstractUser):
     telegram = models.CharField(verbose_name='Telegram', max_length=20, blank=True)
     site = models.CharField(verbose_name='Сайт/Соцсети', max_length=50, blank=True)
     avatar = ResizedImageField(size=[350, 350], upload_to=f'images/users/avatars/%d%m%Y', blank=True,
-                               null=True)
+                               null=True, default='images/users/avatars/avatardefault_92824.png')
     is_premium = models.BooleanField(default=False, verbose_name='Премиум-статус')
     start_date = models.DateTimeField(verbose_name='Дата начала премиум', null=True)
     end_date = models.DateTimeField(verbose_name='Дата окончания премиум', null=True)
