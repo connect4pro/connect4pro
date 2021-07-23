@@ -18,7 +18,7 @@ class Event(models.Model):
     location = models.CharField(max_length = 100, verbose_name = 'Место')
     event_format = models.CharField(max_length = 7, default = offline, choices = EVENT_FORMAT_CHOICES, verbose_name = 'Формат мероприятия')
     sum = models.PositiveIntegerField(verbose_name = 'Стоимость входа')
-    event_image = ResizedImageField(size=[250, 250], upload_to=f'images/event_images/{name}-%d%m%Y', blank=True,
+    event_image = ResizedImageField(size=[1024, 540], upload_to=f'images/event_images/{name}-%d%m%Y', blank=True,
                                    null=True, verbose_name = 'Плакат мероприятия')
 
     def __str__(self):
