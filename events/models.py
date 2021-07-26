@@ -37,6 +37,7 @@ class EventComment(models.Model):
     commentator_text = models.TextField(max_length=500, verbose_name='Комментарий')
     commentator_name = models.CharField(max_length=50, verbose_name='Имя')
     commentator_email = models.EmailField(verbose_name='Контактный адрес почты')
+    event = models.ForeignKey(Event, verbose_name='Мероприятие', on_delete=models.CASCADE)
 
     def __str__(self):
         return f'Имя: {self.commentator_name}, контактная почта: {self.commentator_email}'
