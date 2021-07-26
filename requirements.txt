@@ -49,7 +49,6 @@ phonenumbers==8.12.23
 phonenumberslite==8.12.22
 Pillow==8.2.0
 prompt-toolkit==3.0.18
-psycopg2==2.8.6
 pycparser==2.20
 PyJWT==2.1.0
 pyparsing==2.4.7

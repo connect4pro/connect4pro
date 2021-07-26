@@ -8,6 +8,7 @@ from users.models import Connect4ProUser, BusinessProfile, Sector, ProviderProfi
 
 
 class SectorSerializer(serializers.ModelSerializer):
+    id = serializers.CharField(required=True)
     name = serializers.CharField(required=False)
 
     class Meta:
@@ -16,6 +17,7 @@ class SectorSerializer(serializers.ModelSerializer):
 
 
 class SkillSerializer(serializers.ModelSerializer):
+    id = serializers.CharField(required=True)
     name = serializers.CharField(required=False)
 
     class Meta:
@@ -24,6 +26,7 @@ class SkillSerializer(serializers.ModelSerializer):
 
 
 class KnowledgeSerializer(serializers.ModelSerializer):
+    id = serializers.CharField(required=True)
     name = serializers.CharField(required=False)
 
     class Meta:
@@ -32,6 +35,7 @@ class KnowledgeSerializer(serializers.ModelSerializer):
 
 
 class MethodSerializer(serializers.ModelSerializer):
+    id = serializers.CharField(required=True)
     name = serializers.CharField(required=False)
 
     class Meta:
@@ -75,7 +79,7 @@ class UserBusinessProfileSerializer(serializers.ModelSerializer):
 
         for sect in sector_data:
             try:
-                sector = get_object_or_404(Sector, name=sect['name'])
+                sector = get_object_or_404(Sector, id=sect['id'])
                 profile.save()
                 profile.sector.add(sector)
             except:
@@ -129,7 +133,7 @@ class UserProviderProfileSerializer(serializers.ModelSerializer):
 
         for method in methods_data:
             try:
-                method_obj = get_object_or_404(Method, name=method['name'])
+                method_obj = get_object_or_404(Method, id=method['id'])
                 profile.save()
                 profile.methods.add(method_obj)
             except:
@@ -137,7 +141,7 @@ class UserProviderProfileSerializer(serializers.ModelSerializer):
 
         for knw in knowledge_data:
             try:
-                knw_obj = get_object_or_404(Knowledge, name=knw['name'])
+                knw_obj = get_object_or_404(Knowledge, id=knw['id'])
                 profile.save()
                 profile.knowledge.add(knw_obj)
             except:
@@ -145,7 +149,7 @@ class UserProviderProfileSerializer(serializers.ModelSerializer):
 
         for skill in skills_data:
             try:
-                skill_obj = get_object_or_404(Skill, name=skill['name'])
+                skill_obj = get_object_or_404(Skill, id=skill['id'])
                 profile.save()
                 profile.skills.add(skill_obj)
             except:
