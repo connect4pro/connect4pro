@@ -16,6 +16,7 @@ urlpatterns = [
     path('', include('users.urls')),
     path('', include('events.urls')),
     path('', include('faq.urls')),
+    path('', include('blog.urls')),
     path('', include('forum.urls')),
     path('', include('grants_and_investments.urls')),
     path('', include('adverts.urls')),
