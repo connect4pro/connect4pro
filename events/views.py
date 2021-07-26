@@ -28,6 +28,7 @@ class EventDetail(RetrieveAPIView):
     serializer_class = EventSerializer
     lookup_field = 'id'
 
+
 class EventCommentsList(ListAPIView):
     queryset = EventComment.objects.all()
     serializer_class = EventCommentSerializer
