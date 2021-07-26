@@ -8,6 +8,7 @@ class BlogPost(models.Model):
     """Запись в блоге"""
 
     title = models.CharField(max_length=100)
+    subtitle = models.CharField(max_length=100)
     description = models.TextField()
     created = models.DateTimeField(auto_now=True)
     post_image = ResizedImageField(size=[350, 250], upload_to=f'images/blog_images/%d%m%Y', blank=True,
