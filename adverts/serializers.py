@@ -27,5 +27,5 @@ class ProviderAdvertSerializer(serializers.ModelSerializer):
     images = ImageSetSerializer()
     class Meta:
         model = ProviderAdvert
-        fields = ('images', 'title', 'description', 'price', 'currency', 'category')
+        fields = ('images', 'title', 'description', 'price', 'currency', 'category', 'created_at')
         read_only_fields = ('user',)

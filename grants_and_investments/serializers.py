@@ -30,7 +30,7 @@ class GrantSerializer(serializers.ModelSerializer):
         model = Grant
         fields = (
             'id', 'name', 'sum', 'currency', 'deadline', 'description', 'location', 'period', 'logo', 'image',
-            'grant_comment')
+            'created_at', 'grant_comment')
         read_only_fields = ('user',)
         depth = 1
 
@@ -42,6 +42,6 @@ class InvestmentSerializer(serializers.ModelSerializer):
         model = Investment
         fields = (
             'id', 'name', 'sum', 'currency', 'deadline', 'description', 'location', 'logo', 'image', 'period',
-            'invest_comment')
+            'created_at', 'invest_comment')
         read_only_fields = ('user',)
         depth = 1
