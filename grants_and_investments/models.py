@@ -62,7 +62,7 @@ class Investment(models.Model):
                                              validators=[MinValueValidator(1000), MaxValueValidator(10000000)])
     currency = models.CharField(max_length=5, default=kgs, choices=CURRENCY_CHOICES, verbose_name='Валюта')
     deadline = models.CharField(max_length=20, verbose_name='Срок инвестиции')
-    description = models.TextField(max_length=300, verbose_name='Описание инвестиции')
+    description = models.TextField(verbose_name='Описание инвестиции')
     location = models.CharField(max_length=60, verbose_name='Локация', blank=True, null=True)
     period = models.CharField(max_length=25, verbose_name='Периодичность', choices=PERIOD_CHOICES, default=no)
     logo = ResizedImageField(size=[52, 52], upload_to=f'images/invests/logo/%d%m%Y', blank=True,
