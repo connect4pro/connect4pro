@@ -62,6 +62,8 @@ class BusinessAdvert(models.Model):
     completed = models.CharField(max_length=8,verbose_name='Завершено', choices=COMPLETE_CHOICES, default=no)
     user = models.ForeignKey(BusinessProfile, verbose_name='Пользователь', on_delete=models.CASCADE,
                              related_name='business_profile')
+    needs = models.CharField(max_length=1000, verbose_name='Мне нужно', blank=True, null=True)
+    suggest = models.CharField(max_length=1000, verbose_name='Я предлагаю', blank=True, null=True)
 
     def __str__(self):
         return f'{self.title}'
