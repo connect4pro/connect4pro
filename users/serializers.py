@@ -8,7 +8,7 @@ from users.models import Connect4ProUser, BusinessProfile, Sector, ProviderProfi
 
 
 class SectorSerializer(serializers.ModelSerializer):
-    id = serializers.CharField(required=True)
+    id = serializers.IntegerField(required=True)
     name = serializers.CharField(required=False)
 
     class Meta:
@@ -17,7 +17,7 @@ class SectorSerializer(serializers.ModelSerializer):
 
 
 class SkillSerializer(serializers.ModelSerializer):
-    id = serializers.CharField(required=True)
+    id = serializers.IntegerField(required=True)
     name = serializers.CharField(required=False)
 
     class Meta:
@@ -26,7 +26,7 @@ class SkillSerializer(serializers.ModelSerializer):
 
 
 class KnowledgeSerializer(serializers.ModelSerializer):
-    id = serializers.CharField(required=True)
+    id = serializers.IntegerField(required=True)
     name = serializers.CharField(required=False)
 
     class Meta:
@@ -35,7 +35,7 @@ class KnowledgeSerializer(serializers.ModelSerializer):
 
 
 class MethodSerializer(serializers.ModelSerializer):
-    id = serializers.CharField(required=True)
+    id = serializers.IntegerField(required=True)
     name = serializers.CharField(required=False)
 
     class Meta:
