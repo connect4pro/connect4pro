@@ -15,6 +15,22 @@ CURRENCY_CHOICES = (
     (rub, 'RUB'),
 )
 
+no = 'Нет'
+permanent = 'Постоянно'
+monthly = 'Ежемесячно'
+yearly = 'Ежегодно'
+weekly = 'Еженедельно'
+half = 'Раз в полгода'
+years = 'Раз в несколько лет'
+PERIOD_CHOICES = (
+    (no, 'Нет'),
+    (permanent, 'Постоянно'),
+    (monthly, 'Ежемесячно'),
+    (yearly, 'Ежегодно'),
+    (weekly, 'Еженедельно'),
+    (half, 'Раз в полгода'),
+    (years, 'Раз в несколько лет'),
+)
 
 
 class Grant(models.Model):
@@ -23,6 +39,9 @@ class Grant(models.Model):
     currency = models.CharField(max_length = 5, default = kgs, choices = CURRENCY_CHOICES, verbose_name = 'Валюта')
     grant_deadline = models.CharField(max_length = 20, verbose_name = 'Срок гранта')
     grant_description = models.TextField(max_length = 300, verbose_name = 'Описание гранта')
+    location = models.CharField(max_length=60, verbose_name='Локация', blank=True, null=True)
+    period = models.CharField(max_length=25, verbose_name='Периодичность', choices=PERIOD_CHOICES, default=no)
+
 
     def __str__(self):
         return self.grant_name
@@ -40,6 +59,8 @@ class Investment(models.Model):
     currency = models.CharField(max_length = 5, default = kgs, choices = CURRENCY_CHOICES, verbose_name = 'Валюта')
     invest_deadline = models.CharField(max_length = 20, verbose_name = 'Срок инвестиции')
     invest_description = models.TextField(max_length = 300, verbose_name = 'Описание инвестиции')
+    location = models.CharField(max_length=60, verbose_name='Локация', blank=True, null=True)
+    period = models.CharField(max_length=25, verbose_name='Периодичность', choices=PERIOD_CHOICES, default=no)
 
     def __str__(self):
         return self.invest_name
