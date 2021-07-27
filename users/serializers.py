@@ -79,7 +79,7 @@ class UserBusinessProfileSerializer(serializers.ModelSerializer):
 
         for sect in sector_data:
             try:
-                sector = get_object_or_404(Sector, id=sect['id'])
+                sector = Sector.objects.get_or_create(name=sect['name'])
                 profile.save()
                 profile.sector.add(sector)
             except:
@@ -133,7 +133,7 @@ class UserProviderProfileSerializer(serializers.ModelSerializer):
 
         for method in methods_data:
             try:
-                method_obj = get_object_or_404(Method, id=method['id'])
+                method_obj = Method.objects.get_or_create(name=method['name'])
                 profile.save()
                 profile.methods.add(method_obj)
             except:
@@ -141,7 +141,7 @@ class UserProviderProfileSerializer(serializers.ModelSerializer):
 
         for knw in knowledge_data:
             try:
-                knw_obj = get_object_or_404(Knowledge, id=knw['id'])
+                knw_obj = Knowledge.objects.get_or_create(name=knw['name'])
                 profile.save()
                 profile.knowledge.add(knw_obj)
             except:
@@ -149,7 +149,7 @@ class UserProviderProfileSerializer(serializers.ModelSerializer):
 
         for skill in skills_data:
             try:
-                skill_obj = get_object_or_404(Skill, id=skill['id'])
+                skill_obj = Skill.objects.get_or_create(name=skill['name'])
                 profile.save()
                 profile.skills.add(skill_obj)
             except:
