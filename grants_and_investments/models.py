@@ -47,6 +47,7 @@ class Grant(models.Model):
                                null=True)
     image = ResizedImageField(size=[520, 520], upload_to=f'images/grants/images/%d%m%Y', blank=True,
                                null=True)
+    created_at = models.DateTimeField(auto_now=True)
 
     def __str__(self):
         return self.name
@@ -69,6 +70,7 @@ class Investment(models.Model):
                              null=True)
     image = ResizedImageField(size=[520, 520], upload_to=f'images/invests/images/%d%m%Y', blank=True,
                               null=True)
+    created_at = models.DateTimeField(auto_now=True)
 
     def __str__(self):
         return self.name
