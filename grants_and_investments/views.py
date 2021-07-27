@@ -1,89 +1,45 @@
-from django.shortcuts import render
-from django.http import JsonResponse
+from rest_framework.generics import CreateAPIView, ListAPIView, RetrieveAPIView
 
-from django.views.decorators.csrf import csrf_exempt
-from drf_yasg.utils import swagger_auto_schema
-from rest_framework import serializers, status, generics
-from rest_framework.generics import GenericAPIView, CreateAPIView
-from rest_framework.response import Response
-from rest_framework.views import APIView
-
-from grants_and_investments.models import Grant, Investment, GrantInvestmentComment
-from grants_and_investments.serializers import GrantSerializer, InvestmentSerializer, GrantInvestmentCommentSerializer
-# Create your views here.
-
-class GrantList(APIView):
-    """Список всех грантов"""
-    permission_classes = ()
-
-    @swagger_auto_schema(responses={200: GrantSerializer(many=True)})
-    def get(self, request):
-        grants = Grant.objects.all()
-        serializer = GrantSerializer(grants, many=True)
-        return Response(serializer.data)
-
-    @swagger_auto_schema(responses={200: GrantSerializer()})
-    def post(self, request):
-        """Создание гранта"""
-        serializer = GrantSerializer(data=request.data)
-        if serializer.is_valid():
-            serializer.save()
-            return Response(serializer.data, status=status.HTTP_201_CREATED)
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+from grants_and_investments.models import Grant, Investment, GrantComment, InvestmentComment
+from grants_and_investments.serializers import GrantSerializer, InvestmentSerializer, GrantCommentSerializer, \
+    InvestCommentSerializer
 
 
-
-class GrantCreate(CreateAPIView):
+class GrantsList(ListAPIView):
+    queryset = Grant.objects.all()
     serializer_class = GrantSerializer
 
 
-class InvestmentList(APIView):
-    """Список инвестиций"""
-    permission_classes = ()
-
-    @swagger_auto_schema(responses={200: InvestmentSerializer(many=True)})
-    def get(self, request):
-        investments = Investment.objects.all()
-        serializer = InvestmentSerializer(investments, many=True)
-        return Response(serializer.data)
-
-    @swagger_auto_schema(responses={200: InvestmentSerializer()})
-    def post(self, request):
-        """Создание инвестиции"""
-        serializer = InvestmentSerializer(data=request.data)
-        if serializer.is_valid():
-            serializer.save()
-            return Response(serializer.data, status.HTTP_201_CREATED)
-        return Response(serializer.errors, status.HTTP_400_BAD_REQUEST)
-
-
-
-class InvestmentCreate(CreateAPIView):
+class InvestList(ListAPIView):
+    queryset = Investment.objects.all()
     serializer_class = InvestmentSerializer
 
 
+class GrantDetail(RetrieveAPIView):
+    queryset = Grant.objects.all()
+    serializer_class = GrantSerializer
+    lookup_field = 'id'
 
 
-class GrantInvestmentCommentList(APIView):
-    """Список комментарий на гранты/инвестиции"""
-    permission_classes = ()
-
-    @swagger_auto_schema(responses={200: GrantInvestmentCommentSerializer(many=True)})
-    def get(self, request):
-        grant_invest_comments = GrantInvestmentComment.objects.all()
-        serializer = GrantInvestmentCommentSerializer(grant_invest_comments, many=True)
-        return Response(serializer.data)
-
-    @swagger_auto_schema(responses={200: GrantInvestmentCommentSerializer()})
-    def post(self, request):
-        """Создание комментария на гранты/инвестиции"""
-        serializer = GrantInvestmentCommentSerializer(data=request.data)
-        if serializer.is_valid():
-            serializer.save()
-            return Response(serializer.data, status.HTTP_201_CREATED)
-        return Response(serializer.errors, status.HTTP_400_BAD_REQUEST)
+class InvestDetail(RetrieveAPIView):
+    queryset = Investment.objects.all()
+    serializer_class = InvestmentSerializer
+    lookup_field = 'id'
 
 
+class GrantCommentCreate(CreateAPIView):
+    serializer_class = GrantCommentSerializer
 
-class GrantInvestmentCommentCreate(CreateAPIView):
-    serializer_class = GrantInvestmentCommentSerializer
+
+class InvestmentCommentCreate(CreateAPIView):
+    serializer_class = InvestCommentSerializer
+
+
+class GrantCommentList(ListAPIView):
+    queryset = GrantComment.objects.all()
+    serializer_class = GrantCommentSerializer
+
+
+class InvestCommentList(ListAPIView):
+    queryset = InvestmentComment.objects.all()
+    serializer_class = InvestCommentSerializer
