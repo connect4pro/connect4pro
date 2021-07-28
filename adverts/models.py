@@ -96,3 +96,33 @@ class ProviderAdvert(models.Model):
     class Meta:
         verbose_name = 'Объявление провайдера'
         verbose_name_plural = 'Объявления провайдеров'
+
+
+class BusinessAdvertComment(models.Model):
+    commentator_text = models.TextField(max_length=500, verbose_name='Ваш комментарий')
+    commentator_name = models.CharField(max_length=50, verbose_name='Ваше имя')
+    commentator_email = models.EmailField(verbose_name='Ваш контактный адрес почты')
+    post = models.ForeignKey(BusinessAdvert, verbose_name='Объявление', on_delete=models.CASCADE,
+                             related_name='business_comment')
+
+    def __str__(self):
+        return f'Имя: {self.commentator_name}, контактная почта: {self.commentator_email}'
+
+    class Meta:
+        verbose_name = 'Комментарий объявления МСБ'
+        verbose_name_plural = 'Комментарии объявлений МСБ'
+
+
+class ProviderAdvertComment(models.Model):
+    commentator_text = models.TextField(max_length=500, verbose_name='Ваш комментарий')
+    commentator_name = models.CharField(max_length=50, verbose_name='Ваше имя')
+    commentator_email = models.EmailField(verbose_name='Ваш контактный адрес почты')
+    post = models.ForeignKey(ProviderAdvert, verbose_name='Объявление', on_delete=models.CASCADE,
+                             related_name='provider_comment')
+
+    def __str__(self):
+        return f'Имя: {self.commentator_name}, контактная почта: {self.commentator_email}'
+
+    class Meta:
+        verbose_name = 'Комментарий объявления консультанта'
+        verbose_name_plural = 'Комментарии объявлений консультантов'

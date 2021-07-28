@@ -84,7 +84,7 @@ class GrantComment(models.Model):
     commentator_text = models.TextField(max_length=500, verbose_name='Ваш комментарий')
     commentator_name = models.CharField(max_length=50, verbose_name='Ваше имя')
     commentator_email = models.EmailField(verbose_name='Ваш контактный адрес почты')
-    grant = models.ForeignKey(Grant, verbose_name='Грант', on_delete=models.CASCADE, related_name='grant_comment')
+    post = models.ForeignKey(Grant, verbose_name='Грант', on_delete=models.CASCADE, related_name='grant_comment')
 
     def __str__(self):
         return f'Имя: {self.commentator_name}, контактная почта: {self.commentator_email}'
@@ -98,7 +98,7 @@ class InvestmentComment(models.Model):
     commentator_text = models.TextField(max_length=500, verbose_name='Ваш комментарий')
     commentator_name = models.CharField(max_length=50, verbose_name='Ваше имя')
     commentator_email = models.EmailField(verbose_name='Ваш контактный адрес почты')
-    investment = models.ForeignKey(Investment, verbose_name='Инвестиция', on_delete=models.CASCADE,
+    post = models.ForeignKey(Investment, verbose_name='Инвестиция', on_delete=models.CASCADE,
                                    related_name='invest_comment')
 
     def __str__(self):
