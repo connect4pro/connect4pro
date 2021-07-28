@@ -9,4 +9,4 @@ class EventAdmin(admin.ModelAdmin):
 
 @admin.register(EventComment)
 class EventCommentAdmin(admin.ModelAdmin):
-    list_display = ('commentator_text', 'commentator_name', 'commentator_email', 'event')
+    list_display = ('commentator_text', 'commentator_name', 'commentator_email', 'post')

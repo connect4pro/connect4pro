@@ -14,8 +14,9 @@ class InvestmentAdmin(admin.ModelAdmin):
 
 @admin.register(GrantComment)
 class GrantCommentAdmin(admin.ModelAdmin):
-    list_display = ('commentator_text', 'commentator_name', 'commentator_email', 'grant')
+    list_display = ('commentator_text', 'commentator_name', 'commentator_email', 'post')
+
 
 @admin.register(InvestmentComment)
 class InvestmentCommentAdmin(admin.ModelAdmin):
-    list_display = ('commentator_text', 'commentator_name', 'commentator_email', 'investment')
+    list_display = ('commentator_text', 'commentator_name', 'commentator_email', 'post')
