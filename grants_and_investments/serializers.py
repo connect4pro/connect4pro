@@ -9,8 +9,7 @@ class GrantCommentSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = GrantComment
-        fields = ['id', 'post', 'commentator_text', 'commentator_name', 'commentator_email']
-        read_only_fields = ('user',)
+        fields = ['id', 'post', 'text', 'user']
 
 
 class InvestCommentSerializer(serializers.ModelSerializer):
@@ -19,8 +18,7 @@ class InvestCommentSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = InvestmentComment
-        fields = ['id', 'post', 'commentator_text', 'commentator_name', 'commentator_email']
-        read_only_fields = ('user',)
+        fields = ['id', 'post', 'text', 'user']
 
 
 class GrantSerializer(serializers.ModelSerializer):
@@ -31,7 +29,6 @@ class GrantSerializer(serializers.ModelSerializer):
         fields = (
             'id', 'name', 'sum', 'currency', 'deadline', 'description', 'location', 'period', 'logo', 'image',
             'created_at', 'grant_comment')
-        read_only_fields = ('user',)
         depth = 1
 
 
@@ -43,5 +40,4 @@ class InvestmentSerializer(serializers.ModelSerializer):
         fields = (
             'id', 'name', 'sum', 'currency', 'deadline', 'description', 'location', 'logo', 'image', 'period',
             'created_at', 'invest_comment')
-        read_only_fields = ('user',)
         depth = 1

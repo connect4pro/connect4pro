@@ -5,15 +5,13 @@ from adverts.models import Category, BusinessAdvert, ProviderAdvert, Album, Busi
 class BusinessAdvertCommentSerializer(serializers.ModelSerializer):
     class Meta:
         model = BusinessAdvertComment
-        fields = ['id', 'post', 'commentator_text', 'commentator_name', 'commentator_email']
-        read_only_fields = ('user',)
+        fields = ['id', 'post', 'text', 'user']
 
 
 class ProviderAdvertCommentSerializer(serializers.ModelSerializer):
     class Meta:
         model = ProviderAdvertComment
-        fields = ['id', 'post', 'commentator_text', 'commentator_name', 'commentator_email']
-        read_only_fields = ('user',)
+        fields = ['id', 'post', 'text', 'user']
 
 
 class ImageSetSerializer(serializers.ModelSerializer):
@@ -37,7 +35,6 @@ class BusinessAdvertSerializer(serializers.ModelSerializer):
         model = BusinessAdvert
         fields = ['id', 'title', 'category', 'description', 'price', 'currency', 'completed', 'user', 'needs',
                   'suggest', 'tel', 'created_at', 'business_comment']
-        read_only_fields = ('user',)
         depth = 1
 
 
@@ -48,5 +45,4 @@ class ProviderAdvertSerializer(serializers.ModelSerializer):
         model = ProviderAdvert
         fields = (
             'id', 'images', 'title', 'description', 'price', 'currency', 'category', 'created_at', 'provider_comment')
-        read_only_fields = ('user',)
         depth = 1

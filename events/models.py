@@ -2,6 +2,7 @@ from django.db import models
 from django_resized import ResizedImageField
 
 # Create your models here.
+from users.models import Connect4ProUser
 
 offline = 'Оффлайн'
 online = 'Онлайн'
@@ -34,13 +35,14 @@ class Event(models.Model):
 
 
 class EventComment(models.Model):
-    commentator_text = models.TextField(max_length=500, verbose_name='Комментарий')
-    commentator_name = models.CharField(max_length=50, verbose_name='Имя')
-    commentator_email = models.EmailField(verbose_name='Контактный адрес почты')
-    post = models.ForeignKey(Event, verbose_name='Мероприятие', on_delete=models.CASCADE, related_name='event_comment')
+    text = models.TextField(max_length=500, verbose_name='Ваш комментарий')
+    user = models.ForeignKey(Connect4ProUser, on_delete=models.CASCADE, verbose_name='Пользователь',
+                             related_name='event_commenter')
+    post = models.ForeignKey(Event, verbose_name='Объявление', on_delete=models.CASCADE,
+                             related_name='event_comment')
 
     def __str__(self):
-        return f'Имя: {self.commentator_name}, контактная почта: {self.commentator_email}'
+        return f'Имя: {self.user.email}'
 
     class Meta:
         verbose_name = 'Комментарий мероприятия'

@@ -3,6 +3,8 @@ from django.db import models
 # Create your models here.
 from django_resized import ResizedImageField
 
+from users.models import Connect4ProUser
+
 
 class BlogPost(models.Model):
     """Запись в блоге"""
@@ -23,13 +25,14 @@ class BlogPost(models.Model):
 
 
 class BlogComment(models.Model):
-    commentator_text = models.TextField(max_length=500, verbose_name='Комментарий')
-    commentator_name = models.CharField(max_length=50, verbose_name='Имя')
-    commentator_email = models.EmailField(verbose_name='Контактный адрес почты')
-    post = models.ForeignKey(BlogPost, verbose_name='Блог', on_delete=models.CASCADE, related_name='blog_comment')
+    text = models.TextField(max_length=500, verbose_name='Ваш комментарий')
+    user = models.ForeignKey(Connect4ProUser, on_delete=models.CASCADE, verbose_name='Пользователь',
+                             related_name='blog_commenter')
+    post = models.ForeignKey(BlogPost, verbose_name='Объявление', on_delete=models.CASCADE,
+                             related_name='blog_comment')
 
     def __str__(self):
-        return f'Имя: {self.commentator_name}, - {self.commentator_email}'
+        return f'Имя: {self.user.email}'
 
     class Meta:
         verbose_name = 'Комментарий блога'

@@ -7,8 +7,7 @@ class BlogCommentSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = BlogComment
-        fields = ['id', 'post', 'commentator_text', 'commentator_name', 'commentator_email']
-        read_only_fields = ('user',)
+        fields = ['id', 'post', 'text', 'user']
 
 
 class BlogPostSerializer(serializers.ModelSerializer):
@@ -17,5 +16,4 @@ class BlogPostSerializer(serializers.ModelSerializer):
     class Meta:
         model = BlogPost
         fields = ['id', 'title', 'subtitle', 'description', 'created', 'post_image', 'blog_comment']
-        read_only_fields = ('user',)
         depth = 1
