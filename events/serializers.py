@@ -7,7 +7,7 @@ class EventCommentSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = EventComment
-        fields = ['id','event','commentator_text','commentator_name','commentator_email']
+        fields = ['id','post','commentator_text','commentator_name','commentator_email']
         read_only_fields = ('user',)
 
 

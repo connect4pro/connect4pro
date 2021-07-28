@@ -1,9 +1,10 @@
 from rest_framework import permissions
-from rest_framework.generics import ListAPIView, ListCreateAPIView, UpdateAPIView
+from rest_framework.generics import ListAPIView, ListCreateAPIView, UpdateAPIView, CreateAPIView, RetrieveAPIView
 
-from adverts.models import Category, BusinessAdvert, ProviderAdvert
+from adverts.models import Category, BusinessAdvert, ProviderAdvert, BusinessAdvertComment, ProviderAdvertComment
 from adverts.permissions import IsOwnerOrReadOnly
-from adverts.serializers import AdvertCategorySerializer, BusinessAdvertSerializer, ProviderAdvertSerializer
+from adverts.serializers import AdvertCategorySerializer, BusinessAdvertSerializer, ProviderAdvertSerializer, \
+    BusinessAdvertCommentSerializer, ProviderAdvertCommentSerializer
 
 
 class CategoryList(ListAPIView):
@@ -59,3 +60,33 @@ class ProviderAdvertUpdate(UpdateAPIView):
 
     def perform_update(self, serializer):
         serializer.save(user=self.request.user.provider_profile)
+
+
+class BusinessAdvertCommentCreate(CreateAPIView):
+    serializer_class = BusinessAdvertCommentSerializer
+
+
+class ProviderAdvertCommentCreate(CreateAPIView):
+    serializer_class = ProviderAdvertCommentSerializer
+
+
+class BusinessAdvertCommentList(ListAPIView):
+    queryset = BusinessAdvertComment.objects.all()
+    serializer_class = BusinessAdvertCommentSerializer
+
+
+class ProviderAdvertCommentList(ListAPIView):
+    queryset = ProviderAdvertComment.objects.all()
+    serializer_class = ProviderAdvertCommentSerializer
+
+
+class BusinessAdvertDetail(RetrieveAPIView):
+    queryset = BusinessAdvert.objects.all()
+    serializer_class = BusinessAdvertSerializer
+    lookup_field = 'id'
+
+
+class ProviderAdvertDetail(RetrieveAPIView):
+    queryset = ProviderAdvert.objects.all()
+    serializer_class = ProviderAdvertSerializer
+    lookup_field = 'id'

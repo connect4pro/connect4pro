@@ -3,7 +3,7 @@ from blog.models import BlogPost, BlogComment
 
 
 class BlogCommentSerializer(serializers.ModelSerializer):
-    '''Blog comment serialize'''
+    """Blog comment serialize"""
 
     class Meta:
         model = BlogComment

@@ -9,7 +9,7 @@ class GrantCommentSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = GrantComment
-        fields = ['id', 'grant', 'commentator_text', 'commentator_name', 'commentator_email']
+        fields = ['id', 'post', 'commentator_text', 'commentator_name', 'commentator_email']
         read_only_fields = ('user',)
 
 
@@ -19,7 +19,7 @@ class InvestCommentSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = InvestmentComment
-        fields = ['id', 'investment', 'commentator_text', 'commentator_name', 'commentator_email']
+        fields = ['id', 'post', 'commentator_text', 'commentator_name', 'commentator_email']
         read_only_fields = ('user',)
 
 

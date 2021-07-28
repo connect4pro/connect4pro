@@ -1,12 +1,28 @@
 from rest_framework import serializers
-from adverts.models import Category, BusinessAdvert, ProviderAdvert, Album
+from adverts.models import Category, BusinessAdvert, ProviderAdvert, Album, BusinessAdvertComment, ProviderAdvertComment
+
+
+class BusinessAdvertCommentSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = BusinessAdvertComment
+        fields = ['id', 'post', 'commentator_text', 'commentator_name', 'commentator_email']
+        read_only_fields = ('user',)
+
+
+class ProviderAdvertCommentSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = ProviderAdvertComment
+        fields = ['id', 'post', 'commentator_text', 'commentator_name', 'commentator_email']
+        read_only_fields = ('user',)
 
 
 class ImageSetSerializer(serializers.ModelSerializer):
     image = serializers.ImageField()
+
     class Meta:
         model = Album
         fields = ('image',)
+
 
 class AdvertCategorySerializer(serializers.ModelSerializer):
     """Category serialize"""
@@ -19,13 +35,18 @@ class AdvertCategorySerializer(serializers.ModelSerializer):
 class BusinessAdvertSerializer(serializers.ModelSerializer):
     class Meta:
         model = BusinessAdvert
-        fields = '__all__'
+        fields = ['id', 'title', 'category', 'description', 'price', 'currency', 'completed', 'user', 'needs',
+                  'suggest', 'tel', 'created_at', 'business_comment']
         read_only_fields = ('user',)
+        depth = 1
 
 
 class ProviderAdvertSerializer(serializers.ModelSerializer):
     images = ImageSetSerializer()
+
     class Meta:
         model = ProviderAdvert
-        fields = ('images', 'title', 'description', 'price', 'currency', 'category', 'created_at')
+        fields = (
+            'id', 'images', 'title', 'description', 'price', 'currency', 'category', 'created_at', 'provider_comment')
         read_only_fields = ('user',)
+        depth = 1
