@@ -2,7 +2,7 @@ from django.db import models
 from django_resized import ResizedImageField
 from phonenumber_field.modelfields import PhoneNumberField
 
-from users.models import ProviderProfile, BusinessProfile
+from users.models import ProviderProfile, BusinessProfile, Connect4ProUser
 
 usd = 'USD'
 som = 'Сом'
@@ -99,14 +99,16 @@ class ProviderAdvert(models.Model):
 
 
 class BusinessAdvertComment(models.Model):
-    commentator_text = models.TextField(max_length=500, verbose_name='Ваш комментарий')
-    commentator_name = models.CharField(max_length=50, verbose_name='Ваше имя')
-    commentator_email = models.EmailField(verbose_name='Ваш контактный адрес почты')
+    text = models.TextField(max_length=500, verbose_name='Ваш комментарий')
+    user = models.ForeignKey(Connect4ProUser, on_delete=models.CASCADE, verbose_name='Пользователь',
+                             related_name='business_commenter')
     post = models.ForeignKey(BusinessAdvert, verbose_name='Объявление', on_delete=models.CASCADE,
                              related_name='business_comment')
 
     def __str__(self):
-        return f'Имя: {self.commentator_name}, контактная почта: {self.commentator_email}'
+        return f'Имя: {self.user.email}'
+
+
 
     class Meta:
         verbose_name = 'Комментарий объявления МСБ'
@@ -114,14 +116,14 @@ class BusinessAdvertComment(models.Model):
 
 
 class ProviderAdvertComment(models.Model):
-    commentator_text = models.TextField(max_length=500, verbose_name='Ваш комментарий')
-    commentator_name = models.CharField(max_length=50, verbose_name='Ваше имя')
-    commentator_email = models.EmailField(verbose_name='Ваш контактный адрес почты')
+    text = models.TextField(max_length=500, verbose_name='Ваш комментарий')
+    user = models.ForeignKey(Connect4ProUser, on_delete=models.CASCADE, verbose_name='Пользователь',
+                             related_name='provider_commenter')
     post = models.ForeignKey(ProviderAdvert, verbose_name='Объявление', on_delete=models.CASCADE,
                              related_name='provider_comment')
 
     def __str__(self):
-        return f'Имя: {self.commentator_name}, контактная почта: {self.commentator_email}'
+        return f'Имя: {self.user.email}'
 
     class Meta:
         verbose_name = 'Комментарий объявления консультанта'

@@ -4,6 +4,8 @@ from django.core.validators import MaxValueValidator, MinValueValidator
 # Create your models here.
 from django_resized import ResizedImageField
 
+from users.models import Connect4ProUser
+
 usd = 'USD'
 kgs = 'Сом'
 eur = 'Евро'
@@ -37,16 +39,16 @@ PERIOD_CHOICES = (
 class Grant(models.Model):
     name = models.CharField(max_length=50, verbose_name='Имя гранта')
     sum = models.PositiveIntegerField(verbose_name='Сумма гранта',
-                                            validators=[MinValueValidator(1000), MaxValueValidator(10000000)])
+                                      validators=[MinValueValidator(1000), MaxValueValidator(10000000)])
     currency = models.CharField(max_length=5, default=kgs, choices=CURRENCY_CHOICES, verbose_name='Валюта')
     deadline = models.CharField(max_length=20, verbose_name='Срок гранта')
     description = models.TextField(verbose_name='Описание гранта')
     location = models.CharField(max_length=60, verbose_name='Локация', blank=True, null=True)
     period = models.CharField(max_length=25, verbose_name='Периодичность', choices=PERIOD_CHOICES, default=no)
     logo = ResizedImageField(size=[52, 52], upload_to=f'images/grants/logo/%d%m%Y', blank=True,
-                               null=True)
+                             null=True)
     image = ResizedImageField(size=[520, 520], upload_to=f'images/grants/images/%d%m%Y', blank=True,
-                               null=True)
+                              null=True)
     created_at = models.DateTimeField(auto_now=True)
 
     def __str__(self):
@@ -60,7 +62,7 @@ class Grant(models.Model):
 class Investment(models.Model):
     name = models.CharField(max_length=50, verbose_name='Имя инвестиции')
     sum = models.PositiveIntegerField(verbose_name='Сумма инвестиции',
-                                             validators=[MinValueValidator(1000), MaxValueValidator(10000000)])
+                                      validators=[MinValueValidator(1000), MaxValueValidator(10000000)])
     currency = models.CharField(max_length=5, default=kgs, choices=CURRENCY_CHOICES, verbose_name='Валюта')
     deadline = models.CharField(max_length=20, verbose_name='Срок инвестиции')
     description = models.TextField(verbose_name='Описание инвестиции')
@@ -81,13 +83,14 @@ class Investment(models.Model):
 
 
 class GrantComment(models.Model):
-    commentator_text = models.TextField(max_length=500, verbose_name='Ваш комментарий')
-    commentator_name = models.CharField(max_length=50, verbose_name='Ваше имя')
-    commentator_email = models.EmailField(verbose_name='Ваш контактный адрес почты')
-    post = models.ForeignKey(Grant, verbose_name='Грант', on_delete=models.CASCADE, related_name='grant_comment')
+    text = models.TextField(max_length=500, verbose_name='Ваш комментарий')
+    user = models.ForeignKey(Connect4ProUser, on_delete=models.CASCADE, verbose_name='Пользователь',
+                             related_name='grant_commenter')
+    post = models.ForeignKey(Grant, verbose_name='Объявление', on_delete=models.CASCADE,
+                             related_name='grant_comment')
 
     def __str__(self):
-        return f'Имя: {self.commentator_name}, контактная почта: {self.commentator_email}'
+        return f'Имя: {self.user.email}'
 
     class Meta:
         verbose_name = 'Комментарий гранта'
@@ -95,14 +98,14 @@ class GrantComment(models.Model):
 
 
 class InvestmentComment(models.Model):
-    commentator_text = models.TextField(max_length=500, verbose_name='Ваш комментарий')
-    commentator_name = models.CharField(max_length=50, verbose_name='Ваше имя')
-    commentator_email = models.EmailField(verbose_name='Ваш контактный адрес почты')
-    post = models.ForeignKey(Investment, verbose_name='Инвестиция', on_delete=models.CASCADE,
-                                   related_name='invest_comment')
+    text = models.TextField(max_length=500, verbose_name='Ваш комментарий')
+    user = models.ForeignKey(Connect4ProUser, on_delete=models.CASCADE, verbose_name='Пользователь',
+                             related_name='invest_commenter')
+    post = models.ForeignKey(Investment, verbose_name='Объявление', on_delete=models.CASCADE,
+                             related_name='invest_comment')
 
     def __str__(self):
-        return f'Имя: {self.commentator_name}, контактная почта: {self.commentator_email}'
+        return f'Имя: {self.user.email}'
 
     class Meta:
         verbose_name = 'Комментарий инвестиции'
