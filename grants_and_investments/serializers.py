@@ -28,7 +28,7 @@ class GrantSerializer(serializers.ModelSerializer):
         model = Grant
         fields = (
             'id', 'name', 'sum', 'currency', 'deadline', 'description', 'location', 'period', 'logo', 'image',
-            'created_at', 'grant_comment')
+            'created_at', 'post_comment')
         depth = 1
 
 
@@ -39,5 +39,5 @@ class InvestmentSerializer(serializers.ModelSerializer):
         model = Investment
         fields = (
             'id', 'name', 'sum', 'currency', 'deadline', 'description', 'location', 'logo', 'image', 'period',
-            'created_at', 'invest_comment')
+            'created_at', 'post_comment')
         depth = 1
