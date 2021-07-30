@@ -9,7 +9,7 @@ class GrantCommentSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = GrantComment
-        fields = ['id', 'post', 'text', 'user']
+        fields = ['id', 'post', 'text', 'user', 'posted']
 
 
 class InvestCommentSerializer(serializers.ModelSerializer):
@@ -18,7 +18,7 @@ class InvestCommentSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = InvestmentComment
-        fields = ['id', 'post', 'text', 'user']
+        fields = ['id', 'post', 'text', 'user', 'posted']
 
 
 class GrantSerializer(serializers.ModelSerializer):

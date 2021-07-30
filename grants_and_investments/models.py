@@ -88,6 +88,7 @@ class GrantComment(models.Model):
                              related_name='grant_commenter')
     post = models.ForeignKey(Grant, verbose_name='Объявление', on_delete=models.CASCADE,
                              related_name='grant_comment')
+    posted = models.DateTimeField(auto_now=True)
 
     def __str__(self):
         return f'Имя: {self.user.email}'
@@ -103,6 +104,7 @@ class InvestmentComment(models.Model):
                              related_name='invest_commenter')
     post = models.ForeignKey(Investment, verbose_name='Объявление', on_delete=models.CASCADE,
                              related_name='invest_comment')
+    posted = models.DateTimeField(auto_now=True)
 
     def __str__(self):
         return f'Имя: {self.user.email}'
