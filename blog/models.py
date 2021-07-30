@@ -30,6 +30,7 @@ class BlogComment(models.Model):
                              related_name='blog_commenter')
     post = models.ForeignKey(BlogPost, verbose_name='Объявление', on_delete=models.CASCADE,
                              related_name='blog_comment')
+    posted = models.DateTimeField(auto_now=True)
 
     def __str__(self):
         return f'Имя: {self.user.email}'

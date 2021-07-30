@@ -40,6 +40,7 @@ class EventComment(models.Model):
                              related_name='event_commenter')
     post = models.ForeignKey(Event, verbose_name='Объявление', on_delete=models.CASCADE,
                              related_name='event_comment')
+    posted = models.DateTimeField(auto_now=True)
 
     def __str__(self):
         return f'Имя: {self.user.email}'

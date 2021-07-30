@@ -7,7 +7,7 @@ class EventCommentSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = EventComment
-        fields = ['id', 'post', 'text', 'user']
+        fields = ['id', 'post', 'text', 'user', 'posted']
 
 
 class EventSerializer(serializers.ModelSerializer):
