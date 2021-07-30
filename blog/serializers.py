@@ -15,5 +15,5 @@ class BlogPostSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = BlogPost
-        fields = ['id', 'title', 'subtitle', 'description', 'created', 'post_image', 'blog_comment']
+        fields = ['id', 'title', 'subtitle', 'description', 'created', 'post_image', 'post_comment']
         depth = 1

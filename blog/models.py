@@ -29,7 +29,7 @@ class BlogComment(models.Model):
     user = models.ForeignKey(Connect4ProUser, on_delete=models.CASCADE, verbose_name='Пользователь',
                              related_name='blog_commenter')
     post = models.ForeignKey(BlogPost, verbose_name='Объявление', on_delete=models.CASCADE,
-                             related_name='blog_comment')
+                             related_name='post_comment')
     posted = models.DateTimeField(auto_now=True)
 
     def __str__(self):

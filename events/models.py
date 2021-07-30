@@ -39,7 +39,7 @@ class EventComment(models.Model):
     user = models.ForeignKey(Connect4ProUser, on_delete=models.CASCADE, verbose_name='Пользователь',
                              related_name='event_commenter')
     post = models.ForeignKey(Event, verbose_name='Объявление', on_delete=models.CASCADE,
-                             related_name='event_comment')
+                             related_name='post_comment')
     posted = models.DateTimeField(auto_now=True)
 
     def __str__(self):
