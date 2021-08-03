@@ -34,7 +34,7 @@ class BusinessAdvertSerializer(serializers.ModelSerializer):
     class Meta:
         model = BusinessAdvert
         fields = ['id', 'title', 'category', 'description', 'price', 'currency', 'completed', 'user', 'needs',
-                  'suggest', 'tel', 'created_at', 'business_comment']
+                  'suggest', 'tel', 'created_at', 'post_comment']
         depth = 1
 
 
@@ -44,5 +44,5 @@ class ProviderAdvertSerializer(serializers.ModelSerializer):
     class Meta:
         model = ProviderAdvert
         fields = (
-            'id', 'images', 'title', 'description', 'price', 'currency', 'category', 'created_at', 'provider_comment')
+            'id', 'images', 'title', 'description', 'price', 'currency', 'category', 'created_at', 'post_comment')
         depth = 1

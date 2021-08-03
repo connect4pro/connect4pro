@@ -103,7 +103,7 @@ class BusinessAdvertComment(models.Model):
     user = models.ForeignKey(Connect4ProUser, on_delete=models.CASCADE, verbose_name='Пользователь',
                              related_name='business_commenter')
     post = models.ForeignKey(BusinessAdvert, verbose_name='Объявление', on_delete=models.CASCADE,
-                             related_name='business_comment')
+                             related_name='post_comment')
 
     def __str__(self):
         return f'Имя: {self.user.email}'
@@ -120,7 +120,7 @@ class ProviderAdvertComment(models.Model):
     user = models.ForeignKey(Connect4ProUser, on_delete=models.CASCADE, verbose_name='Пользователь',
                              related_name='provider_commenter')
     post = models.ForeignKey(ProviderAdvert, verbose_name='Объявление', on_delete=models.CASCADE,
-                             related_name='provider_comment')
+                             related_name='post_comment')
 
     def __str__(self):
         return f'Имя: {self.user.email}'
