@@ -104,6 +104,7 @@ class BusinessAdvertComment(models.Model):
                              related_name='business_commenter')
     post = models.ForeignKey(BusinessAdvert, verbose_name='Объявление', on_delete=models.CASCADE,
                              related_name='post_comment')
+    posted = models.DateTimeField(auto_now=True)
 
     def __str__(self):
         return f'Имя: {self.user.email}'
@@ -121,6 +122,7 @@ class ProviderAdvertComment(models.Model):
                              related_name='provider_commenter')
     post = models.ForeignKey(ProviderAdvert, verbose_name='Объявление', on_delete=models.CASCADE,
                              related_name='post_comment')
+    posted = models.DateTimeField(auto_now=True)
 
     def __str__(self):
         return f'Имя: {self.user.email}'
