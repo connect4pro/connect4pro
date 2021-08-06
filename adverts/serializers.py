@@ -44,7 +44,7 @@ class AdvertCategorySerializer(serializers.ModelSerializer):
 
 
 class BusinessAdvertSerializer(serializers.ModelSerializer):
-    comments = BusinessAdvertCommentSerializer(source='post_comment')
+    comments = BusinessAdvertCommentSerializer(source='post_comment', many=True)
     class Meta:
         model = BusinessAdvert
         fields = ['id', 'title', 'category', 'description', 'price', 'currency', 'completed', 'user', 'needs',
@@ -53,7 +53,7 @@ class BusinessAdvertSerializer(serializers.ModelSerializer):
 
 
 class ProviderAdvertSerializer(serializers.ModelSerializer):
-    comments = ProviderAdvertCommentSerializer(source='post_comment')
+    comments = ProviderAdvertCommentSerializer(source='post_comment', many=True)
     images = ImageSetSerializer()
 
     class Meta:

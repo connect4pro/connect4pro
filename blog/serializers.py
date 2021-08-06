@@ -15,7 +15,7 @@ class BlogCommentSerializer(serializers.ModelSerializer):
 
 class BlogPostSerializer(serializers.ModelSerializer):
     id = serializers.IntegerField(read_only=True)
-    comments = BlogCommentSerializer(source='post_comment')
+    comments = BlogCommentSerializer(source='post_comment', many=True)
     class Meta:
         model = BlogPost
         fields = ['id', 'title', 'subtitle', 'description', 'created', 'post_image', 'comments']
