@@ -26,7 +26,7 @@ class InvestCommentSerializer(serializers.ModelSerializer):
 
 class GrantSerializer(serializers.ModelSerializer):
     """Grant serialize"""
-    comments = GrantCommentSerializer(source='post_comment')
+    comments = GrantCommentSerializer(source='post_comment', many=True)
     class Meta:
         model = Grant
         fields = (
@@ -37,7 +37,7 @@ class GrantSerializer(serializers.ModelSerializer):
 
 class InvestmentSerializer(serializers.ModelSerializer):
     """Investment serialize"""
-    comments = InvestCommentSerializer(source='post_comment')
+    comments = InvestCommentSerializer(source='post_comment', many=True)
     class Meta:
         model = Investment
         fields = (

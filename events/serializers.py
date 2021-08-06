@@ -14,7 +14,7 @@ class EventCommentSerializer(serializers.ModelSerializer):
 
 class EventSerializer(serializers.ModelSerializer):
     id = serializers.IntegerField(read_only=True)
-    comments = EventCommentSerializer(source='post_comment')
+    comments = EventCommentSerializer(source='post_comment', many=True)
     class Meta:
         model = Event
         fields = ['id', 'name', 'date', 'time', 'location', 'event_format', 'sum', 'event_image', 'description',
