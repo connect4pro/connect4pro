@@ -88,6 +88,10 @@ class MyTokenObtainPairSerializer(TokenObtainPairSerializer):
         # Add extra responses here
         data['id'] = self.user.id
         data['email'] = self.user.email
+        if self.user.is_business:
+            data['user_type'] = 'business'
+        else:
+            data['user_type'] = 'provider'
         return data
 
 
