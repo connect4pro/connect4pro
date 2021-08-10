@@ -1,5 +1,6 @@
 from django.contrib import admin
-from adverts.models import BusinessAdvert, Category, ProviderAdvert, BusinessAdvertComment, ProviderAdvertComment
+from adverts.models import BusinessAdvert, Category, ProviderAdvert, BusinessAdvertComment, ProviderAdvertComment, \
+    Album, Image
 
 admin.site.register(Category)
 
@@ -18,9 +19,19 @@ class ProviderAdvertAdmin(admin.ModelAdmin):
 
 @admin.register(BusinessAdvertComment)
 class BusinessAdvertCommentAdmin(admin.ModelAdmin):
-    list_display = ('text', 'user',  'post')
+    list_display = ('text', 'user', 'post')
 
 
 @admin.register(ProviderAdvertComment)
 class ProviderAdvertCommentAdmin(admin.ModelAdmin):
-    list_display = ('text', 'user',  'post')
+    list_display = ('text', 'user', 'post')
+
+
+@admin.register(Album)
+class AlbumAdmin(admin.ModelAdmin):
+    list_display = ('id',)
+
+
+@admin.register(Image)
+class ImageAdmin(admin.ModelAdmin):
+    list_display = ('image', 'album')
