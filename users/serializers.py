@@ -17,7 +17,6 @@ class SectorSerializer(serializers.ModelSerializer):
 
 
 class SkillSerializer(serializers.ModelSerializer):
-    id = serializers.IntegerField(required=True)
     name = serializers.CharField(required=False)
 
     class Meta:
@@ -26,7 +25,6 @@ class SkillSerializer(serializers.ModelSerializer):
 
 
 class KnowledgeSerializer(serializers.ModelSerializer):
-    id = serializers.IntegerField(required=True)
     name = serializers.CharField(required=False)
 
     class Meta:
@@ -35,7 +33,6 @@ class KnowledgeSerializer(serializers.ModelSerializer):
 
 
 class MethodSerializer(serializers.ModelSerializer):
-    id = serializers.IntegerField(required=True)
     name = serializers.CharField(required=False)
 
     class Meta:
