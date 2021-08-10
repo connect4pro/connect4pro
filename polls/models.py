@@ -3,6 +3,8 @@ from django.core.validators import MaxValueValidator, MinValueValidator
 from django.contrib.auth import get_user_model
 from django.db.models import Sum, Avg
 
+from users.models import Connect4ProUser
+
 User = get_user_model()
 
 ANSWER_ONE = 0
@@ -31,7 +33,7 @@ class Question(models.Model):
 
 
 class ResultPoll(models.Model):
-    user = models.ForeignKey(User, on_delete = models.CASCADE, null = True)
+    user = models.ForeignKey(Connect4ProUser, on_delete = models.CASCADE, null = True)
     # questions = models.ForeignKey(Question, on_delete = models.CASCADE, verbose_name = "Вопрос пользователю")
     # answers = models.ForeignKey(Answer, on_delete = models.CASCADE, verbose_name = "Ответ пользователя")
     date_pass_poll = models.DateTimeField(auto_now_add = True)

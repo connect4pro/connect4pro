@@ -22,7 +22,7 @@ class SkillSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Skill
-        fields = ('id', 'name',)
+        fields = ('name',)
 
 
 class KnowledgeSerializer(serializers.ModelSerializer):
@@ -31,7 +31,7 @@ class KnowledgeSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Knowledge
-        fields = ('id', 'name',)
+        fields = ('name',)
 
 
 class MethodSerializer(serializers.ModelSerializer):
@@ -40,7 +40,7 @@ class MethodSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Method
-        fields = ('id', 'name',)
+        fields = ('name',)
 
 
 class BusinessProfileSerializer(serializers.ModelSerializer):
