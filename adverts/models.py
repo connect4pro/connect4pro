@@ -33,7 +33,7 @@ class Album(models.Model):
 class Image(models.Model):
     image = ResizedImageField(size=[350, 250], upload_to=f'images/adverts/%d%m%Y', blank=True,
                               null=True)
-    album = models.ForeignKey(Album, on_delete=models.CASCADE, related_name='album')
+    album = models.ForeignKey(Album, on_delete=models.CASCADE, related_name='images')
 
 
 class Category(models.Model):

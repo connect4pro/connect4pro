@@ -1,7 +1,8 @@
 from rest_framework import serializers
 from rest_framework.relations import PrimaryKeyRelatedField
 
-from adverts.models import Category, BusinessAdvert, ProviderAdvert, Album, BusinessAdvertComment, ProviderAdvertComment
+from adverts.models import Category, BusinessAdvert, ProviderAdvert, Album, BusinessAdvertComment, \
+    ProviderAdvertComment, Image
 from users.models import Connect4ProUser
 
 
@@ -26,13 +27,17 @@ class ProviderAdvertCommentSerializer(serializers.ModelSerializer):
         model = ProviderAdvertComment
         fields = ['id', 'post', 'text', 'user', 'posted']
 
+class ImageSerializer(serializers.ModelSerializer):
+    image = serializers.ImageField()
+    class Meta:
+        model = Image
+        fields = ('image',)
 
 class ImageSetSerializer(serializers.ModelSerializer):
-    image = serializers.ImageField()
-
+    image_set = ImageSerializer(source='images', many=True)
     class Meta:
         model = Album
-        fields = ('image',)
+        fields = ('image_set',)
 
 
 class AdvertCategorySerializer(serializers.ModelSerializer):
