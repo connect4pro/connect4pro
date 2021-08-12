@@ -1,4 +1,4 @@
-from datetime import datetime
+from datetime import datetime, date
 
 from django.contrib.auth.base_user import BaseUserManager
 from django.contrib.auth.models import AbstractUser, User
@@ -164,6 +164,7 @@ class ProviderProfile(models.Model):
     skills = models.ManyToManyField(Skill, verbose_name='Навыки', blank=True, related_name='skills')
     knowledge = models.ManyToManyField(Knowledge, verbose_name='Знания', blank=True)
     methods = models.ManyToManyField(Method, verbose_name='Методологии', blank=True)
+    foundation_date = models.DateField(verbose_name='Дата основания', default=date.today, blank=True, null=True)
 
     def __str__(self):
         return self.user.email

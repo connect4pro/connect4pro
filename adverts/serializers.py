@@ -72,8 +72,9 @@ class ProviderAdvertSerializer(serializers.ModelSerializer):
     comments = ProviderAdvertCommentSerializer(source='post_comment', many=True)
     images = ImageSetSerializer(required=False)
 
+
     class Meta:
         model = ProviderAdvert
         fields = (
-            'id', 'images', 'title', 'description', 'price', 'currency', 'category', 'created_at', 'comments')
+            'id', 'images', 'title', 'description', 'price', 'currency', 'category', 'created_at', 'user_id', 'comments')
         depth = 1

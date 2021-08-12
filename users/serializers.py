@@ -89,7 +89,8 @@ class UserBusinessProfileSerializer(serializers.ModelSerializer):
         model = Connect4ProUser
         fields = (
             'id', 'email', 'password', 'password2', 'first_name', 'last_name', 'birth_date', 'gender', 'country',
-            'city', 'phone', 'telegram', 'avatar', 'site', 'is_premium', 'start_date', 'end_date', 'is_business', 'is_provider',
+            'city', 'phone', 'telegram', 'avatar', 'site', 'is_premium', 'start_date', 'end_date', 'is_business',
+            'is_provider',
             'business_profile')
 
 
@@ -100,7 +101,7 @@ class ProviderProfileSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = ProviderProfile
-        fields = ('skills', 'knowledge', 'methods')
+        fields = ('skills', 'knowledge', 'methods', 'foundation_date')
 
 
 class UserProviderProfileSerializer(serializers.ModelSerializer):
@@ -161,7 +162,8 @@ class UserProviderProfileSerializer(serializers.ModelSerializer):
         model = Connect4ProUser
         fields = (
             'id', 'email', 'password', 'password2', 'first_name', 'last_name', 'birth_date', 'gender', 'country',
-            'city', 'phone', 'telegram', 'avatar', 'site', 'is_premium', 'start_date', 'end_date', 'is_business', 'is_provider',
+            'city', 'phone', 'telegram', 'avatar', 'site', 'is_premium', 'start_date', 'end_date', 'is_business',
+            'is_provider',
             'provider_profile')
 
 
