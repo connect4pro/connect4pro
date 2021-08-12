@@ -1,3 +1,5 @@
+from datetime import date
+
 from django.db import models
 from django_resized import ResizedImageField
 from phonenumber_field.modelfields import PhoneNumberField
@@ -91,6 +93,7 @@ class ProviderAdvert(models.Model):
     location = models.CharField(max_length=100, blank=True, null=True, default='')
     scope = models.CharField(max_length=100, blank=True, null=True, default='')
     services = models.CharField(max_length=100, blank=True, null=True, default='')
+    foundation_date = models.DateField(verbose_name='Дата основания', default=date.today, blank=True, null=True)
     created_at = models.DateTimeField(auto_now=True)
 
 
