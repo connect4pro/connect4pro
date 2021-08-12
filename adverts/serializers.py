@@ -3,7 +3,7 @@ from rest_framework.relations import PrimaryKeyRelatedField
 
 from adverts.models import Category, BusinessAdvert, ProviderAdvert, Album, BusinessAdvertComment, \
     ProviderAdvertComment, Image
-from users.models import Connect4ProUser
+from users.models import Connect4ProUser, ProviderProfile
 
 
 class UserSerializer(serializers.ModelSerializer):
@@ -73,15 +73,22 @@ class UserAdvertSerializer(serializers.ModelSerializer):
         fields = ('id', 'phone', 'telegram')
 
 
+class ProviderProfileAdvertSerializer(serializers.Serializer):
+    class Meta:
+        model = ProviderProfile
+        fields = ('foundation_date',)
+
+
 class ProviderAdvertSerializer(serializers.ModelSerializer):
     id = serializers.IntegerField(read_only=True)
     comments = ProviderAdvertCommentSerializer(source='post_comment', many=True)
     images = ImageSetSerializer(required=False)
     user = UserAdvertSerializer(required=False)
+    foundation_date = ProviderProfileAdvertSerializer(required=False)
 
     class Meta:
         model = ProviderAdvert
         fields = (
-            'id', 'images', 'title', 'description', 'price', 'currency', 'category', 'tel', 'created_at', 'user',
-            'comments')
+            'id', 'images', 'title', 'description', 'price', 'currency', 'category', 'tel', 'scope', 'services',
+            'location', 'created_at', 'user', 'foundation_date', 'comments')
         depth = 1

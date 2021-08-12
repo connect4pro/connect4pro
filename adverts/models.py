@@ -88,7 +88,11 @@ class ProviderAdvert(models.Model):
     price = models.DecimalField(decimal_places=2, verbose_name='Цена', max_digits=9, default=0)
     currency = models.CharField(max_length=3, verbose_name='Валюта', choices=CURRENCY_CHOICES, default=usd, blank=True)
     tel = models.CharField(max_length=20, verbose_name='Телефон', blank=True, null=True)
+    location = models.CharField(max_length=100, blank=True, null=True, default='')
+    scope = models.CharField(max_length=100, blank=True, null=True, default='')
+    services = models.CharField(max_length=100, blank=True, null=True, default='')
     created_at = models.DateTimeField(auto_now=True)
+
 
     def __str__(self):
         return self.title
