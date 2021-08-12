@@ -77,7 +77,7 @@ class ProviderAdvertSerializer(serializers.ModelSerializer):
     id = serializers.IntegerField(read_only=True)
     comments = ProviderAdvertCommentSerializer(source='post_comment', many=True)
     images = ImageSetSerializer(required=False)
-    user = UserAdvertSerializer()
+    user = UserAdvertSerializer(required=False)
 
     class Meta:
         model = ProviderAdvert
