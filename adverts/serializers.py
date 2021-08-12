@@ -67,14 +67,21 @@ class BusinessAdvertSerializer(serializers.ModelSerializer):
         depth = 1
 
 
+class UserAdvertSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Connect4ProUser
+        fields = ('id', 'phone', 'telegram')
+
+
 class ProviderAdvertSerializer(serializers.ModelSerializer):
     id = serializers.IntegerField(read_only=True)
     comments = ProviderAdvertCommentSerializer(source='post_comment', many=True)
     images = ImageSetSerializer(required=False)
-
+    user = UserAdvertSerializer()
 
     class Meta:
         model = ProviderAdvert
         fields = (
-            'id', 'images', 'title', 'description', 'price', 'currency', 'category', 'created_at', 'user_id', 'comments')
+            'id', 'images', 'title', 'description', 'price', 'currency', 'category', 'created_at', 'user',
+            'comments')
         depth = 1
