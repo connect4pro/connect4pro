@@ -94,7 +94,7 @@ class UserBusinessProfileSerializer(serializers.ModelSerializer):
 
 
 class ProviderProfileSerializer(serializers.ModelSerializer):
-    skills = SkillSerializer(many=True, required=False)
+    skills = SkillSerializer(required=False, many=True)
     knowledge = KnowledgeSerializer(many=True, required=False)
     methods = MethodSerializer(many=True, required=False)
 
@@ -130,7 +130,7 @@ class UserProviderProfileSerializer(serializers.ModelSerializer):
 
         for method in methods_data:
             try:
-                method_obj = Method.objects.get_or_create(name=method['name'])
+                method_obj = Method.objects.get(name=method['name'])
                 profile.save()
                 profile.methods.add(method_obj)
             except:
@@ -138,15 +138,17 @@ class UserProviderProfileSerializer(serializers.ModelSerializer):
 
         for knw in knowledge_data:
             try:
-                knw_obj = Knowledge.objects.get_or_create(name=knw['name'])
+                knw_obj = Knowledge.objects.get(name=knw['name'])
                 profile.save()
                 profile.knowledge.add(knw_obj)
             except:
                 continue
 
         for skill in skills_data:
+            print(profile.skills)
             try:
-                skill_obj = Skill.objects.get_or_create(name=skill['name'])
+                skill_obj = Skill.objects.create(name=dict(skill)['name'])
+
                 profile.save()
                 profile.skills.add(skill_obj)
             except:

@@ -161,7 +161,7 @@ class ProviderProfile(models.Model):
 
     user = models.OneToOneField(Connect4ProUser, verbose_name='Пользователь', on_delete=models.CASCADE,
                                 related_name='provider_profile')
-    skills = models.ManyToManyField(Skill, verbose_name='Навыки', blank=True)
+    skills = models.ManyToManyField(Skill, verbose_name='Навыки', blank=True, related_name='skills')
     knowledge = models.ManyToManyField(Knowledge, verbose_name='Знания', blank=True)
     methods = models.ManyToManyField(Method, verbose_name='Методологии', blank=True)
 

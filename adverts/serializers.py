@@ -13,7 +13,9 @@ class UserSerializer(serializers.ModelSerializer):
 
 
 class BusinessAdvertCommentSerializer(serializers.ModelSerializer):
-    user = UserSerializer()
+    text = serializers.CharField(required=False)
+    post = serializers.IntegerField(required=False)
+    user = UserSerializer(required=False)
 
     class Meta:
         model = BusinessAdvertComment
@@ -21,7 +23,9 @@ class BusinessAdvertCommentSerializer(serializers.ModelSerializer):
 
 
 class ProviderAdvertCommentSerializer(serializers.ModelSerializer):
-    user = UserSerializer()
+    text = serializers.CharField(required=False)
+    post = serializers.IntegerField(required=False)
+    user = UserSerializer(required=False)
 
     class Meta:
         model = ProviderAdvertComment
@@ -34,7 +38,7 @@ class ImageSerializer(serializers.ModelSerializer):
         fields = ('image',)
 
 class ImageSetSerializer(serializers.ModelSerializer):
-    image_set = ImageSerializer(source='images', many=True)
+    image_set = ImageSerializer(source='images', many=True, required=False)
     class Meta:
         model = Album
         fields = ('image_set',)
@@ -49,7 +53,7 @@ class AdvertCategorySerializer(serializers.ModelSerializer):
 
 
 class BusinessAdvertSerializer(serializers.ModelSerializer):
-    comments = BusinessAdvertCommentSerializer(source='post_comment', many=True)
+    comments = BusinessAdvertCommentSerializer(source='post_comment', many=True, required=False)
     class Meta:
         model = BusinessAdvert
         fields = ['id', 'title', 'category', 'description', 'price', 'currency', 'completed', 'user', 'needs',
@@ -58,8 +62,8 @@ class BusinessAdvertSerializer(serializers.ModelSerializer):
 
 
 class ProviderAdvertSerializer(serializers.ModelSerializer):
-    comments = ProviderAdvertCommentSerializer(source='post_comment', many=True)
-    images = ImageSetSerializer()
+    comments = ProviderAdvertCommentSerializer(source='post_comment', many=True, required=False)
+    images = ImageSetSerializer(required=False)
 
     class Meta:
         model = ProviderAdvert
