@@ -58,7 +58,7 @@ class AdvertCategorySerializer(serializers.ModelSerializer):
 
 class BusinessAdvertSerializer(serializers.ModelSerializer):
     id = serializers.IntegerField(read_only=True)
-    comments = BusinessAdvertCommentSerializer(source='post_comment', many=True)
+    comments = BusinessAdvertCommentSerializer(source='post_comment', many=True, required=False)
 
     class Meta:
         model = BusinessAdvert
@@ -81,14 +81,14 @@ class ProviderProfileAdvertSerializer(serializers.Serializer):
 
 class ProviderAdvertSerializer(serializers.ModelSerializer):
     id = serializers.IntegerField(read_only=True)
-    comments = ProviderAdvertCommentSerializer(source='post_comment', many=True)
+    comments = ProviderAdvertCommentSerializer(source='post_comment', many=True, required=False)
     images = ImageSetSerializer(required=False)
     user = UserAdvertSerializer(required=False)
-    foundation_date = ProviderProfileAdvertSerializer(required=False)
+    found_date = ProviderProfileAdvertSerializer(required=False, read_only=True)
 
     class Meta:
         model = ProviderAdvert
         fields = (
             'id', 'images', 'title', 'description', 'price', 'currency', 'category', 'tel', 'scope', 'services',
-            'location', 'created_at', 'user', 'foundation_date', 'comments')
+            'location', 'created_at', 'user', 'found_date', 'comments')
         depth = 1
