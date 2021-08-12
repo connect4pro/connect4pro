@@ -13,8 +13,8 @@ class UserSerializer(serializers.ModelSerializer):
 
 
 class BusinessAdvertCommentSerializer(serializers.ModelSerializer):
-    text = serializers.CharField(required=False)
-    post = serializers.IntegerField(required=False)
+    # text = serializers.CharField(required=False)
+    # post = serializers.IntegerField(required=False)
     user = UserSerializer(required=False)
 
     class Meta:
@@ -23,22 +23,26 @@ class BusinessAdvertCommentSerializer(serializers.ModelSerializer):
 
 
 class ProviderAdvertCommentSerializer(serializers.ModelSerializer):
-    text = serializers.CharField(required=False)
-    post = serializers.IntegerField(required=False)
+    # text = serializers.CharField(required=False)
+    # post = serializers.IntegerField(required=False)
     user = UserSerializer(required=False)
 
     class Meta:
         model = ProviderAdvertComment
         fields = ['id', 'post', 'text', 'user', 'posted']
 
+
 class ImageSerializer(serializers.ModelSerializer):
     image = serializers.ImageField()
+
     class Meta:
         model = Image
         fields = ('image',)
 
+
 class ImageSetSerializer(serializers.ModelSerializer):
     image_set = ImageSerializer(source='images', many=True, required=False)
+
     class Meta:
         model = Album
         fields = ('image_set',)
@@ -53,7 +57,9 @@ class AdvertCategorySerializer(serializers.ModelSerializer):
 
 
 class BusinessAdvertSerializer(serializers.ModelSerializer):
-    comments = BusinessAdvertCommentSerializer(source='post_comment', many=True, required=False)
+    id = serializers.IntegerField(read_only=True)
+    comments = BusinessAdvertCommentSerializer(source='post_comment', many=True)
+
     class Meta:
         model = BusinessAdvert
         fields = ['id', 'title', 'category', 'description', 'price', 'currency', 'completed', 'user', 'needs',
@@ -62,7 +68,8 @@ class BusinessAdvertSerializer(serializers.ModelSerializer):
 
 
 class ProviderAdvertSerializer(serializers.ModelSerializer):
-    comments = ProviderAdvertCommentSerializer(source='post_comment', many=True, required=False)
+    id = serializers.IntegerField(read_only=True)
+    comments = ProviderAdvertCommentSerializer(source='post_comment', many=True)
     images = ImageSetSerializer(required=False)
 
     class Meta:
