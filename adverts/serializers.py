@@ -73,11 +73,7 @@ class UserAdvertSerializer(serializers.ModelSerializer):
         fields = ('id', 'phone', 'telegram')
 
 
-class ProviderProfileAdvertSerializer(serializers.Serializer):
-    foundation_date = serializers.DateField(read_only=True)
-    class Meta:
-        model = ProviderProfile
-        fields = ('foundation_date',)
+
 
 
 class ProviderAdvertSerializer(serializers.ModelSerializer):
@@ -85,11 +81,11 @@ class ProviderAdvertSerializer(serializers.ModelSerializer):
     comments = ProviderAdvertCommentSerializer(source='post_comment', many=True, required=False)
     images = ImageSetSerializer(required=False)
     user = UserAdvertSerializer(required=False)
-    found_date = ProviderProfileAdvertSerializer(required=False, read_only=True)
+
 
     class Meta:
         model = ProviderAdvert
         fields = (
             'id', 'images', 'title', 'description', 'price', 'currency', 'category', 'tel', 'scope', 'services',
-            'location', 'created_at', 'user', 'found_date', 'comments')
+            'location', 'created_at', 'user', 'foundation_date', 'comments')
         depth = 1

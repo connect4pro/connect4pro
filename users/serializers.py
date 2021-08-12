@@ -101,7 +101,7 @@ class ProviderProfileSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = ProviderProfile
-        fields = ('skills', 'knowledge', 'methods', 'foundation_date')
+        fields = ('skills', 'knowledge', 'methods')
 
 
 class UserProviderProfileSerializer(serializers.ModelSerializer):
