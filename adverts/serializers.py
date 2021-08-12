@@ -74,6 +74,7 @@ class UserAdvertSerializer(serializers.ModelSerializer):
 
 
 class ProviderProfileAdvertSerializer(serializers.Serializer):
+    foundation_date = serializers.DateField(read_only=True)
     class Meta:
         model = ProviderProfile
         fields = ('foundation_date',)
