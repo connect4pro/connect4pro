@@ -82,6 +82,6 @@ class ProviderAdvertSerializer(serializers.ModelSerializer):
     class Meta:
         model = ProviderAdvert
         fields = (
-            'id', 'images', 'title', 'description', 'price', 'currency', 'category', 'created_at', 'user',
+            'id', 'images', 'title', 'description', 'price', 'currency', 'category', 'tel', 'created_at', 'user',
             'comments')
         depth = 1
