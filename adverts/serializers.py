@@ -7,6 +7,8 @@ from users.models import Connect4ProUser, ProviderProfile
 
 
 class UserSerializer(serializers.ModelSerializer):
+    id = serializers.IntegerField(required=True)
+
     class Meta:
         model = Connect4ProUser
         fields = ['id', 'avatar', 'first_name', 'last_name']
@@ -21,6 +23,16 @@ class BusinessAdvertCommentSerializer(serializers.ModelSerializer):
         model = BusinessAdvertComment
         fields = ['id', 'post', 'text', 'user', 'posted']
 
+    def create(self, validated_data):
+        user = dict(validated_data.pop('user'))['id']
+        post = validated_data['post']
+        user = Connect4ProUser.objects.get(id=user)
+        post = BusinessAdvert.objects.get(id=post.id)
+        text = validated_data['text']
+        comment = BusinessAdvertComment.objects.create(user=user, text=text, post=post)
+        comment.save()
+        return comment
+
 
 class ProviderAdvertCommentSerializer(serializers.ModelSerializer):
     # text = serializers.CharField(required=False)
@@ -30,6 +42,16 @@ class ProviderAdvertCommentSerializer(serializers.ModelSerializer):
     class Meta:
         model = ProviderAdvertComment
         fields = ['id', 'post', 'text', 'user', 'posted']
+
+    def create(self, validated_data):
+        user = dict(validated_data.pop('user'))['id']
+        post = validated_data['post']
+        user = Connect4ProUser.objects.get(id=user)
+        post = ProviderAdvert.objects.get(id=post.id)
+        text = validated_data['text']
+        comment = ProviderAdvertComment.objects.create(user=user, text=text, post=post)
+        comment.save()
+        return comment
 
 
 class ImageSerializer(serializers.ModelSerializer):
@@ -73,15 +95,11 @@ class UserAdvertSerializer(serializers.ModelSerializer):
         fields = ('id', 'phone', 'telegram')
 
 
-
-
-
 class ProviderAdvertSerializer(serializers.ModelSerializer):
     id = serializers.IntegerField(read_only=True)
     comments = ProviderAdvertCommentSerializer(source='post_comment', many=True, required=False, read_only=True)
     images = ImageSetSerializer(required=False)
     user = UserAdvertSerializer(required=False)
-
 
     class Meta:
         model = ProviderAdvert
