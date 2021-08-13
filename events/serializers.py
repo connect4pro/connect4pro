@@ -2,6 +2,7 @@ from rest_framework import serializers
 
 from adverts.serializers import UserSerializer
 from events.models import Event, EventComment
+from users.models import Connect4ProUser
 
 
 class EventCommentSerializer(serializers.ModelSerializer):
@@ -10,6 +11,16 @@ class EventCommentSerializer(serializers.ModelSerializer):
     class Meta:
         model = EventComment
         fields = ['id', 'post', 'text', 'user', 'posted']
+
+    def create(self, validated_data):
+        user = dict(validated_data.pop('user'))['id']
+        post = validated_data['post']
+        user = Connect4ProUser.objects.get(id=user)
+        post = Event.objects.get(id=post.id)
+        text = validated_data['text']
+        comment = EventComment.objects.create(user=user, text=text, post=post)
+        comment.save()
+        return comment
 
 
 class EventSerializer(serializers.ModelSerializer):
