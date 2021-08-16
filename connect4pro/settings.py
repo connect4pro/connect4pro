@@ -268,7 +268,9 @@ CORS_ALLOW_HEADERS = [
 CORS_ORIGIN_ALLOW_ALL = False
 
 CORS_ORIGIN_WHITELIST = (
-    'http//:localhost:3000',
+    'http://localhost:3000',
+    'http://94.228.120.61',
+    'http://94.228.120.61/',
 )
 
 DJANGORESIZED_DEFAULT_SIZE = [1920, 1080]
