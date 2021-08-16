@@ -8,12 +8,12 @@ from users.models import Connect4ProUser, BusinessProfile, Sector, ProviderProfi
 
 
 class SectorSerializer(serializers.ModelSerializer):
-    id = serializers.IntegerField(required=True)
+
     name = serializers.CharField(required=False)
 
     class Meta:
         model = Sector
-        fields = ('id', 'name',)
+        fields = ('name',)
 
 
 class SkillSerializer(serializers.ModelSerializer):
@@ -76,9 +76,14 @@ class UserBusinessProfileSerializer(serializers.ModelSerializer):
 
         for sect in sector_data:
             try:
-                sector = Sector.objects.get_or_create(name=sect['name'])
-                profile.save()
-                profile.sector.add(sector)
+                sector = Sector.objects.get(name=sect['name'])
+                if sector:
+                    profile.save()
+                    profile.sector.add(sector)
+                else:
+                    sector_obj = Sector.objects.create(name=dict(sect)['name'])
+                    profile.save()
+                    profile.sector.add(sector_obj)
             except:
                 continue
             finally:
@@ -146,8 +151,8 @@ class UserProviderProfileSerializer(serializers.ModelSerializer):
                 continue
 
         for skill in skills_data:
-            print(profile.skills)
             try:
+
                 skill_obj = Skill.objects.create(name=dict(skill)['name'])
 
                 profile.save()
