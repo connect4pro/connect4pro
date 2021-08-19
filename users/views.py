@@ -90,7 +90,7 @@ class MyTokenObtainPairSerializer(TokenObtainPairSerializer):
         data['email'] = self.user.email
         if self.user.is_business:
             data['user_type'] = 'business'
-        else:
+        elif self.user.is_provider:
             data['user_type'] = 'provider'
         return data
 
