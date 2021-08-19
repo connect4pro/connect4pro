@@ -61,6 +61,7 @@ INSTALLED_APPS = [
     'django.contrib.sites',
     'rest_framework',
     'rest_framework_simplejwt.token_blacklist',
+    'rest_framework_simplejwt',
     'drf_yasg',
     'phonenumber_field',
     # 'tinymce',
@@ -172,7 +173,7 @@ REST_FRAMEWORK = {
     ],
     'DEFAULT_AUTHENTICATION_CLASSES': (
         'rest_framework.authentication.TokenAuthentication',
-        # 'rest_framework.authentication.SessionAuthentication',
+        'rest_framework.authentication.SessionAuthentication',
         'rest_framework_simplejwt.authentication.JWTAuthentication',
     ),
     'DEFAULT_SCHEMA_CLASS': 'rest_framework.schemas.coreapi.AutoSchema'
@@ -222,8 +223,8 @@ SOCIALACCOUNT_PROVIDERS = {
         }
     }
 }
-LOGIN_REDIRECT_URL = '/api/token'
-LOGOUT_REDIRECT_URL = '/api/token'
+# LOGIN_REDIRECT_URL = '/api/token'
+# LOGOUT_REDIRECT_URL = '/api/token'
 
 # SOCIAL_AUTH_PIPELINE = (
 #     'users.pipelines.create_user',    # custom method

@@ -1,3 +1,4 @@
+from django.contrib.auth import authenticate
 from rest_framework import status
 from rest_framework.generics import CreateAPIView, ListAPIView, UpdateAPIView, RetrieveAPIView, get_object_or_404
 from rest_framework.permissions import IsAuthenticated
@@ -82,6 +83,8 @@ class MyTokenObtainPairSerializer(TokenObtainPairSerializer):
     def validate(self, attrs):
         data = super().validate(attrs)
         refresh = self.get_token(self.user)
+        user = authenticate(**attrs)
+
         data['refresh'] = str(refresh)
         data['access'] = str(refresh.access_token)
 
