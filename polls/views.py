@@ -1,7 +1,9 @@
+from django.core.mail import send_mail
 from django.db.models.query_utils import Q
 from django.shortcuts import render, get_object_or_404
+from django.template.loader import render_to_string
 from rest_framework.decorators import api_view
-from django.http import JsonResponse
+from django.http import JsonResponse, HttpResponse
 from .models import *
 from django.db.models import Sum
 from rest_framework import serializers, status
@@ -52,3 +54,27 @@ class PollResultId(APIView):
 
 class PollResultCreate(CreateAPIView):
     serializer_class = ResultPollSerializer
+
+
+
+def get_template(poll_id):
+    poll_obj = ResultPoll.objects.get(id=poll_id)
+    context = {
+        'poll': poll_obj
+    }
+    email_template = render_to_string('email/result_poll.html', context)
+    return email_template
+
+
+def send_result(request):
+    if request.method == 'POST':
+        poll = request.POST.get('poll_id')
+        number = request.POST.get('number')
+        email = request.POST.get('email')
+        email_template = get_template(poll)
+        subject = 'Калькулятор'
+        send_mail(subject, email_template, 'connect4pro@google.com', [email], fail_silently=False)
+        print(number, email, poll)
+        return  HttpResponse('200 OK')
+    return HttpResponse('Form empty/Not POST')
+
