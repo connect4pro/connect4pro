@@ -18,3 +18,8 @@ class AnswerInline(admin.TabularInline):
 class ResultPollAdmin(admin.ModelAdmin):
     inlines = [AnswerInline]
     list_display = ['id', 'user', 'avg_points']
+
+@admin.register(Appeal)
+class AppealAdmin(admin.ModelAdmin):
+    list_display = [f.name for f in Appeal._meta.get_fields()]
+    list_filter = ('status',)
