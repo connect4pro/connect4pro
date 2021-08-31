@@ -52,7 +52,7 @@ class ResultPoll(models.Model):
         verbose_name = "Результат опроса"
         verbose_name_plural = "Результаты опросов"
 
-class СonsultationForm(models.Model):
+class ConsultationForm(models.Model):
     name = models.CharField(max_length = 50, verbose_name = "Имя")
     phone_number = PhoneNumberField(null = False, verbose_name = "Номер телефона")
     messanger = models.CharField(max_length = 30, verbose_name = "Whats'App или Telegram")

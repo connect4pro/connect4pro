@@ -16,12 +16,12 @@ class AuthorAdmin(admin.ModelAdmin):
 
 @admin.register(Category)
 class CategoryAdmin(admin.ModelAdmin):
-    list_display = ('title', 'description')
+    list_display = ('id', 'title', 'description')
 
 
 @admin.register(Post)
 class CategoryAdmin(admin.ModelAdmin):
-    list_display = ('user', 'title', 'content', 'category', 'date')
+    list_display = ('id', 'user', 'title', 'content', 'category', 'date')
 
     def get_queryset(self, request):
         queryset = super().get_queryset(request)

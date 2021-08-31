@@ -17,7 +17,7 @@ class AnswerSerializer(serializers.ModelSerializer):
 
 
 class UserPollSerializer(serializers.ModelSerializer):
-    id = serializers.IntegerField(required = True)
+    id = serializers.IntegerField(required = False)
     email = serializers.CharField(required = True)
 
     class Meta:
@@ -26,7 +26,7 @@ class UserPollSerializer(serializers.ModelSerializer):
 
 
 class ResultPollSerializer(serializers.ModelSerializer):
-    id = serializers.IntegerField(required = True)
+    id = serializers.IntegerField(required = False)
     user = UserPollSerializer()
 
     class Meta:
@@ -42,8 +42,8 @@ class ResultPollSerializer(serializers.ModelSerializer):
         return poll
 
 class ConsultationFormSerializer(serializers.ModelSerializer):
-    id = serializers.IntegerField(required = True)
+    id = serializers.IntegerField(required = False)
 
     class Meta:
-        model = СonsultationForm
-        fields = ['id','name', 'phone_number', 'messanger']
+        model = ConsultationForm
+        fields = ['id', 'name', 'phone_number', 'messanger']

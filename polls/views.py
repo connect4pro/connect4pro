@@ -83,7 +83,7 @@ def send_result(request):
 
 
 
-class СonsultationFormSend(APIView):
+class ConsultationFormSend(APIView):
     def post(self, request):
         serializer = ConsultationFormSerializer(data = request.data)
         if serializer.is_valid():

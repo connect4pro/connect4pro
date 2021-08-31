@@ -12,5 +12,5 @@ urlpatterns = [
     path('api/poll', PollResultId.as_view()),
     path('api/poll/<int:poll_id>/<int:question_id>', AnswerCreate.as_view()),
     path('api/poll/send_result', send_result, name='send_result'),
-    path('api/poll/send_form', СonsultationFormSend.as_view()),
+    path('api/poll/send_form', ConsultationFormSend.as_view()),
 ]

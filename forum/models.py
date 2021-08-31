@@ -6,13 +6,14 @@ from django.contrib.auth import get_user_model
 from django.contrib.contenttypes.fields import GenericRelation
 from pytils.translit import slugify
 from django.shortcuts import reverse
+from users.models import Connect4ProUser
 # Create your models here.
 
 User = get_user_model()
 
 class Author(models.Model):
     '''Модель пользователя форума'''
-    user = models.ForeignKey(User, on_delete = models.CASCADE, verbose_name = 'Пользователь')
+    user = models.ForeignKey(Connect4ProUser, on_delete = models.CASCADE, verbose_name = 'Пользователь')
     fullname = models.CharField(max_length = 50, verbose_name = 'Настоящее имя')
     slug = models.SlugField(max_length = 400, unique = True, blank = True)
     bio = models.TextField(max_length = 150, verbose_name = 'Немного о себе')
