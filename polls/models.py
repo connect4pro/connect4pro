@@ -84,17 +84,4 @@ class Answer(models.Model):
         self.poll_result.save()
 
 
-class Appeal(models.Model):
-    result_poll = models.ForeignKey(ResultPoll, on_delete=models.CASCADE, verbose_name='Результат опроса')
-    name = models.CharField(max_length=100, verbose_name='Имя')
-    phone = models.CharField(max_length=16, verbose_name='Телеграм/WhatsApp')
-    email = models.EmailField(verbose_name='email')
-    date = models.DateTimeField(auto_now=True, verbose_name='Дата обращения')
-    status = models.CharField(max_length=20, verbose_name='Статус', choices=STATUS_CHOICES, default=OPENED, null=True)
 
-    def __str__(self):
-        return f'{self.email} - {self.date}'
-
-    class Meta:
-        verbose_name = 'Запрос консультации'
-        verbose_name_plural = 'Запросы консультаций'
