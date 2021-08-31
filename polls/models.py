@@ -22,7 +22,12 @@ ANSWER_CHOICES = (
     (ANSWER_FIVE, 80),
     (ANSWER_SIX, 100),
 )
-
+CLOSED = 'Закрыт'
+OPENED = 'Открыт'
+STATUS_CHOICES = (
+    (CLOSED, 'Закрыт'),
+    (OPENED, 'Открыт')
+)
 
 class Question(models.Model):
     title = models.CharField(max_length = 200, verbose_name = "Вопрос")
@@ -56,3 +61,19 @@ class Answer(models.Model):
         average = self.poll_result.answer_set.all().aggregate(Avg('final_answer'))
         self.poll_result.avg_points = average['final_answer__avg']
         self.poll_result.save()
+
+
+class Appeal(models.Model):
+    result_poll = models.ForeignKey(ResultPoll, on_delete=models.CASCADE, verbose_name='Результат опроса')
+    name = models.CharField(max_length=100, verbose_name='Имя')
+    phone = models.CharField(max_length=16, verbose_name='Телеграм/WhatsApp')
+    email = models.EmailField(verbose_name='email')
+    date = models.DateTimeField(auto_now=True, verbose_name='Дата обращения')
+    status = models.CharField(max_length=20, verbose_name='Статус', choices=STATUS_CHOICES, default=OPENED, null=True)
+
+    def __str__(self):
+        return f'{self.email} - {self.date}'
+
+    class Meta:
+        verbose_name = 'Запрос консультации'
+        verbose_name_plural = 'Запросы консультаций'
