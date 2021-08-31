@@ -21,6 +21,6 @@ class ResultPollAdmin(admin.ModelAdmin):
 
 
 
-@admin.register(СonsultationForm)
-class СonsultationFormAdmin(admin.ModelAdmin):
+@admin.register(ConsultationForm)
+class ConsultationFormAdmin(admin.ModelAdmin):
     list_display = ['id', 'name', 'phone_number', 'messanger']

@@ -47,5 +47,5 @@ class ConsultationFormSerializer(serializers.ModelSerializer):
     id = serializers.IntegerField(required = True)
 
     class Meta:
-        model = СonsultationForm
+        model = ConsultationForm
         fields = ['id','name', 'phone_number', 'messanger']

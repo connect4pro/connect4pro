@@ -64,23 +64,8 @@ class PollResultCreate(CreateAPIView):
     serializer_class = ResultPollSerializer
 
 
-def send_result(request):
-    # TODO: создать объект обращения
 
-    if request.method == 'POST':
-        poll = request.POST.get('poll_id')
-        number = request.POST.get('number')
-        email = request.POST.get('email')
-        name = request.POST.get('name')
-        appeal = Appeal.objects.create(result_poll_id=poll, phone=number, email=email, name=name)
-        appeal.save()
-        return HttpResponse('200 OK')
-    return HttpResponse('Form empty/Not POST')
-
-
-
-
-class СonsultationFormSend(APIView):
+class ConsultationFormSend(APIView):
     def post(self, request):
         serializer = ConsultationFormSerializer(data = request.data)
         if serializer.is_valid():
