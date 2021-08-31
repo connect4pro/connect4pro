@@ -19,7 +19,8 @@ class ResultPollAdmin(admin.ModelAdmin):
     inlines = [AnswerInline]
     list_display = ['id', 'user', 'avg_points']
 
-@admin.register(Appeal)
-class AppealAdmin(admin.ModelAdmin):
-    list_display = [f.name for f in Appeal._meta.get_fields()]
-    list_filter = ('status',)
+
+
+@admin.register(СonsultationForm)
+class СonsultationFormAdmin(admin.ModelAdmin):
+    list_display = ['id', 'name', 'phone_number', 'messanger']

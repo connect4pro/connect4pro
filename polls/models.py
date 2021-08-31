@@ -1,7 +1,9 @@
+from enum import unique
 from django.db import models
 from django.core.validators import MaxValueValidator, MinValueValidator
 from django.contrib.auth import get_user_model
 from django.db.models import Sum, Avg
+from phonenumber_field.modelfields import PhoneNumberField
 
 from users.models import Connect4ProUser
 
@@ -36,6 +38,10 @@ class Question(models.Model):
     def __str__(self):
         return self.title
 
+    class Meta:
+        verbose_name = "Вопрос"
+        verbose_name_plural = "Список вопросов"
+
 
 class ResultPoll(models.Model):
     user = models.ForeignKey(Connect4ProUser, on_delete = models.CASCADE, null = True)
@@ -47,6 +53,21 @@ class ResultPoll(models.Model):
     def __str__(self):
         return f'{self.avg_points}'
 
+    class Meta:
+        verbose_name = "Результат опроса"
+        verbose_name_plural = "Результаты опросов"
+
+class СonsultationForm(models.Model):
+    name = models.CharField(max_length = 50, verbose_name = "Имя")
+    phone_number = PhoneNumberField(null = False, verbose_name = "Номер телефона")
+    messanger = models.CharField(max_length = 30, verbose_name = "Whats'App или Telegram")
+
+    def __str__(self):
+        return f'{self.name}, {self.phone_number}, {self.messanger}'
+
+    class Meta:
+        verbose_name = "Обращение через форму для консультации"
+        verbose_name_plural = "Все обращения через форму для консультаций"
 
 
 class Answer(models.Model):
