@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 from django.contrib import admin
 from .models import *
 
@@ -23,3 +24,31 @@ class ResultPollAdmin(admin.ModelAdmin):
 @admin.register(ConsultationForm)
 class СonsultationFormAdmin(admin.ModelAdmin):
     list_display = ['id', 'name', 'phone_number', 'messanger']
+=======
+from django.contrib import admin
+from .models import *
+
+@admin.register(Question)
+class QuestionAdmin(admin.ModelAdmin):
+    list_display = ['id', 'title']
+
+@admin.register(Answer)
+class AnswerAdmin(admin.ModelAdmin):
+    list_display = ['id', 'question', 'final_answer', 'poll_result']
+
+
+class AnswerInline(admin.TabularInline):
+    model = Answer
+
+
+@admin.register(ResultPoll)
+class ResultPollAdmin(admin.ModelAdmin):
+    inlines = [AnswerInline]
+    list_display = ['id', 'user', 'avg_points']
+
+
+
+@admin.register(ConsultationForm)
+class ConsultationFormAdmin(admin.ModelAdmin):
+    list_display = ['id', 'name', 'phone_number', 'messanger']
+>>>>>>> 803b5d8895726f93043b67deacb9a6807f91452f
