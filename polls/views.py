@@ -43,14 +43,17 @@ class AnswerCreate(APIView):
         # return Response(serializer.errors, status.HTTP_400_BAD_REQUEST)
 
 
+# class PollResultId(APIView):
+#     def post(self, request):
+#         serializer = ResultPollSerializer(data = request.data)
+#         if serializer.is_valid():
+#             serializer.save()
+#             return Response(serializer.data, status.HTTP_201_CREATED)
+#         return Response(serializer.errors, status.HTTP_400_BAD_REQUEST)
 
-class PollResultId(APIView):
-    def post(self, request):
-        serializer = ResultPollSerializer(data = request.data)
-        if serializer.is_valid():
-            serializer.save()
-            return Response(serializer.data, status.HTTP_201_CREATED)
-        return Response(serializer.errors, status.HTTP_400_BAD_REQUEST)
+
+class PollResultId(CreateAPIView):
+    serializer_class = ResultPollSerializer
 
 class PollResultCreate(CreateAPIView):
     serializer_class = ResultPollSerializer
@@ -78,3 +81,12 @@ def send_result(request):
         return  HttpResponse('200 OK')
     return HttpResponse('Form empty/Not POST')
 
+
+
+class СonsultationFormSend(APIView):
+    def post(self, request):
+        serializer = ConsultationFormSerializer(data = request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status.HTTP_201_CREATED)
+        return Response(serializer.errors, status.HTTP_400_BAD_REQUEST)
