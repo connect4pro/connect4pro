@@ -44,7 +44,7 @@ class ResultPollSerializer(serializers.ModelSerializer):
         return poll
 
 class ConsultationFormSerializer(serializers.ModelSerializer):
-    id = serializers.IntegerField(required = True)
+    id = serializers.IntegerField()
 
     class Meta:
         model = ConsultationForm
