@@ -20,6 +20,7 @@ class ResultPollAdmin(admin.ModelAdmin):
     list_display = ['id', 'user', 'avg_points']
 
 
+
 @admin.register(СonsultationForm)
 class СonsultationFormAdmin(admin.ModelAdmin):
     list_display = ['id', 'name', 'phone_number', 'messanger']

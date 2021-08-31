@@ -12,28 +12,30 @@ from rest_framework.response import Response
 from rest_framework.generics import ListAPIView, ListCreateAPIView, UpdateAPIView, CreateAPIView, GenericAPIView
 from polls.serializers import *
 
+
 class QuestionList(APIView):
-     def get(self, request):
-         questions = Question.objects.all()
-         serializer = QuestionSerializer(questions, many = True)
-         return Response(serializer.data)
+    def get(self, request):
+        questions = Question.objects.all()
+        serializer = QuestionSerializer(questions, many=True)
+        return Response(serializer.data)
+
 
 # class QuestionCreate(CreateAPIView):
 #     serializer_class = QuestionSerializer
 
 
 class AnswerList(APIView):
-     def get(self, request):
-         answer = Answer.objects.all()
-         serializer = AnswerSerializer(answer, many = True)
-         return Response(serializer.data)
+    def get(self, request):
+        answer = Answer.objects.all()
+        serializer = AnswerSerializer(answer, many=True)
+        return Response(serializer.data)
+
 
 class AnswerCreate(APIView):
     def post(self, request, question_id, poll_id):
-
-        question = Question.objects.get(id = question_id)
-        poll = ResultPoll.objects.get(id = poll_id)
-        answer = Answer.objects.create(question = question, poll_result = poll, final_answer = request.data["choice"])
+        question = Question.objects.get(id=question_id)
+        poll = ResultPoll.objects.get(id=poll_id)
+        answer = Answer.objects.create(question=question, poll_result=poll, final_answer=request.data["choice"])
         serializer = AnswerSerializer(answer)
         return Response(serializer.data, status.HTTP_201_CREATED)
 
@@ -41,6 +43,7 @@ class AnswerCreate(APIView):
         #     serializer.save()
         #     return Response(serializer.data, status.HTTP_201_CREATED)
         # return Response(serializer.errors, status.HTTP_400_BAD_REQUEST)
+
 
 
 # class PollResultId(APIView):
@@ -55,31 +58,25 @@ class AnswerCreate(APIView):
 class PollResultId(CreateAPIView):
     serializer_class = ResultPollSerializer
 
+
+
 class PollResultCreate(CreateAPIView):
     serializer_class = ResultPollSerializer
 
 
-
-def get_template(poll_id):
-    poll_obj = ResultPoll.objects.get(id=poll_id)
-    context = {
-        'poll': poll_obj
-    }
-    email_template = render_to_string('email/result_poll.html', context)
-    return email_template
-
-
 def send_result(request):
+    # TODO: создать объект обращения
+
     if request.method == 'POST':
         poll = request.POST.get('poll_id')
         number = request.POST.get('number')
         email = request.POST.get('email')
-        email_template = get_template(poll)
-        subject = 'Калькулятор'
-        send_mail(subject, email_template, 'connect4pro@google.com', [email], fail_silently=False)
-        print(number, email, poll)
-        return  HttpResponse('200 OK')
+        name = request.POST.get('name')
+        appeal = Appeal.objects.create(result_poll_id=poll, phone=number, email=email, name=name)
+        appeal.save()
+        return HttpResponse('200 OK')
     return HttpResponse('Form empty/Not POST')
+
 
 
 
@@ -90,3 +87,4 @@ class СonsultationFormSend(APIView):
             serializer.save()
             return Response(serializer.data, status.HTTP_201_CREATED)
         return Response(serializer.errors, status.HTTP_400_BAD_REQUEST)
+
