@@ -14,7 +14,6 @@ class AuthorSerializer(serializers.ModelSerializer):
 
 
 class CategorySerializer(serializers.ModelSerializer):
-    id = serializers.IntegerField(required = False)
     title = serializers.CharField(required = True)
 
     class Meta:
@@ -33,8 +32,8 @@ class PostSerializer(serializers.ModelSerializer):
         read_only_fields = ('slug',)
 
     def create(self, validated_data):
-        category = dict(validated_data.pop('category'))['id']
-        category = Category.objects.get(id = category)
+        category = dict(validated_data.pop('category'))['title']
+        category = Category.objects.get(title = category)
         new_post = Post.objects.create(category = category, user = validated_data['user'], title = validated_data['title'], content = validated_data['content'])
         new_post.save()
         return new_post
