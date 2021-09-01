@@ -36,22 +36,26 @@ class AuthorCreate(CreateAPIView):
 
 
 #CategoryList
-class CategoryList(APIView):
-    permission_classes = ()
+# class CategoryList(APIView):
+#     permission_classes = ()
+#
+#     @swagger_auto_schema(responses = {200: CategorySerializer(many = True)})
+#     def get(self, request):
+#         categories = Category.objects.all()
+#         serializer = CategorySerializer(categories, many = True)
+#         return Response(serializer.data)
+#
+#     def post(self, request):
+#         """Создание категории"""
+#         serializer = CategorySerializer(data=request.data)
+#         if serializer.is_valid():
+#             serializer.save()
+#             return Response(serializer.data, status=status.HTTP_201_CREATED)
+#         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
-    @swagger_auto_schema(responses = {200: CategorySerializer(many = True)})
-    def get(self, request):
-        categories = Category.objects.all()
-        serializer = CategorySerializer(categories, many = True)
-        return Response(serializer.data)
-
-    def post(self, request):
-        """Создание категории"""
-        serializer = CategorySerializer(data=request.data)
-        if serializer.is_valid():
-            serializer.save()
-            return Response(serializer.data, status=status.HTTP_201_CREATED)
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+class CategoryList(ListAPIView):
+    serializer_class = CategorySerializer
+    queryset = Category.objects.all()
 
 #CategoryCreate
 class CategoryCreate(CreateAPIView):
@@ -59,21 +63,21 @@ class CategoryCreate(CreateAPIView):
 
 
 
-class PostList(APIView):
-    permission_classes = ()
-
-    @swagger_auto_schema(responses = {200: PostSerializer(many = True)})
-    def get(self, request):
-        posts = Post.objects.all()
-        serializer = PostSerializer(posts, many = True)
-        return Response(serializer.data)
-
-#     def post(self, request):
-#         serializer = PostSerializer(data=request.data)
-#         if serializer.is_valid():
-#             serializer.save()
-#             return Response(serializer.data, status=status.HTTP_201_CREATED)
-#         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+# class PostList(APIView):
+#     permission_classes = ()
+#
+#     @swagger_auto_schema(responses = {200: PostSerializer(many = True)})
+#     def get(self, request):
+#         posts = Post.objects.all()
+#         serializer = PostSerializer(posts, many = True)
+#         return Response(serializer.data)
+#
+# #     def post(self, request):
+# #         serializer = PostSerializer(data=request.data)
+# #         if serializer.is_valid():
+# #             serializer.save()
+# #             return Response(serializer.data, status=status.HTTP_201_CREATED)
+# #         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
 class PostList(ListAPIView):
