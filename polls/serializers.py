@@ -3,7 +3,6 @@ from rest_framework import serializers
 from rest_framework.relations import StringRelatedField
 from .models import *
 
-
 class QuestionSerializer(serializers.ModelSerializer):
     class Meta:
         model = Question
@@ -27,7 +26,6 @@ class UserPollSerializer(serializers.ModelSerializer):
 
 
 class ResultPollSerializer(serializers.ModelSerializer):
-
     id = serializers.IntegerField(required = False)
     user = UserPollSerializer()
 
@@ -48,4 +46,4 @@ class ConsultationFormSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = ConsultationForm
-        fields = ['id','name', 'phone_number', 'messanger']
+        fields = ['id', 'name', 'phone_number', 'messanger']
