@@ -59,15 +59,14 @@ class CategoryCreate(CreateAPIView):
 
 
 
-#PostList
-# class PostList(APIView):
-#     permission_classes = ()
+class PostList(APIView):
+    permission_classes = ()
 
-#     @swagger_auto_schema(responses = {200: PostSerializer(many = True)})
-#     def get(self, request):
-#         posts = Post.objects.all()
-#         serializer = PostSerializer(posts, many = True)
-#         return Response(serializer.data)
+    @swagger_auto_schema(responses = {200: PostSerializer(many = True)})
+    def get(self, request):
+        posts = Post.objects.all()
+        serializer = PostSerializer(posts, many = True)
+        return Response(serializer.data)
 
 #     def post(self, request):
 #         serializer = PostSerializer(data=request.data)
@@ -76,9 +75,10 @@ class CategoryCreate(CreateAPIView):
 #             return Response(serializer.data, status=status.HTTP_201_CREATED)
 #         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
-#PostCreate
-class PostList(CreateAPIView):
+
+class PostList(ListAPIView):
     serializer_class = PostSerializer
+    queryset = Post.objects.all()
 
 class PostCreate(CreateAPIView):
     serializer_class = PostSerializer
