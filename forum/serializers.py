@@ -6,28 +6,26 @@ from forum.models import Author, Category, Post, Comment
 
 
 class AuthorSerializer(serializers.ModelSerializer):
-    id = serializers.IntegerField(required = False)
-    email = serializers.CharField(required = True)
 
     class Meta:
         model = Author
-        fields = ['id', 'email', 'fullname', 'bio']
+        fields = ['id', 'fullname', 'bio']
         read_only_fields = ('slug',)
 
 
 class CategorySerializer(serializers.ModelSerializer):
     id = serializers.IntegerField(required = False)
+    title = serializers.CharField(required = True)
 
     class Meta:
         model = Category
-        fields = ['id', 'title', 'slug', 'description']
+        fields = ['id', 'title', 'slug']
         read_only_fields = ('slug',)
 
 
 class PostSerializer(serializers.ModelSerializer):
     id = serializers.IntegerField(required = False)
     category = CategorySerializer()
-    user = AuthorSerializer()
 
     class Meta:
         model = Post
@@ -37,9 +35,9 @@ class PostSerializer(serializers.ModelSerializer):
     def create(self, validated_data):
         category = dict(validated_data.pop('category'))['id']
         category = Category.objects.get(id = category)
-        post = Post.objects.create(category = category, user = validated_data['user'], title = validated_data['title'], content = validated_data['content'])
-        post.save()
-        return post
+        new_post = Post.objects.create(category = category, user = validated_data['user'], title = validated_data['title'], content = validated_data['content'])
+        new_post.save()
+        return new_post
 
 
 class CommentSerializer(serializers.ModelSerializer):
