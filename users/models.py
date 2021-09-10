@@ -41,6 +41,9 @@ class CustomUserManager(BaseUserManager):
         return user
 
 
+AUTH_PROVIDERS = {'facebook': 'facebook', 'google': 'google', 'email': 'email'}
+
+
 class Connect4ProUser(AbstractUser):
     """Общая для всех основа пользователя"""
 
@@ -69,6 +72,8 @@ class Connect4ProUser(AbstractUser):
     end_date = models.DateTimeField(verbose_name='Дата окончания премиум', null=True, blank=True)
     is_business = models.BooleanField(default=False, verbose_name='Профиль МСБ')
     is_provider = models.BooleanField(default=False, verbose_name='Профиль провайдера')
+    auth_provider = models.CharField(max_length=255, blank=False, null=False, default=AUTH_PROVIDERS.get('email'),
+                                     verbose_name='Провайдер аутентификации')
 
     def tokens(self):
         refresh = RefreshToken.for_user(self)
@@ -164,7 +169,6 @@ class ProviderProfile(models.Model):
     skills = models.ManyToManyField(Skill, verbose_name='Навыки', blank=True, related_name='skills')
     knowledge = models.ManyToManyField(Knowledge, verbose_name='Знания', blank=True)
     methods = models.ManyToManyField(Method, verbose_name='Методологии', blank=True)
-
 
     def __str__(self):
         return self.user.email

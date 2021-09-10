@@ -8,7 +8,6 @@ from users.models import Connect4ProUser, BusinessProfile, Sector, ProviderProfi
 
 
 class SectorSerializer(serializers.ModelSerializer):
-
     name = serializers.CharField(required=False)
 
     class Meta:
