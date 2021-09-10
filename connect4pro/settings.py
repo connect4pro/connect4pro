@@ -50,6 +50,7 @@ INSTALLED_APPS = [
     'polls.apps.PollsConfig',
     'newsletter.apps.NewsletterConfig',
     'payments.apps.PaymentsConfig',
+    'social_auth.apps.SocialAuthConfig',
 
     # Django
     'django.contrib.admin',
