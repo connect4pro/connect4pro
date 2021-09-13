@@ -17,7 +17,8 @@ def register_social_user(provider, user_id, email):
 
             return {
                 'email': registered_user.email,
-                'tokens': registered_user.tokens()}
+                'token': registered_user.tokens(),
+                'id': registered_user.id}
 
         else:
             raise AuthenticationFailed(
@@ -36,5 +37,6 @@ def register_social_user(provider, user_id, email):
             email=email, password=os.environ.get('SOCIAL_SECRET'))
         return {
             'email': new_user.email,
-            'tokens': new_user.tokens()
+            'tokens': new_user.tokens(),
+            'id': new_user.id,
         }
