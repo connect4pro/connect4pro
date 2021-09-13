@@ -220,7 +220,7 @@ SOCIALACCOUNT_PROVIDERS = {
         ],
         'AUTH_PARAMS': {
             'access_type': 'online',
-            'redirect_uri': 'http://127.0.0.1:8000/<custom-url>'
+            'redirect_uri': 'http://94.228.120.61/<custom-url>'
         }
     }
 }
@@ -289,3 +289,4 @@ CSRF_COOKIE_NAME = "XSRF-TOKEN"
 CSRF_USE_SESSIONS = True
 
 SOCIAL_AUTH_REDIRECT_IS_HTTPS = True
+
