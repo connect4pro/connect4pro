@@ -8,8 +8,9 @@ from rest_framework.exceptions import AuthenticationFailed
 class FacebookSocialAuthSerializer(serializers.Serializer):
     """Handles serialization of facebook related data"""
     auth_token = serializers.CharField()
+    user_type = serializers.CharField(required=False)
 
-    def validate_auth_token(self, auth_token):
+    def validate_auth_token(self, auth_token, user_type):
         user_data = facebook.Facebook.validate(auth_token)
 
         try:
@@ -20,6 +21,7 @@ class FacebookSocialAuthSerializer(serializers.Serializer):
                 provider=provider,
                 user_id=user_id,
                 email=email,
+                user_type=user_type,
             )
         except Exception as identifier:
 
@@ -30,8 +32,9 @@ class FacebookSocialAuthSerializer(serializers.Serializer):
 
 class GoogleSocialAuthSerializer(serializers.Serializer):
     auth_token = serializers.CharField()
+    user_type = serializers.CharField(required=False)
 
-    def validate_auth_token(self, auth_token):
+    def validate_auth_token(self, auth_token, user_type=None):
         user_data = google.Google.validate(auth_token)
         print(user_data)
 
@@ -42,14 +45,14 @@ class GoogleSocialAuthSerializer(serializers.Serializer):
             raise serializers.ValidationError(
                 'The token is invalid or expired. Please login again.'
             )
-        print(os.environ.get('SOCIAL_AUTH_GOOGLE_OAUTH2_KEY'))
-        if user_data['aud'] != os.environ.get('SOCIAL_AUTH_GOOGLE_OAUTH2_KEY'):
 
-            raise AuthenticationFailed('oops, who are you?')
+        # if user_data['aud'] != os.environ.get('SOCIAL_AUTH_GOOGLE_OAUTH2_KEY'):
+        #
+        #     raise AuthenticationFailed('oops, who are you?')
 
         user_id = user_data['sub']
         email = user_data['email']
         provider = 'google'
 
         return register_social_user(
-            provider=provider, user_id=user_id, email=email)
+            provider=provider, user_id=user_id, email=email, user_type=user_type)

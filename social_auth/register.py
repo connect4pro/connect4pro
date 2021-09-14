@@ -1,11 +1,11 @@
 from django.contrib.auth import authenticate
-from users.models import Connect4ProUser
+from users.models import Connect4ProUser, BusinessProfile, ProviderProfile
 import os
 import random
 from rest_framework.exceptions import AuthenticationFailed
 
 
-def register_social_user(provider, user_id, email):
+def register_social_user(provider, user_id, email, user_type=None):
     filtered_user_by_email = Connect4ProUser.objects.filter(email=email)
 
     if filtered_user_by_email.exists():
@@ -31,6 +31,15 @@ def register_social_user(provider, user_id, email):
         user = Connect4ProUser.objects.create_user(**user)
         user.is_active = True
         user.auth_provider = provider
+        if user_type:
+            if user_type == 'business':
+                user.is_business = True
+                profile = BusinessProfile.objects.create(user=user)
+                profile.save()
+            elif user_type == 'provider':
+                user.is_provider = True
+                profile = ProviderProfile.objects.create(user=user)
+                profile.save()
         user.save()
 
         new_user = authenticate(
