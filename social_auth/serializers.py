@@ -10,7 +10,7 @@ class FacebookSocialAuthSerializer(serializers.Serializer):
     auth_token = serializers.CharField()
     user_type = serializers.CharField(required=False)
 
-    def validate_auth_token(self, auth_token, user_type):
+    def validate_auth_token(self, auth_token, user_type=None):
         user_data = facebook.Facebook.validate(auth_token)
 
         try:
