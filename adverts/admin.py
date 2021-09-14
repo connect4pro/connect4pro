@@ -7,14 +7,14 @@ admin.site.register(Category)
 
 @admin.register(BusinessAdvert)
 class BusinessAdvertAdmin(admin.ModelAdmin):
-    list_display = ['user', 'title', 'price', 'currency', 'category', 'completed']
-    list_filter = ['currency', 'category__name', 'completed']
+    list_display = ['user', 'title', 'price', 'currency', 'completed']
+    list_filter = ['currency', 'completed']
 
 
 @admin.register(ProviderAdvert)
 class ProviderAdvertAdmin(admin.ModelAdmin):
-    list_display = ['user', 'title', 'price', 'currency', 'category']
-    list_filter = ['currency', 'category__name']
+    list_display = ['user', 'title', 'price', 'currency',]
+    list_filter = ['currency', ]
 
 
 @admin.register(BusinessAdvertComment)

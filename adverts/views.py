@@ -24,8 +24,8 @@ class BusinessAdvertList(ListCreateAPIView):
     queryset = BusinessAdvert.objects.all()
     serializer_class = BusinessAdvertSerializer
 
-    def perform_create(self, serializer):
-        serializer.save(user=self.request.user.business_profile)
+    # def perform_create(self, serializer):
+    #     serializer.save(user=self.request.user.business_profile)
 
 
 class ProviderAdvertList(ListCreateAPIView):
@@ -36,8 +36,10 @@ class ProviderAdvertList(ListCreateAPIView):
     queryset = ProviderAdvert.objects.all()
     serializer_class = ProviderAdvertSerializer
 
-    def perform_create(self, serializer):
-        serializer.save(user=self.request.user.provider_profile)
+    # def perform_create(self, serializer):
+    #     serializer.save(user=self.request.user.provider_profile)
+    #
+    # def post(self, request, *args, **kwargs):
 
 
 class BusinessAdvertUpdate(UpdateAPIView):
