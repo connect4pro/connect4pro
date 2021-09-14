@@ -56,8 +56,7 @@ class BusinessAdvert(models.Model):
     """Объявление от МСБ"""
 
     title = models.CharField(max_length=200, verbose_name='Заголовок')
-    category = models.ForeignKey(Category, verbose_name='Категория', on_delete=models.CASCADE,
-                                 related_name='business_advert_category')
+
     description = models.TextField(verbose_name='Описание')
     price = models.DecimalField(decimal_places=2, verbose_name='Цена', max_digits=9, default=0)
     currency = models.CharField(max_length=3, verbose_name='Валюта', choices=CURRENCY_CHOICES, default=usd, blank=True)
@@ -85,8 +84,7 @@ class ProviderAdvert(models.Model):
     user = models.ForeignKey(ProviderProfile, verbose_name='Пользователь', on_delete=models.CASCADE,
                              related_name='provider_profile')
     images = models.ForeignKey(Album, verbose_name='Фото', on_delete=models.CASCADE, related_name='image_set')
-    category = models.ForeignKey(Category, verbose_name='Категория', on_delete=models.CASCADE,
-                                 related_name='provider_advert_category')
+
     price = models.DecimalField(decimal_places=2, verbose_name='Цена', max_digits=9, default=0)
     currency = models.CharField(max_length=3, verbose_name='Валюта', choices=CURRENCY_CHOICES, default=usd, blank=True)
     tel = models.CharField(max_length=20, verbose_name='Телефон', blank=True, null=True)

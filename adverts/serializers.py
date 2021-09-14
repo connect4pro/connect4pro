@@ -78,21 +78,32 @@ class AdvertCategorySerializer(serializers.ModelSerializer):
         fields = '__all__'
 
 
-class BusinessAdvertSerializer(serializers.ModelSerializer):
-    id = serializers.IntegerField(read_only=True)
-    comments = BusinessAdvertCommentSerializer(source='post_comment', many=True, required=False, read_only=True)
-
-    class Meta:
-        model = BusinessAdvert
-        fields = ['id', 'title', 'category', 'description', 'price', 'currency', 'completed', 'user', 'needs',
-                  'suggest', 'tel', 'created_at', 'comments']
-        depth = 1
-
-
 class UserAdvertSerializer(serializers.ModelSerializer):
+    id = serializers.IntegerField()
     class Meta:
         model = Connect4ProUser
         fields = ('id', 'phone', 'telegram')
+
+
+class BusinessAdvertSerializer(serializers.ModelSerializer):
+    id = serializers.IntegerField(read_only=True)
+    comments = BusinessAdvertCommentSerializer(source='post_comment', many=True, required=False, read_only=True)
+    user = UserAdvertSerializer(required=False)
+
+
+    class Meta:
+        model = BusinessAdvert
+        fields = ['id', 'title', 'description', 'price', 'currency', 'completed', 'user', 'needs',
+                  'suggest', 'tel', 'created_at', 'comments']
+        depth = 1
+
+    def create(self, validated_data):
+        user_data = validated_data.pop('user')
+
+        user = Connect4ProUser.objects.get(id=user_data['id'])
+        advert = BusinessAdvert.objects.create(**validated_data, user=user.business_profile)
+        advert.save()
+        return advert
 
 
 class ProviderAdvertSerializer(serializers.ModelSerializer):
@@ -104,6 +115,17 @@ class ProviderAdvertSerializer(serializers.ModelSerializer):
     class Meta:
         model = ProviderAdvert
         fields = (
-            'id', 'images', 'title', 'description', 'price', 'currency', 'category', 'tel', 'scope', 'services',
+            'id', 'images', 'title', 'description', 'price', 'currency', 'tel', 'scope', 'services',
             'location', 'created_at', 'user', 'foundation_date', 'comments')
         depth = 1
+
+    def create(self, validated_data):
+        user_data = validated_data.pop('user')
+        image_set = validated_data.pop('images')
+        images = Album.objects.create(**image_set)
+        images.save()
+
+        user = Connect4ProUser.objects.get(id=user_data['id'])
+        advert = ProviderAdvert.objects.create(**validated_data, user=user.provider_profile, images_id=images.id)
+        advert.save()
+        return advert
