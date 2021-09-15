@@ -37,14 +37,12 @@ class ProviderUserRegister(CreateAPIView):
 
 class BusinessUserUpdate(UpdateAPIView):
     queryset = Connect4ProUser.objects.filter(is_business=True)
-    permission_classes = (IsAuthenticated, IsOwnerOrReadOnly)
     serializer_class = UpdateBusinessProfile
     lookup_field = 'id'
 
 
 class ProviderUserUpdate(UpdateAPIView):
     queryset = Connect4ProUser.objects.filter(is_provider=True)
-    permission_classes = (IsAuthenticated, IsOwnerOrReadOnly)
     serializer_class = UpdateProviderProfile
     lookup_field = 'id'
 
