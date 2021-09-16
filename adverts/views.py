@@ -1,3 +1,4 @@
+from django.shortcuts import render
 from rest_framework import permissions
 from rest_framework.generics import ListAPIView, ListCreateAPIView, UpdateAPIView, CreateAPIView, RetrieveAPIView
 
@@ -92,3 +93,7 @@ class ProviderAdvertDetail(RetrieveAPIView):
     queryset = ProviderAdvert.objects.all()
     serializer_class = ProviderAdvertSerializer
     lookup_field = 'id'
+
+
+def react_view(request):
+    return render(request, 'index.html')
