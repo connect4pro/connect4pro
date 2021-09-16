@@ -5,6 +5,7 @@ from django.urls import path, include
 import debug_toolbar
 from django.views.decorators.csrf import csrf_exempt
 
+from adverts.views import react_view
 from users.views import MyTokenObtainPairView, LogoutView
 from . import settings
 from .yasg import urlpatterns as yasg_urls
@@ -12,7 +13,7 @@ from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-
+    path('', react_view),
     path('api-auth/', include('rest_framework.urls')),
     path('__debug__/', include(debug_toolbar.urls)),
     path('', include('users.urls')),
