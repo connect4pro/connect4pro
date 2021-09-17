@@ -16,24 +16,27 @@ from pathlib import Path
 from django.template.context_processors import media
 from dotenv import load_dotenv
 
-load_dotenv()
+
 
 SITE_ID = 1
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
+load_dotenv(os.path.join(BASE_DIR, '.env'))
+
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/3.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = os.environ['SECRET_KEY']
+SECRET_KEY = os.environ.get('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = os.environ['DEBUG']
+DEBUG = os.environ.get('DEBUG')
 # TODO: Закрыть доступ для посторонних айпи
 
 ALLOWED_HOSTS = ['http://localhost:8000', 'http://localhost:3000', 'http://94.228.120.61/', 'http://94.228.120.61',
-                 '94.228.120.61', '127.0.0.1', 'http://cj28902.tmweb.ru/']
+                 '94.228.120.61', '127.0.0.1','http://cj28902.tmweb.ru','http://connect4.pro','cj28902.tmweb.ru']
+
 
 # Application definition
 
@@ -114,30 +117,33 @@ WSGI_APPLICATION = 'connect4pro.wsgi.application'
 try:
     import pymysql
 
+    pymysql.version_info = (1, 4, 6, 'final', 0)
     pymysql.install_as_MySQLdb()
 except:
     pass
 
 # DATABASES = {
 #     'default': {
-#         'ENGINE': os.environ['ENGINE'],
-#         'NAME': os.environ['NAME'],
-#         'USER': os.environ['USER'],
-#         'PASSWORD': os.environ['PASSWORD'],
-#         'HOST': os.environ['HOST'],
-#         'PORT': os.environ['PORT'],
+#         'ENGINE': os.environ.get('ENGINE'),
+#         'NAME': os.environ.get('NAME'),
+#         'USER': os.environ.get('USER'),
+#         'PASSWORD': os.environ.get('PASSWORD'),
+#         'HOST': os.environ.get('HOST'),
+#         'PORT': os.environ.get('PORT'),
 #     }
 # }
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': os.environ['NAME'],
-        'USER': os.environ['USER'],
-        'PASSWORD': os.environ['PASSWORD'],
-        'HOST': 'localhost',  # Or an IP Address that your DB is hosted on
-        'PORT': os.environ['MSQL_PORT'],
+        'NAME': os.environ.get('NAME'),
+        'USER': os.environ.get('DBUSER'),
+        'PASSWORD': os.environ.get('PASSWORD'),
+        'HOST': 'localhost',   # Or an IP Address that your DB is hosted on
+        'PORT': os.environ.get('MSQL_PORT'),
+
     }
 }
+
 # Password validation
 # https://docs.djangoproject.com/en/3.2/ref/settings/#auth-password-validators
 
@@ -173,14 +179,14 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/3.2/howto/static-files/
 
 STATIC_URL = '/static/'
-if not DEBUG:
-    STATIC_ROOT = '/var/www/static/'
+STATIC_ROOT = '/home/c/cj28902/public_html/static/'
+REACT_APP = os.path.join(BASE_DIR, 'frontend')
 MEDIA_URL = '/media/'
-MEDIA_ROOT = '/var/www/media/'
-STATICFILES_DIRS = (
-    os.path.join(BASE_DIR, 'front/static'),
-    os.path.join(BASE_DIR, 'front')
-)
+MEDIA_ROOT = '/home/c/cj28902/public_html/media/'
+#STATICFILES_DIRS = (
+#     os.path.join(BASE_DIR, 'frontend/static'),
+#)
+
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
@@ -219,8 +225,8 @@ SWAGGER_SETTINGS = {
 # SOCIAL_AUTH_POSTGRES_JSONFIELD = True
 SOCIAL_AUTH_URL_NAMESPACE = 'social'
 
-SOCIAL_AUTH_FACEBOOK_KEY = os.environ['SOCIAL_AUTH_FACEBOOK_KEY']
-SOCIAL_AUTH_FACEBOOK_SECRET = os.environ['SOCIAL_AUTH_FACEBOOK_SECRET']
+SOCIAL_AUTH_FACEBOOK_KEY = os.environ.get('SOCIAL_AUTH_FACEBOOK_KEY')
+SOCIAL_AUTH_FACEBOOK_SECRET = os.environ.get('SOCIAL_AUTH_FACEBOOK_SECRET')
 
 SOCIAL_AUTH_FACEBOOK_SCOPE = ['email']
 FIELDS_STORED_IN_SESSION = ['user_type']
@@ -230,8 +236,8 @@ SOCIAL_AUTH_FACEBOOK_PROFILE_EXTRA_PARAMS = {
     'fields': 'name, email'
 }
 
-SOCIAL_AUTH_GOOGLE_OAUTH2_KEY = os.environ['SOCIAL_AUTH_GOOGLE_OAUTH2_KEY']
-SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET = os.environ['SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET']
+SOCIAL_AUTH_GOOGLE_OAUTH2_KEY = os.environ.get('SOCIAL_AUTH_GOOGLE_OAUTH2_KEY')
+SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET = os.environ.get('SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET')
 
 SOCIALACCOUNT_PROVIDERS = {
     'google': {
@@ -255,12 +261,12 @@ SOCIALACCOUNT_PROVIDERS = {
 
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 
-CELERY_BROKER_URL = os.environ['CELERY_BROKER_URL']
+CELERY_BROKER_URL = os.environ.get('CELERY_BROKER_URL')
 CELERY_IMPORTS = [
     'newsletter.tasks',
 ]
 
-PAYBOX_KEY = os.environ['PAYBOX_KEY']
+PAYBOX_KEY = os.environ.get('PAYBOX_KEY')
 
 CORS_ALLOWED_ORIGINS = [
     'http://94.228.120.61',
