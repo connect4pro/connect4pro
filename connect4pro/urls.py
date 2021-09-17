@@ -1,11 +1,12 @@
 from django.conf.urls.static import static
 from django.contrib import admin
 
-from django.urls import path, include
+from django.urls import path, re_path, include
+
 import debug_toolbar
 from django.views.decorators.csrf import csrf_exempt
 
-from adverts.views import react_view
+from react_app.views import ReactAppView
 from users.views import MyTokenObtainPairView, LogoutView
 from . import settings
 from .yasg import urlpatterns as yasg_urls
@@ -13,7 +14,6 @@ from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', react_view),
     path('api-auth/', include('rest_framework.urls')),
     path('__debug__/', include(debug_toolbar.urls)),
     path('', include('users.urls')),
@@ -30,6 +30,8 @@ urlpatterns = [
     path('api/login', csrf_exempt(MyTokenObtainPairView.as_view()), name='token_obtain_pair'),
     path('api/login/refresh', csrf_exempt(TokenRefreshView.as_view()), name='token_refresh'),
     path('api/logout/', LogoutView.as_view(), name='auth_logout'),
+
+    re_path(r'^',ReactAppView.as_view()),
 
 ]
 
