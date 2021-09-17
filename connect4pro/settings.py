@@ -111,17 +111,32 @@ WSGI_APPLICATION = 'connect4pro.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/3.2/ref/settings/#databases
 
+try:
+    import pymysql
+    pymysql.install_as_MySQLdb()
+except:
+    pass
+
+# DATABASES = {
+#     'default': {
+#         'ENGINE': os.environ['ENGINE'],
+#         'NAME': os.environ['NAME'],
+#         'USER': os.environ['USER'],
+#         'PASSWORD': os.environ['PASSWORD'],
+#         'HOST': os.environ['HOST'],
+#         'PORT': os.environ['PORT'],
+#     }
+# }
 DATABASES = {
     'default': {
-        'ENGINE': os.environ['ENGINE'],
+        'ENGINE': 'django.db.backends.mysql',
         'NAME': os.environ['NAME'],
         'USER': os.environ['USER'],
         'PASSWORD': os.environ['PASSWORD'],
-        'HOST': os.environ['HOST'],
-        'PORT': os.environ['PORT'],
+        'HOST': 'localhost',   # Or an IP Address that your DB is hosted on
+        'PORT': os.environ['MSQL_PORT'],
     }
 }
-
 # Password validation
 # https://docs.djangoproject.com/en/3.2/ref/settings/#auth-password-validators
 
