@@ -33,7 +33,7 @@ DEBUG = os.environ['DEBUG']
 # TODO: Закрыть доступ для посторонних айпи
 
 ALLOWED_HOSTS = ['http://localhost:8000', 'http://localhost:3000', 'http://94.228.120.61/', 'http://94.228.120.61',
-                 '94.228.120.61', '127.0.0.1']
+                 '94.228.120.61', '127.0.0.1', 'http://cj28902.tmweb.ru/']
 
 # Application definition
 
@@ -113,6 +113,7 @@ WSGI_APPLICATION = 'connect4pro.wsgi.application'
 
 try:
     import pymysql
+
     pymysql.install_as_MySQLdb()
 except:
     pass
@@ -133,7 +134,7 @@ DATABASES = {
         'NAME': os.environ['NAME'],
         'USER': os.environ['USER'],
         'PASSWORD': os.environ['PASSWORD'],
-        'HOST': 'localhost',   # Or an IP Address that your DB is hosted on
+        'HOST': 'localhost',  # Or an IP Address that your DB is hosted on
         'PORT': os.environ['MSQL_PORT'],
     }
 }
@@ -177,8 +178,8 @@ if not DEBUG:
 MEDIA_URL = '/media/'
 MEDIA_ROOT = '/var/www/media/'
 STATICFILES_DIRS = (
-     os.path.join(BASE_DIR, 'front/static'),
-     os.path.join(BASE_DIR, 'front')
+    os.path.join(BASE_DIR, 'front/static'),
+    os.path.join(BASE_DIR, 'front')
 )
 
 # Default primary key field type
@@ -266,6 +267,7 @@ CORS_ALLOWED_ORIGINS = [
     'http://localhost:3000',
     'http://localhost:8000',
     'http://127.0.0.1:3000',
+    'http://cj28902.tmweb.ru/',
 ]
 CORS_ALLOW_METHODS = [
     'DELETE',
@@ -309,4 +311,5 @@ CSRF_COOKIE_NAME = "XSRF-TOKEN"
 CSRF_USE_SESSIONS = True
 
 SOCIAL_AUTH_REDIRECT_IS_HTTPS = True
+
 
