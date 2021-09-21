@@ -122,27 +122,27 @@ try:
 except:
     pass
 
-# DATABASES = {
-#     'default': {
-#         'ENGINE': os.environ.get('ENGINE'),
-#         'NAME': os.environ.get('NAME'),
-#         'USER': os.environ.get('USER'),
-#         'PASSWORD': os.environ.get('PASSWORD'),
-#         'HOST': os.environ.get('HOST'),
-#         'PORT': os.environ.get('PORT'),
-#     }
-# }
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.mysql',
+        'ENGINE': os.environ.get('ENGINE'),
         'NAME': os.environ.get('NAME'),
-        'USER': os.environ.get('DBUSER'),
+        'USER': os.environ.get('USER'),
         'PASSWORD': os.environ.get('PASSWORD'),
-        'HOST': 'localhost',   # Or an IP Address that your DB is hosted on
-        'PORT': os.environ.get('MSQL_PORT'),
-
+        'HOST': os.environ.get('HOST'),
+        'PORT': os.environ.get('PORT'),
     }
 }
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.mysql',
+#         'NAME': os.environ.get('NAME'),
+#         'USER': os.environ.get('DBUSER'),
+#         'PASSWORD': os.environ.get('PASSWORD'),
+#         'HOST': 'localhost',   # Or an IP Address that your DB is hosted on
+#         'PORT': os.environ.get('MSQL_PORT'),
+#
+#     }
+# }
 
 # Password validation
 # https://docs.djangoproject.com/en/3.2/ref/settings/#auth-password-validators
@@ -261,7 +261,7 @@ SOCIALACCOUNT_PROVIDERS = {
 
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 
-CELERY_BROKER_URL = os.environ.get('CELERY_BROKER_URL')
+# CELERY_BROKER_URL = os.environ.get('CELERY_BROKER_URL')
 CELERY_IMPORTS = [
     'newsletter.tasks',
 ]
@@ -273,7 +273,7 @@ CORS_ALLOWED_ORIGINS = [
     'http://localhost:3000',
     'http://localhost:8000',
     'http://127.0.0.1:3000',
-    'http://cj28902.tmweb.ru/',
+    'http://cj28902.tmweb.ru',
 ]
 CORS_ALLOW_METHODS = [
     'DELETE',
@@ -300,7 +300,7 @@ CORS_ORIGIN_ALLOW_ALL = False
 CORS_ORIGIN_WHITELIST = (
     'http://localhost:3000',
     'http://94.228.120.61',
-    'http://94.228.120.61/',
+    'http://94.228.120.61',
 )
 
 DJANGORESIZED_DEFAULT_SIZE = [1920, 1080]
@@ -318,4 +318,5 @@ CSRF_USE_SESSIONS = True
 
 SOCIAL_AUTH_REDIRECT_IS_HTTPS = True
 
-
+BROKER_BACKEND = 'sqlakombu.transport.Transport'
+BROKER_HOST = 'sqlite:///celerydb.sqlite'
