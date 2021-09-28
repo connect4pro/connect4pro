@@ -301,6 +301,7 @@ CORS_ORIGIN_WHITELIST = (
     'http://localhost:3000',
     'http://94.228.120.61',
     'http://94.228.120.61',
+    'http://cj28902.tmweb.ru',
 )
 
 DJANGORESIZED_DEFAULT_SIZE = [1920, 1080]
