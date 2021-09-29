@@ -176,7 +176,7 @@ class UpdateBusinessProfile(serializers.ModelSerializer):
 
     class Meta:
         model = Connect4ProUser
-        fields = ('first_name', 'last_name', 'birth_date', 'gender', 'country',
+        fields = ('email', 'first_name', 'last_name', 'birth_date', 'gender', 'country',
                   'city', 'phone', 'telegram', 'avatar', 'site')# 'business_profile')
 
     def update(self, instance, validated_data):
@@ -191,7 +191,7 @@ class UpdateProviderProfile(serializers.ModelSerializer):
 
     class Meta:
         model = Connect4ProUser
-        fields = ('first_name', 'last_name', 'birth_date', 'gender', 'country',
+        fields = ('email', 'first_name', 'last_name', 'birth_date', 'gender', 'country',
                   'city', 'phone', 'telegram', 'avatar', 'site') #'provider_profile')
 
     def update(self, instance, validated_data):
