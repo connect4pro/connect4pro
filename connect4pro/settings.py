@@ -321,3 +321,4 @@ SOCIAL_AUTH_REDIRECT_IS_HTTPS = True
 
 BROKER_BACKEND = 'sqlakombu.transport.Transport'
 BROKER_HOST = 'sqlite:///celerydb.sqlite'
+SQLALCHEMY_DATABASE_URI = 'sqlite:///celerydb.sqlite'
