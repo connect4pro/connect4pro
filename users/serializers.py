@@ -199,3 +199,14 @@ class UpdateProviderProfile(serializers.ModelSerializer):
         instance.save()
 
         return instance
+
+
+
+class ChangePasswordSerializer(serializers.Serializer):
+    model = Connect4ProUser
+
+    """
+    Serializer for password change endpoint.
+    """
+    old_password = serializers.CharField(required=True)
+    new_password = serializers.CharField(required=True)
