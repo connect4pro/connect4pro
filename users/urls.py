@@ -1,4 +1,4 @@
-from django.urls import path
+from django.urls import path, include
 from django.views.decorators.csrf import csrf_exempt
 
 from users.views import BusinessUserList, BusinessUserRegister, ProviderUserList, ProviderUserRegister, \
@@ -23,4 +23,5 @@ urlpatterns = [
     path('api/knowledge', KnowledgeList.as_view(), name='knowledge_list'),
     path('api/method', MethodList.as_view(), name='method_list'),
     path('api/change-password', ChangePasswordView.as_view(), name='change-password'),
+    path('api/password_reset/', include('django_rest_passwordreset.urls', namespace='password_reset')),
 ]

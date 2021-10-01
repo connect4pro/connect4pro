@@ -72,6 +72,7 @@ INSTALLED_APPS = [
     'pytils',
     'social_django',
     'corsheaders',
+    'django_rest_passwordreset',
 ]
 
 MIDDLEWARE = [

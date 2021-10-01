@@ -123,7 +123,6 @@ class ChangePasswordView(UpdateAPIView):
     serializer_class = ChangePasswordSerializer
     model = Connect4ProUser
 
-
     def get_object(self, queryset=None):
         obj = self.request.user
         return obj
