@@ -7,7 +7,7 @@ from users.views import BusinessUserList, BusinessUserRegister, ProviderUserList
 
 from users.views import SectorList
 
-app_name = 'users'
+
 
 urlpatterns = [
     path('api/users/business', BusinessUserList.as_view(), name='business'),
@@ -23,5 +23,5 @@ urlpatterns = [
     path('api/knowledge', KnowledgeList.as_view(), name='knowledge_list'),
     path('api/method', MethodList.as_view(), name='method_list'),
     path('api/change-password', ChangePasswordView.as_view(), name='change-password'),
-    path('password_reset/', include('django_rest_passwordreset.urls', namespace='password_reset')),
+    path('api/password_reset', include('django_rest_passwordreset.urls', namespace='password_reset')),
 ]
