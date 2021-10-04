@@ -53,7 +53,7 @@ AUTH_PROVIDERS = {'facebook': 'facebook', 'google': 'google', 'email': 'email'}
 def password_reset_token_created(sender, instance, reset_password_token, *args, **kwargs):
 
     domain = Site.objects.get_current().domain
-    email_plaintext_message = "http://{}/{}/?token={}".format(domain, 'password_reset',
+    email_plaintext_message = "http://{}/{}/{}".format(domain, 'password_reset',
                                                    reset_password_token.key)
 
     send_mail(
