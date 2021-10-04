@@ -51,6 +51,7 @@ AUTH_PROVIDERS = {'facebook': 'facebook', 'google': 'google', 'email': 'email'}
 
 @receiver(reset_password_token_created)
 def password_reset_token_created(sender, instance, reset_password_token, *args, **kwargs):
+
     domain = Site.objects.get_current().domain
     email_plaintext_message = "http://{}{}?token={}".format(domain, reverse('password_reset:reset-password-request'),
                                                    reset_password_token.key)
