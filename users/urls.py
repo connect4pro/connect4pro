@@ -23,5 +23,5 @@ urlpatterns = [
     path('api/knowledge', KnowledgeList.as_view(), name='knowledge_list'),
     path('api/method', MethodList.as_view(), name='method_list'),
     path('api/change-password', ChangePasswordView.as_view(), name='change-password'),
-    path('api/password_reset', include('django_rest_passwordreset.urls', namespace='password_reset')),
+    path('password_reset/', include('django_rest_passwordreset.urls', namespace='password_reset')),
 ]
