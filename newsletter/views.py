@@ -11,5 +11,8 @@ class NewsletterSubscribe(CreateAPIView):
 
 class NewsletterUnsubscribe(DestroyAPIView):
     serializer_class = ContactsSerializer
-    queryset = Contacts.objects.all()
     lookup_field = 'email'
+
+    def get_queryset(self):
+        queryset = Contacts.objects.all()
+        return queryset

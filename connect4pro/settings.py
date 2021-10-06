@@ -120,7 +120,7 @@ try:
 except:
     pass
 
-# DATABASES = {
+#DATABASES = {
 #    'default': {
 #        'ENGINE': os.environ.get('ENGINE'),
 #        'NAME': os.environ.get('NAME'),
@@ -129,8 +129,8 @@ except:
 #        'HOST': os.environ.get('HOST'),
 #        'PORT': os.environ.get('PORT'),
 #    }
-# }
-#
+#}
+
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
