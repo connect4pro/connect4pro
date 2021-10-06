@@ -12,3 +12,4 @@ class NewsletterSubscribe(CreateAPIView):
 class NewsletterUnsubscribe(DestroyAPIView):
     serializer_class = ContactsSerializer
     lookup_field = 'email'
+    queryset = Contacts.objects.all()
