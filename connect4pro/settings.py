@@ -32,8 +32,8 @@ SECRET_KEY = os.environ.get('SECRET_KEY')
 DEBUG = os.environ.get('DEBUG')
 # TODO: Закрыть доступ для посторонних айпи
 
-ALLOWED_HOSTS = ['http://localhost:8000', 'http://localhost:3000', 'http://94.228.120.61/', 'http://94.228.120.61',
-                 '94.228.120.61', '127.0.0.1', 'http://cj28902.tmweb.ru', 'http://connect4.pro', 'cj28902.tmweb.ru']
+ALLOWED_HOSTS = ['http://localhost:8000', 'http://localhost:3000', '127.0.0.1', 'http://cj28902.tmweb.ru',
+                 'http://connect4.pro', 'cj28902.tmweb.ru', 'connect4.pro', 'https://connect4.pro']
 
 # Application definition
 
@@ -264,7 +264,6 @@ EMAIL_PORT = 587
 EMAIL_HOST_USER = 'connect4fund@gmail.com'
 EMAIL_HOST_PASSWORD = os.environ.get('EMAIL_HOST_PASSWORD')
 
-
 # CELERY_BROKER_URL = os.environ.get('CELERY_BROKER_URL')
 CELERY_IMPORTS = [
     'newsletter.tasks',
@@ -278,6 +277,9 @@ CORS_ALLOWED_ORIGINS = [
     'http://localhost:8000',
     'http://127.0.0.1:3000',
     'http://cj28902.tmweb.ru',
+    'connect4.pro',
+    'http://connect4.pro',
+    'https://connect4.pro'
 ]
 CORS_ALLOW_METHODS = [
     'DELETE',
