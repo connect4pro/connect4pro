@@ -120,27 +120,27 @@ try:
 except:
     pass
 
-DATABASES = {
-    'default': {
-        'ENGINE': os.environ.get('ENGINE'),
-        'NAME': os.environ.get('NAME'),
-        'USER': os.environ.get('USER'),
-        'PASSWORD': os.environ.get('PASSWORD'),
-        'HOST': os.environ.get('HOST'),
-        'PORT': os.environ.get('PORT'),
-    }
-}
 # DATABASES = {
 #     'default': {
-#         'ENGINE': 'django.db.backends.mysql',
+#         'ENGINE': os.environ.get('ENGINE'),
 #         'NAME': os.environ.get('NAME'),
-#         'USER': os.environ.get('DBUSER'),
+#         'USER': os.environ.get('USER'),
 #         'PASSWORD': os.environ.get('PASSWORD'),
-#         'HOST': 'localhost',   # Or an IP Address that your DB is hosted on
-#         'PORT': os.environ.get('MSQL_PORT'),
-#
+#         'HOST': os.environ.get('HOST'),
+#         'PORT': os.environ.get('PORT'),
 #     }
 # }
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': os.environ.get('NAME'),
+        'USER': os.environ.get('DBUSER'),
+        'PASSWORD': os.environ.get('PASSWORD'),
+        'HOST': 'localhost',   # Or an IP Address that your DB is hosted on
+        'PORT': os.environ.get('MSQL_PORT'),
+
+    }
+}
 
 # Password validation
 # https://docs.djangoproject.com/en/3.2/ref/settings/#auth-password-validators
