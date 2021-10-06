@@ -32,8 +32,8 @@ SECRET_KEY = os.environ.get('SECRET_KEY')
 DEBUG = os.environ.get('DEBUG')
 # TODO: Закрыть доступ для посторонних айпи
 
-ALLOWED_HOSTS = ['http://localhost:8000', 'http://localhost:3000', '127.0.0.1', 'http://cj28902.tmweb.ru',
-                 'http://connect4.pro', 'cj28902.tmweb.ru', 'connect4.pro', 'https://connect4.pro']
+ALLOWED_HOSTS = ['http://localhost:8000', 'http://localhost:3000', 'http://94.228.120.61/', 'http://94.228.120.61',
+                 '94.228.120.61', '127.0.0.1', 'http://cj28902.tmweb.ru', 'http://connect4.pro','connect4.pro', 'cj28902.tmweb.ru']
 
 # Application definition
 
@@ -120,25 +120,25 @@ try:
 except:
     pass
 
-# DATABASES = {
-#     'default': {
-#         'ENGINE': os.environ.get('ENGINE'),
-#         'NAME': os.environ.get('NAME'),
-#         'USER': os.environ.get('USER'),
-#         'PASSWORD': os.environ.get('PASSWORD'),
-#         'HOST': os.environ.get('HOST'),
-#         'PORT': os.environ.get('PORT'),
-#     }
-# }
+#DATABASES = {
+#    'default': {
+#        'ENGINE': os.environ.get('ENGINE'),
+#        'NAME': os.environ.get('NAME'),
+#        'USER': os.environ.get('USER'),
+#        'PASSWORD': os.environ.get('PASSWORD'),
+#        'HOST': os.environ.get('HOST'),
+#        'PORT': os.environ.get('PORT'),
+#    }
+#}
+
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': os.environ.get('NAME'),
         'USER': os.environ.get('DBUSER'),
         'PASSWORD': os.environ.get('PASSWORD'),
-        'HOST': 'localhost',  # Or an IP Address that your DB is hosted on
+        'HOST': 'localhost',   # Or an IP Address that your DB is hosted on
         'PORT': os.environ.get('MSQL_PORT'),
-
     }
 }
 
@@ -264,6 +264,7 @@ EMAIL_PORT = 587
 EMAIL_HOST_USER = 'connect4fund@gmail.com'
 EMAIL_HOST_PASSWORD = os.environ.get('EMAIL_HOST_PASSWORD')
 
+
 # CELERY_BROKER_URL = os.environ.get('CELERY_BROKER_URL')
 CELERY_IMPORTS = [
     'newsletter.tasks',
@@ -277,7 +278,6 @@ CORS_ALLOWED_ORIGINS = [
     'http://localhost:8000',
     'http://127.0.0.1:3000',
     'http://cj28902.tmweb.ru',
-    'connect4.pro',
     'http://connect4.pro',
     'https://connect4.pro'
 ]
@@ -288,6 +288,7 @@ CORS_ALLOW_METHODS = [
     'PATCH',
     'POST',
     'PUT',
+    'FETCH',
 ]
 CORS_ALLOW_HEADERS = [
     'accept',
@@ -302,7 +303,7 @@ CORS_ALLOW_HEADERS = [
 ]
 
 CORS_ORIGIN_ALLOW_ALL = False
-
+CORS_ALLOW_CREDENTIALS = True
 CORS_ORIGIN_WHITELIST = (
     'http://localhost:3000',
     'http://94.228.120.61',
@@ -328,5 +329,7 @@ CSRF_USE_SESSIONS = True
 SOCIAL_AUTH_REDIRECT_IS_HTTPS = True
 
 BROKER_BACKEND = 'sqlakombu.transport.Transport'
-BROKER_HOST = 'sqlite:///celerydb.sqlite'
-SQLALCHEMY_DATABASE_URI = 'sqlite:///celerydb.sqlite'
+
+SQLALCHEMY_DATABASE_URI = 'sqla+sqlite:////home/c/cj28902/celerydb.sqlite'
+BROKER_HOST = 'sqla+sqlite:////home/c/cj28902/celerydb.sqlite'
+BROKER_URL = 'sqla+sqlite:////home/c/cj28902/celerydb.sqlite'
