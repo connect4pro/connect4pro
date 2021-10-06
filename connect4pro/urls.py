@@ -32,7 +32,7 @@ urlpatterns = [
     path('api/login/refresh', csrf_exempt(TokenRefreshView.as_view()), name='token_refresh'),
     path('api/logout/', LogoutView.as_view(), name='auth_logout'),
 
-    re_path(r'^',ReactAppView.as_view()),
+    path('',ReactAppView.as_view()),
 
 ]
 
