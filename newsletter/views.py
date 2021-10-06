@@ -1,5 +1,6 @@
 from django.shortcuts import render
 from rest_framework.generics import CreateAPIView, DestroyAPIView
+from rest_framework.permissions import AllowAny
 
 from newsletter.models import Contacts
 from newsletter.serializers import ContactsSerializer
@@ -14,5 +15,5 @@ class NewsletterUnsubscribe(DestroyAPIView):
     lookup_field = 'email'
 
     def get_queryset(self):
-        queryset = Contacts.objects.all()
+        queryset = Contacts.objects.all().first()
         return queryset

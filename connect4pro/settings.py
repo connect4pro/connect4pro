@@ -33,7 +33,8 @@ DEBUG = os.environ.get('DEBUG')
 # TODO: Закрыть доступ для посторонних айпи
 
 ALLOWED_HOSTS = ['http://localhost:8000', 'http://localhost:3000', 'http://94.228.120.61/', 'http://94.228.120.61',
-                 '94.228.120.61', '127.0.0.1', 'http://cj28902.tmweb.ru', 'http://connect4.pro','connect4.pro', 'cj28902.tmweb.ru']
+                 '94.228.120.61', '127.0.0.1', 'http://cj28902.tmweb.ru', 'http://connect4.pro', 'connect4.pro',
+                 'cj28902.tmweb.ru']
 
 # Application definition
 
@@ -120,16 +121,16 @@ try:
 except:
     pass
 
-#DATABASES = {
-#    'default': {
-#        'ENGINE': os.environ.get('ENGINE'),
-#        'NAME': os.environ.get('NAME'),
-#        'USER': os.environ.get('USER'),
-#        'PASSWORD': os.environ.get('PASSWORD'),
-#        'HOST': os.environ.get('HOST'),
-#        'PORT': os.environ.get('PORT'),
-#    }
-#}
+# DATABASES = {
+#     'default': {
+#         'ENGINE': os.environ.get('ENGINE'),
+#         'NAME': os.environ.get('NAME'),
+#         'USER': os.environ.get('USER'),
+#         'PASSWORD': os.environ.get('PASSWORD'),
+#         'HOST': os.environ.get('HOST'),
+#         'PORT': os.environ.get('PORT'),
+#     }
+# }
 
 DATABASES = {
     'default': {
@@ -264,7 +265,6 @@ EMAIL_PORT = 587
 EMAIL_HOST_USER = 'connect4fund@gmail.com'
 EMAIL_HOST_PASSWORD = os.environ.get('EMAIL_HOST_PASSWORD')
 
-
 # CELERY_BROKER_URL = os.environ.get('CELERY_BROKER_URL')
 CELERY_IMPORTS = [
     'newsletter.tasks',
@@ -279,7 +279,7 @@ CORS_ALLOWED_ORIGINS = [
     'http://127.0.0.1:3000',
     'http://cj28902.tmweb.ru',
     'http://connect4.pro',
-    'https://connect4.pro'
+    'https://connect4.pro',
 ]
 CORS_ALLOW_METHODS = [
     'DELETE',
@@ -310,7 +310,7 @@ CORS_ORIGIN_WHITELIST = (
     'http://94.228.120.61',
     'http://cj28902.tmweb.ru',
     'http://connect4.pro',
-    'https://connect4.pro'
+    'https://connect4.pro',
 )
 
 DJANGORESIZED_DEFAULT_SIZE = [1920, 1080]
