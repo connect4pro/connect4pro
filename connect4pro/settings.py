@@ -245,7 +245,7 @@ SOCIALACCOUNT_PROVIDERS = {
         ],
         'AUTH_PARAMS': {
             'access_type': 'online',
-            'redirect_uri': 'http://94.228.120.61/<custom-url>'
+            'redirect_uri': 'http://connect4.pro/<custom-url>'
         }
     }
 }
