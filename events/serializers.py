@@ -23,7 +23,8 @@ class EventCommentSerializer(serializers.ModelSerializer):
         return comment
 
 
-class EventSerializer(serializers.ModelSerializer):
+class EventSerializer(serializers.HyperlinkedModelSerializer):
+    event_image = serializers.ImageField(required=False)
     id = serializers.IntegerField(read_only=True)
     comments = EventCommentSerializer(source='post_comment', many=True)
     class Meta:
