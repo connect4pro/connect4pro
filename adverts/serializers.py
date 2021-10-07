@@ -55,7 +55,7 @@ class ProviderAdvertCommentSerializer(serializers.ModelSerializer):
 
 
 class ImageSerializer(serializers.ModelSerializer):
-    image = serializers.ImageField()
+    image = serializers.ImageField(required=False)
 
     class Meta:
         model = Image
@@ -63,11 +63,11 @@ class ImageSerializer(serializers.ModelSerializer):
 
 
 class ImageSetSerializer(serializers.ModelSerializer):
-    image_set = ImageSerializer(source='images', many=True, required=False)
+    album = ImageSerializer(source='images', many=True, required=False)
 
     class Meta:
         model = Album
-        fields = ('image_set',)
+        fields = ('album',)
 
 
 class AdvertCategorySerializer(serializers.ModelSerializer):
@@ -80,6 +80,9 @@ class AdvertCategorySerializer(serializers.ModelSerializer):
 
 class UserAdvertSerializer(serializers.ModelSerializer):
     id = serializers.IntegerField()
+    phone = serializers.CharField(required=False)
+    telegram = serializers.CharField(required=False)
+
     class Meta:
         model = Connect4ProUser
         fields = ('id', 'phone', 'telegram')
@@ -89,7 +92,6 @@ class BusinessAdvertSerializer(serializers.ModelSerializer):
     id = serializers.IntegerField(read_only=True)
     comments = BusinessAdvertCommentSerializer(source='post_comment', many=True, required=False, read_only=True)
     user = UserAdvertSerializer(required=False)
-
 
     class Meta:
         model = BusinessAdvert
@@ -122,10 +124,16 @@ class ProviderAdvertSerializer(serializers.ModelSerializer):
     def create(self, validated_data):
         user_data = validated_data.pop('user')
         image_set = validated_data.pop('images')
-        images = Album.objects.create(**image_set)
-        images.save()
+        print(validated_data)
+        album = Album.objects.create()
+        for image in image_set:
+            img = Image.objects.create(image=image, album=album)
+            img.save()
+
+        album.save()
 
         user = Connect4ProUser.objects.get(id=user_data['id'])
-        advert = ProviderAdvert.objects.create(**validated_data, user=user.provider_profile, images_id=images.id)
+        advert = ProviderAdvert.objects.create(**validated_data, user=user.provider_profile, images_id=1)
+
         advert.save()
         return advert

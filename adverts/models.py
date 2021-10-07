@@ -25,7 +25,7 @@ COMPLETE_CHOICES = (
 
 
 class Album(models.Model):
-    id = models.IntegerField(primary_key=True)
+    # id = models.IntegerField(primary_key=True)
 
     class Meta:
         verbose_name = 'Набор изображений'
@@ -83,7 +83,7 @@ class ProviderAdvert(models.Model):
     description = models.TextField(verbose_name='Описание')
     user = models.ForeignKey(ProviderProfile, verbose_name='Пользователь', on_delete=models.CASCADE,
                              related_name='provider_profile')
-    images = models.ForeignKey(Album, verbose_name='Фото', on_delete=models.CASCADE, related_name='image_set')
+    images = models.ForeignKey(Album, verbose_name='Фото', on_delete=models.CASCADE)
 
     price = models.DecimalField(decimal_places=2, verbose_name='Цена', max_digits=9, default=0)
     currency = models.CharField(max_length=3, verbose_name='Валюта', choices=CURRENCY_CHOICES, default=usd, blank=True)
