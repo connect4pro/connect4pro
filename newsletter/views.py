@@ -15,5 +15,5 @@ class NewsletterUnsubscribe(DestroyAPIView):
     lookup_field = 'email'
 
     def get_queryset(self):
-        queryset = Contacts.objects.all()
+        queryset = Contacts.objects.all().last()
         return queryset
