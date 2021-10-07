@@ -24,18 +24,15 @@ COMPLETE_CHOICES = (
 )
 
 
-class Album(models.Model):
-    # id = models.IntegerField(primary_key=True)
+# class Album(models.Model):
+#     # id = models.IntegerField(primary_key=True)
+#
+#     class Meta:
+#         verbose_name = 'Набор изображений'
+#         verbose_name_plural = 'Наборы изображений'
 
-    class Meta:
-        verbose_name = 'Набор изображений'
-        verbose_name_plural = 'Наборы изображений'
 
-
-class Image(models.Model):
-    image = ResizedImageField(size=[350, 250], upload_to=f'images/adverts/%d%m%Y', blank=True,
-                              null=True)
-    album = models.ForeignKey(Album, on_delete=models.CASCADE, related_name='images')
+# album = models.ForeignKey(Album, on_delete=models.CASCADE, related_name='images')
 
 
 class Category(models.Model):
@@ -83,7 +80,7 @@ class ProviderAdvert(models.Model):
     description = models.TextField(verbose_name='Описание')
     user = models.ForeignKey(ProviderProfile, verbose_name='Пользователь', on_delete=models.CASCADE,
                              related_name='provider_profile')
-    images = models.ForeignKey(Album, verbose_name='Фото', on_delete=models.CASCADE)
+    # images = models.ForeignKey(Image, verbose_name='Фото', on_delete=models.CASCADE, related_name='adverts')
 
     price = models.DecimalField(decimal_places=2, verbose_name='Цена', max_digits=9, default=0)
     currency = models.CharField(max_length=3, verbose_name='Валюта', choices=CURRENCY_CHOICES, default=usd, blank=True)
@@ -94,13 +91,18 @@ class ProviderAdvert(models.Model):
     foundation_date = models.DateField(verbose_name='Дата основания', default=date.today, blank=True, null=True)
     created_at = models.DateTimeField(auto_now=True)
 
-
     def __str__(self):
         return self.title
 
     class Meta:
         verbose_name = 'Объявление провайдера'
         verbose_name_plural = 'Объявления провайдеров'
+
+
+class Image(models.Model):
+    image = ResizedImageField(size=[350, 250], upload_to=f'images/adverts/%d%m%Y', blank=True,
+                              null=True)
+    advert = models.ForeignKey(ProviderAdvert, on_delete=models.CASCADE, null=True, related_name='images_set')
 
 
 class BusinessAdvertComment(models.Model):
@@ -113,8 +115,6 @@ class BusinessAdvertComment(models.Model):
 
     def __str__(self):
         return f'Имя: {self.user.email}'
-
-
 
     class Meta:
         verbose_name = 'Комментарий объявления МСБ'
