@@ -11,5 +11,5 @@ class TestImageSerializer(serializers.HyperlinkedModelSerializer):
         fields = ('image',)
 
     def create(self, validated_data):
-        images_data = self.context.get('view').request.FILES
+        images_data = self.context.get('file').request.FILES
         return TestImage.objects.create(**validated_data)
