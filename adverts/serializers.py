@@ -126,14 +126,9 @@ class ProviderAdvertSerializer(serializers.HyperlinkedModelSerializer):
         depth = 1
 
     def create(self, validated_data):
-        user_data = validated_data.pop('user')
-        # images = validated_data.pop('images_set')
         images_data = self.context.get('view').request.FILES
-
-        images_data = dict(images_data)
-        user = Connect4ProUser.objects.get(id=user_data)
-        advert = ProviderAdvert.objects.create(**validated_data, user=user.provider_profile)
+        advert = ProviderAdvert.objects.create(**validated_data)
         for image_data in images_data.values():
             Image.objects.create(advert=advert, image=image_data)
-        advert.save()
+
         return advert
