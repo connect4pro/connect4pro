@@ -113,7 +113,7 @@ class ProviderAdvertSerializer(serializers.HyperlinkedModelSerializer):
     description = serializers.CharField(required=False)
     id = serializers.IntegerField(read_only=True, required=False)
     comments = ProviderAdvertCommentSerializer(source='post_comment', many=True, required=False, read_only=True)
-    images = ImageSerializer(many=True, required=False)
+    images = ImageSerializer(source='images_set', many=True, required=False)
     # images = ImageSetSerializer(required=False)
     user = UserAdvertSerializer(required=False)
     # user = serializers.IntegerField(required=False)
