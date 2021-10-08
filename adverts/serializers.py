@@ -116,7 +116,7 @@ class ProviderAdvertSerializer(serializers.HyperlinkedModelSerializer):
     images = ImageSerializer(source='images_set', many=True, required=False)
     # images = ImageSetSerializer(required=False)
     # user = UserAdvertSerializer(required=False)
-    user = serializers.ImageField(required=False)
+    user = serializers.IntegerField(required=False)
 
     class Meta:
         model = ProviderAdvert
