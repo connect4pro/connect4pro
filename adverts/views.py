@@ -1,6 +1,7 @@
 from django.shortcuts import render
 from rest_framework import permissions
 from rest_framework.generics import ListAPIView, ListCreateAPIView, UpdateAPIView, CreateAPIView, RetrieveAPIView
+from rest_framework.parsers import MultiPartParser
 
 from adverts.models import Category, BusinessAdvert, ProviderAdvert, BusinessAdvertComment, ProviderAdvertComment
 from adverts.permissions import IsOwnerOrReadOnly
@@ -36,6 +37,7 @@ class ProviderAdvertList(ListCreateAPIView):
     """
     queryset = ProviderAdvert.objects.all()
     serializer_class = ProviderAdvertSerializer
+    parser_classes = [MultiPartParser]
 
     # def perform_create(self, serializer):
     #     serializer.save(user=self.request.user.provider_profile)
