@@ -8,7 +8,7 @@ class TestImageSerializer(serializers.HyperlinkedModelSerializer):
 
     class Meta:
         model = TestImage
-        fields = '__all__'
+        fields = ('image',)
 
     def create(self, validated_data):
         images_data = self.context.get('view').request.FILES
