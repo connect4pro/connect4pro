@@ -140,7 +140,7 @@ class ProviderAdvertSerializer(serializers.HyperlinkedModelSerializer):
 
         # album.save()
 
-        user = Connect4ProUser.objects.get(id=user_data['id'])
+        user = Connect4ProUser.objects.get(id=user_data)
         advert = ProviderAdvert.objects.create(**validated_data, user=user.provider_profile)
         for image_data in images_data.values():
             Image.objects.create(advert=advert, image=image_data)
