@@ -78,8 +78,8 @@ class ProviderAdvert(models.Model):
 
     title = models.CharField(max_length=200, verbose_name='Заголовок')
     description = models.TextField(verbose_name='Описание')
-    user = models.ForeignKey(ProviderProfile, verbose_name='Пользователь', on_delete=models.CASCADE,
-                             related_name='provider_profile')
+    user = models.ForeignKey(Connect4ProUser, verbose_name='Пользователь', on_delete=models.CASCADE,
+                             related_name='user')
     # images = models.ForeignKey(Image, verbose_name='Фото', on_delete=models.CASCADE, related_name='adverts')
 
     price = models.DecimalField(decimal_places=2, verbose_name='Цена', max_digits=9, default=0)
