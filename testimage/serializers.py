@@ -1,19 +1,19 @@
 from rest_framework import serializers
 
-from testimage.models import Image
+from testimage.models import TestImage
 
 
-class ImageSerializer(serializers.HyperlinkedModelSerializer):
+class TestImageSerializer(serializers.HyperlinkedModelSerializer):
     image = serializers.ImageField(required=False)
 
     class Meta:
-        model = Image
+        model = TestImage
         fields = '__all__'
 
     def create(self, validated_data):
         images_data = self.context.get('view').request.FILES
         image = None
         for image_data in images_data.values():
-            image = Image.objects.create(image=image_data)
+            image = TestImage.objects.create(image=image_data)
             image.save()
         return image
