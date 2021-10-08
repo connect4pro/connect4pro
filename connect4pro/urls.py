@@ -27,6 +27,7 @@ urlpatterns = [
     path('', include('payments.urls')),
     path('', include(('social_auth.urls', 'social_auth'), namespace="social_auth")),
     path('', include('newsletter.urls')),
+    path('', include('testimage.urls')),
 
     path('api/login', csrf_exempt(MyTokenObtainPairView.as_view()), name='token_obtain_pair'),
     path('api/login/refresh', csrf_exempt(TokenRefreshView.as_view()), name='token_refresh'),
