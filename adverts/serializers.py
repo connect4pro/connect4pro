@@ -115,7 +115,8 @@ class ProviderAdvertSerializer(serializers.HyperlinkedModelSerializer):
     comments = ProviderAdvertCommentSerializer(source='post_comment', many=True, required=False, read_only=True)
     images = ImageSerializer(source='images_set', many=True, required=False)
     # images = ImageSetSerializer(required=False)
-    user = UserAdvertSerializer(required=False)
+    # user = UserAdvertSerializer(required=False)
+    user = serializers.ImageField(required=False)
 
     class Meta:
         model = ProviderAdvert
