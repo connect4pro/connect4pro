@@ -39,6 +39,12 @@ class ProviderAdvertList(ListCreateAPIView):
     serializer_class = ProviderAdvertSerializer
     parser_classes = [MultiPartParser, FormParser]
 
+    def get_parsers(self):
+        if getattr(self, 'swagger_fake_view', False):
+            return []
+
+        return super().get_parsers()
+
     # def perform_create(self, serializer):
     #     serializer.save(user=self.request.user.provider_profile)
     #
