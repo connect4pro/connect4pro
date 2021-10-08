@@ -79,7 +79,7 @@ class AdvertCategorySerializer(serializers.ModelSerializer):
 
 
 class UserAdvertSerializer(serializers.ModelSerializer):
-    id = serializers.IntegerField()
+    id = serializers.IntegerField(required=False)
     phone = serializers.CharField(required=False)
     telegram = serializers.CharField(required=False)
 
