@@ -113,7 +113,8 @@ class ProviderAdvertSerializer(serializers.HyperlinkedModelSerializer):
     description = serializers.CharField(required=False)
     id = serializers.IntegerField(read_only=True, required=False)
     comments = ProviderAdvertCommentSerializer(source='post_comment', many=True, required=False, read_only=True)
-    images = ImageSerializer(source='images_set', many=True, required=False)
+    image = serializers.ImageField(required=False)
+    # images = ImageSerializer(source='images_set', many=True, required=False)
     # images = ImageSetSerializer(required=False)
     # user = UserAdvertSerializer(required=False)
     user = serializers.IntegerField(source='user_id',required=False)
@@ -121,18 +122,18 @@ class ProviderAdvertSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = ProviderAdvert
         fields = (
-            'id', 'images', 'title', 'description', 'price', 'currency', 'tel', 'scope', 'services',
+            'id', 'image', 'title', 'description', 'price', 'currency', 'tel', 'scope', 'services',
             'location', 'created_at', 'user', 'foundation_date', 'comments')
         depth = 1
 
-    def create(self, validated_data):
-        user = validated_data.pop('user')
-        user_id = Connect4ProUser.objects.get(id=user)
-        images_data = self.context.get('view').request.FILES
-        advert = ProviderAdvert.objects.create(**validated_data, user=user_id)
-        for image_data in images_data.values():
-            Image.objects.create(advert=advert, image=image_data)
-
-        return advert
+    # def create(self, validated_data):
+    #     user = validated_data.pop('user')
+    #     user_id = Connect4ProUser.objects.get(id=user)
+    #     images_data = self.context.get('view').request.FILES
+    #     advert = ProviderAdvert.objects.create(**validated_data, user=user_id)
+    #     for image_data in images_data.values():
+    #         Image.objects.create(advert=advert, image=image_data)
+    #
+    #     return advert
 
 
