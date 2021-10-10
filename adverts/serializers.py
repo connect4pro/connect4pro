@@ -80,12 +80,13 @@ class AdvertCategorySerializer(serializers.ModelSerializer):
 
 class UserAdvertSerializer(serializers.ModelSerializer):
     id = serializers.IntegerField(required=False)
+    avatar = serializers.ImageField(required=False)
     phone = serializers.CharField(required=False)
     telegram = serializers.CharField(required=False)
 
     class Meta:
         model = Connect4ProUser
-        fields = ('id', 'phone', 'telegram')
+        fields = ('id', 'phone', 'telegram', 'avatar')
 
 
 class BusinessAdvertSerializer(serializers.ModelSerializer):
@@ -116,14 +117,14 @@ class ProviderAdvertSerializer(serializers.HyperlinkedModelSerializer):
     image = serializers.ImageField(required=False)
     # images = ImageSerializer(source='images_set', many=True, required=False)
     # images = ImageSetSerializer(required=False)
-    # user = UserAdvertSerializer(required=False)
+    user_data = UserAdvertSerializer(required=False, source='user', read_only=True)
     user = serializers.IntegerField(source='user_id',required=False)
 
     class Meta:
         model = ProviderAdvert
         fields = (
             'id', 'image', 'title', 'description', 'price', 'currency', 'tel', 'scope', 'services',
-            'location', 'created_at', 'user', 'foundation_date', 'comments')
+            'location', 'created_at', 'user', 'foundation_date', 'user_data', 'comments')
         depth = 1
 
     # def create(self, validated_data):
