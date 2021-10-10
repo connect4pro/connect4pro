@@ -79,10 +79,10 @@ class AdvertCategorySerializer(serializers.ModelSerializer):
 
 
 class UserAdvertSerializer(serializers.ModelSerializer):
-    id = serializers.IntegerField(required=False)
-    avatar = serializers.ImageField(required=False)
-    phone = serializers.CharField(required=False)
-    telegram = serializers.CharField(required=False)
+    id = serializers.IntegerField(required=False, read_only=True)
+    avatar = serializers.ImageField(required=False, read_only=True)
+    phone = serializers.CharField(required=False, read_only=True)
+    telegram = serializers.CharField(required=False, read_only=True)
 
     class Meta:
         model = Connect4ProUser
