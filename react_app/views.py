@@ -1,7 +1,8 @@
 from django.views.generic import View
 from django.http import HttpResponse
 from django.conf import settings
-import os 
+import os
+
 
 class ReactAppView(View):
 
@@ -11,7 +12,7 @@ class ReactAppView(View):
             with open(os.path.join(settings.REACT_APP, 'index.html')) as file:
                 return HttpResponse(file.read())
 
-        except :
+        except:
             return HttpResponse(
                 """
                 index.html not found! build your React app !!
