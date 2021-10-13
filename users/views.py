@@ -3,6 +3,7 @@ from abc import ABC
 from django.contrib.auth import authenticate
 from rest_framework import status
 from rest_framework.generics import CreateAPIView, ListAPIView, UpdateAPIView, RetrieveAPIView, get_object_or_404
+from rest_framework.parsers import MultiPartParser, FormParser
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.views import APIView
@@ -39,12 +40,26 @@ class BusinessUserUpdate(UpdateAPIView):
     queryset = Connect4ProUser.objects.filter(is_business=True)
     serializer_class = UpdateBusinessProfile
     lookup_field = 'id'
+    parser_classes = [MultiPartParser, FormParser]
+
+    def get_parsers(self):
+        if getattr(self, 'swagger_fake_view', False):
+            return []
+
+        return super().get_parsers()
 
 
 class ProviderUserUpdate(UpdateAPIView):
     queryset = Connect4ProUser.objects.filter(is_provider=True)
     serializer_class = UpdateProviderProfile
     lookup_field = 'id'
+    parser_classes = [MultiPartParser, FormParser]
+
+    def get_parsers(self):
+        if getattr(self, 'swagger_fake_view', False):
+            return []
+
+        return super().get_parsers()
 
 
 class BusinessProfileDetail(RetrieveAPIView):
