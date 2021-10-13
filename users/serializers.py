@@ -173,11 +173,11 @@ class UserProviderProfileSerializer(serializers.ModelSerializer):
 
 class UpdateBusinessProfile(serializers.ModelSerializer):
     # business_profile = BusinessProfileSerializer(required=False)
-    image = serializers.ImageField(required=False)
+    avatar = serializers.ImageField(required=False)
 
     class Meta:
         model = Connect4ProUser
-        fields = ('email', 'image', 'first_name', 'last_name', 'birth_date', 'gender', 'country',
+        fields = ('email', 'avatar', 'first_name', 'last_name', 'birth_date', 'gender', 'country',
                   'city', 'phone', 'telegram', 'avatar', 'site')# 'business_profile')
 
     def update(self, instance, validated_data):
@@ -189,11 +189,11 @@ class UpdateBusinessProfile(serializers.ModelSerializer):
 
 class UpdateProviderProfile(serializers.ModelSerializer):
     # provider_profile = ProviderProfileSerializer(required=True)
-    image = serializers.ImageField(required=False)
+    avatar = serializers.ImageField(required=False)
 
     class Meta:
         model = Connect4ProUser
-        fields = ('email', 'image', 'first_name', 'last_name', 'birth_date', 'gender', 'country',
+        fields = ('email', 'avatar', 'first_name', 'last_name', 'birth_date', 'gender', 'country',
                   'city', 'phone', 'telegram', 'avatar', 'site') #'provider_profile')
 
     def update(self, instance, validated_data):
