@@ -178,7 +178,7 @@ class UpdateBusinessProfile(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = Connect4ProUser
         fields = ('email', 'first_name', 'last_name', 'birth_date', 'gender', 'country',
-                  'city', 'phone', 'telegram', 'avatar', 'site')# 'business_profile')
+                  'city', 'phone', 'telegram', 'avatar', 'site')  # 'business_profile')
 
     # def update(self, instance, validated_data):
     #     instance.__dict__.update(validated_data)
@@ -194,7 +194,7 @@ class UpdateProviderProfile(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = Connect4ProUser
         fields = ('email', 'first_name', 'last_name', 'birth_date', 'gender', 'country',
-                  'city', 'phone', 'telegram', 'avatar', 'site') #'provider_profile')
+                  'city', 'phone', 'telegram', 'avatar', 'site')  # 'provider_profile')
 
     # def update(self, instance, validated_data):
     #     instance.__dict__.update(validated_data)
@@ -202,6 +202,14 @@ class UpdateProviderProfile(serializers.HyperlinkedModelSerializer):
     #
     #     return instance
 
+
+class UpdateUser(serializers.HyperlinkedModelSerializer):
+    avatar = serializers.ImageField(required=False)
+
+    class Meta:
+        model = Connect4ProUser
+        fields = ('email', 'first_name', 'last_name', 'birth_date', 'gender', 'country',
+                  'city', 'phone', 'telegram', 'avatar', 'site')
 
 
 class ChangePasswordSerializer(serializers.Serializer):

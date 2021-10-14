@@ -15,7 +15,7 @@ from users.models import Connect4ProUser, Sector, Knowledge, Skill, Method
 from users.permissions import IsOwnerOrReadOnly, PremiumPermission
 from users.serializers import SectorSerializer, UserBusinessProfileSerializer, \
     UserProviderProfileSerializer, UpdateProviderProfile, UpdateBusinessProfile, SkillSerializer, KnowledgeSerializer, \
-    MethodSerializer, ChangePasswordSerializer
+    MethodSerializer, ChangePasswordSerializer, UpdateUser
 
 
 class BusinessUserList(ListAPIView):
@@ -37,8 +37,8 @@ class ProviderUserRegister(CreateAPIView):
 
 
 class BusinessUserUpdate(UpdateAPIView):
-    queryset = Connect4ProUser.objects.filter(is_business=True)
-    serializer_class = UpdateBusinessProfile
+    queryset = Connect4ProUser.objects.all()
+    serializer_class = UpdateUser
     lookup_field = 'id'
     parser_classes = [MultiPartParser, FormParser]
 
@@ -50,8 +50,8 @@ class BusinessUserUpdate(UpdateAPIView):
 
 
 class ProviderUserUpdate(UpdateAPIView):
-    queryset = Connect4ProUser.objects.filter(is_provider=True)
-    serializer_class = UpdateProviderProfile
+    queryset = Connect4ProUser.objects.all()
+    serializer_class = UpdateUser
     lookup_field = 'id'
     parser_classes = [MultiPartParser, FormParser]
 
