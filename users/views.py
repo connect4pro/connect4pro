@@ -40,26 +40,26 @@ class BusinessUserUpdate(UpdateAPIView):
     queryset = Connect4ProUser.objects.all()
     serializer_class = UpdateUser
     lookup_field = 'id'
-    # parser_classes = [MultiPartParser, FormParser]
-    #
-    # def get_parsers(self):
-    #     if getattr(self, 'swagger_fake_view', False):
-    #         return []
-    #
-    #     return super().get_parsers()
+    parser_classes = [MultiPartParser, FormParser]
+
+    def get_parsers(self):
+        if getattr(self, 'swagger_fake_view', False):
+            return []
+
+        return super().get_parsers()
 
 
 class ProviderUserUpdate(UpdateAPIView):
     queryset = Connect4ProUser.objects.all()
     serializer_class = UpdateUser
     lookup_field = 'id'
-    # parser_classes = [MultiPartParser, FormParser]
-    #
-    # def get_parsers(self):
-    #     if getattr(self, 'swagger_fake_view', False):
-    #         return []
-    #
-    #     return super().get_parsers()
+    parser_classes = [MultiPartParser, FormParser]
+
+    def get_parsers(self):
+        if getattr(self, 'swagger_fake_view', False):
+            return []
+
+        return super().get_parsers()
 
 
 class BusinessProfileDetail(RetrieveAPIView):
