@@ -16,8 +16,8 @@ from payments.models import Order, Customer
 from users.models import Connect4ProUser
 
 
-def pay_premium(request):
-    user = request.user
+def pay_premium(request, id):
+    user = Connect4ProUser.objects.get(id=id)
     customer = Customer.objects.get_or_create(user=user)
     order = Order.objects.create(
         amount=100,
