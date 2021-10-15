@@ -26,8 +26,8 @@ def pay_premium(request):
     )
     order.save()
     payload = {'pg_merchant_id': 540612, 'pg_amount': 100, 'pg_salt': 'string', 'pg_order_id': order.id,
-               'pg_description': 'Оплата премиум-аккаунта на сайте connect4pro.kg',
-               'pg_result_url': 'http://73b24fb81aa0.ngrok.io/paybox-result',
+               'pg_description': 'Оплата премиум-аккаунта на сайте connect4.pro',
+               'pg_result_url': 'http://connect4.pro/api/paybox-result',
                'pg_success_url_method': 'GET',
                'pg_failure_url_method': 'GET'
                }
