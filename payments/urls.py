@@ -7,6 +7,6 @@ app_name = 'payments'
 urlpatterns = [
     path('api/paybox/<int:id>', pay_premium, name='paybox_init'),
     path('api/paybox-success', pay_success, name='paybox_success'),
-    path('api/paybox-result', pay_result, name='paybox_result'),
+    path('api/paybox-result/<int:id>', pay_result, name='paybox_result'),
     path('api/paybox-failure', pay_failure, name='paybox_failure'),
 ]
