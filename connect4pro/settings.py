@@ -34,7 +34,7 @@ DEBUG = os.environ.get('DEBUG')
 
 ALLOWED_HOSTS = ['http://localhost:8000', 'http://localhost:3000', 'http://94.228.120.61/', 'http://94.228.120.61',
                  '94.228.120.61', '127.0.0.1', 'http://cj28902.tmweb.ru', 'http://connect4.pro', 'connect4.pro',
-                 'cj28902.tmweb.ru', 'https://customer.paybox.money']
+                 'cj28902.tmweb.ru', 'https://customer.paybox.money', 'https://api.paybox.money']
 
 # Application definition
 
@@ -282,6 +282,7 @@ CORS_ALLOWED_ORIGINS = [
     'http://connect4.pro',
     'https://connect4.pro',
     'https://customer.paybox.money',
+    'https://api.paybox.money',
 ]
 CORS_ALLOW_METHODS = [
     'DELETE',
@@ -313,7 +314,8 @@ CORS_ORIGIN_WHITELIST = (
     'http://cj28902.tmweb.ru',
     'http://connect4.pro',
     'https://connect4.pro',
-    'https://customer.paybox.money'
+    'https://customer.paybox.money',
+    'https://api.paybox.money',
 )
 
 DJANGORESIZED_DEFAULT_SIZE = [1920, 1080]
