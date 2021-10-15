@@ -139,7 +139,7 @@ DATABASES = {
         'NAME': os.environ.get('NAME'),
         'USER': os.environ.get('DBUSER'),
         'PASSWORD': os.environ.get('PASSWORD'),
-        'HOST': 'localhost',   # Or an IP Address that your DB is hosted on
+        'HOST': 'localhost',  # Or an IP Address that your DB is hosted on
         'PORT': os.environ.get('MSQL_PORT'),
     }
 }
@@ -281,6 +281,7 @@ CORS_ALLOWED_ORIGINS = [
     'http://cj28902.tmweb.ru',
     'http://connect4.pro',
     'https://connect4.pro',
+    'https://customer.paybox.money',
 ]
 CORS_ALLOW_METHODS = [
     'DELETE',
@@ -312,6 +313,7 @@ CORS_ORIGIN_WHITELIST = (
     'http://cj28902.tmweb.ru',
     'http://connect4.pro',
     'https://connect4.pro',
+    'https://customer.paybox.money'
 )
 
 DJANGORESIZED_DEFAULT_SIZE = [1920, 1080]
