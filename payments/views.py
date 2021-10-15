@@ -27,7 +27,7 @@ def pay_premium(request, id):
     order.save()
     payload = {'pg_merchant_id': 540612, 'pg_amount': 100, 'pg_salt': 'string', 'pg_order_id': order.id,
                'pg_description': 'Оплата премиум-аккаунта на сайте connect4.pro',
-               'pg_result_url': f'http://connect4.pro/api/paybox-result/{order.id}',
+               'pg_result_url': f'http://connect4.pro/api/paybox-result/',
                'pg_success_url_method': 'GET',
                'pg_failure_url_method': 'GET'
                }
@@ -58,9 +58,9 @@ def pay_failure(request):
     return HttpResponse('Failure')
 
 
-def pay_result(request, id):
+def pay_result(request):
     if request.GET.get('pg_result') == '1':
-        order = Order.objects.get(id=id)
+        order = Order.objects.get(id=request.GET.get('pg_order_id'))
         order.pg_payment_id = int(request.GET.get('pg_payment_id'))
         order.status = '2'
         order.save()
