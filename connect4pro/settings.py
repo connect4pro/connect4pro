@@ -34,7 +34,7 @@ DEBUG = os.environ.get('DEBUG')
 
 ALLOWED_HOSTS = ['http://localhost:8000', 'http://localhost:3000', 'http://94.228.120.61/', 'http://94.228.120.61',
                  '94.228.120.61', '127.0.0.1', 'http://cj28902.tmweb.ru', 'http://connect4.pro', 'connect4.pro',
-                 'cj28902.tmweb.ru']
+                 'cj28902.tmweb.ru', 'https://customer.paybox.money']
 
 # Application definition
 
