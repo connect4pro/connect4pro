@@ -140,7 +140,7 @@ DATABASES = {
         'NAME': os.environ.get('NAME'),
         'USER': os.environ.get('DBUSER'),
         'PASSWORD': os.environ.get('PASSWORD'),
-        'HOST': 'http://127.0.0.1',  # Or an IP Address that your DB is hosted on
+        'HOST': 'localhost',  # Or an IP Address that your DB is hosted on
         'PORT': os.environ.get('MSQL_PORT'),
     }
 }
