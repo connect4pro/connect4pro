@@ -2,10 +2,15 @@ from datetime import datetime, date
 
 from django.contrib.auth.base_user import BaseUserManager
 from django.contrib.auth.models import AbstractUser, User
+from django.contrib.sites.models import Site
+from django.core.mail import send_mail
 from django.db import models
+from django.dispatch import receiver
+from django.urls import reverse
 from django.utils.translation import ugettext_lazy as _
 from django_resized import ResizedImageField
 from rest_framework_simplejwt.tokens import RefreshToken
+from django_rest_passwordreset.signals import reset_password_token_created
 
 # Поле email теперь уникально
 User._meta.get_field('email')._unique = True
@@ -42,6 +47,25 @@ class CustomUserManager(BaseUserManager):
 
 
 AUTH_PROVIDERS = {'facebook': 'facebook', 'google': 'google', 'email': 'email'}
+
+
+@receiver(reset_password_token_created)
+def password_reset_token_created(sender, instance, reset_password_token, *args, **kwargs):
+
+    domain = Site.objects.get_current().domain
+    email_plaintext_message = "http://{}/{}/{}".format(domain, 'password_reset',
+                                                   reset_password_token.key)
+
+    send_mail(
+        # title:
+        'Сброс пароля',
+        # message:
+        email_plaintext_message,
+        # from:
+        "admin@connect4.pro",
+        # to:
+        [reset_password_token.user.email],
+    )
 
 
 class Connect4ProUser(AbstractUser):

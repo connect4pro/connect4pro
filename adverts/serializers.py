@@ -1,7 +1,7 @@
 from rest_framework import serializers
 from rest_framework.relations import PrimaryKeyRelatedField
 
-from adverts.models import Category, BusinessAdvert, ProviderAdvert, Album, BusinessAdvertComment, \
+from adverts.models import Category, BusinessAdvert, ProviderAdvert, BusinessAdvertComment, \
     ProviderAdvertComment, Image
 from users.models import Connect4ProUser, ProviderProfile
 
@@ -55,19 +55,19 @@ class ProviderAdvertCommentSerializer(serializers.ModelSerializer):
 
 
 class ImageSerializer(serializers.ModelSerializer):
-    image = serializers.ImageField()
+    image = serializers.ImageField(required=False)
 
     class Meta:
         model = Image
         fields = ('image',)
 
 
-class ImageSetSerializer(serializers.ModelSerializer):
-    image_set = ImageSerializer(source='images', many=True, required=False)
-
-    class Meta:
-        model = Album
-        fields = ('image_set',)
+# class ImageSetSerializer(serializers.ModelSerializer):
+#     album = ImageSerializer(source='images', many=True, required=False)
+#
+#     class Meta:
+#         model = Album
+#         fields = ('album',)
 
 
 class AdvertCategorySerializer(serializers.ModelSerializer):
@@ -79,17 +79,20 @@ class AdvertCategorySerializer(serializers.ModelSerializer):
 
 
 class UserAdvertSerializer(serializers.ModelSerializer):
-    id = serializers.IntegerField()
+    id = serializers.IntegerField(required=False, read_only=True)
+    avatar = serializers.ImageField(required=False, read_only=True)
+    phone = serializers.CharField(required=False, read_only=True)
+    telegram = serializers.CharField(required=False, read_only=True)
+
     class Meta:
         model = Connect4ProUser
-        fields = ('id', 'phone', 'telegram')
+        fields = ('id', 'phone', 'telegram', 'avatar')
 
 
 class BusinessAdvertSerializer(serializers.ModelSerializer):
     id = serializers.IntegerField(read_only=True)
     comments = BusinessAdvertCommentSerializer(source='post_comment', many=True, required=False, read_only=True)
     user = UserAdvertSerializer(required=False)
-
 
     class Meta:
         model = BusinessAdvert
@@ -106,26 +109,32 @@ class BusinessAdvertSerializer(serializers.ModelSerializer):
         return advert
 
 
-class ProviderAdvertSerializer(serializers.ModelSerializer):
-    id = serializers.IntegerField(read_only=True)
+class ProviderAdvertSerializer(serializers.HyperlinkedModelSerializer):
+    title = serializers.CharField(required=False)
+    description = serializers.CharField(required=False)
+    id = serializers.IntegerField(read_only=True, required=False)
     comments = ProviderAdvertCommentSerializer(source='post_comment', many=True, required=False, read_only=True)
-    images = ImageSetSerializer(required=False)
-    user = UserAdvertSerializer(required=False)
+    image = serializers.ImageField(required=False)
+    # images = ImageSerializer(source='images_set', many=True, required=False)
+    # images = ImageSetSerializer(required=False)
+    user_data = UserAdvertSerializer(required=False, source='user', read_only=True)
+    user = serializers.IntegerField(source='user_id',required=False)
 
     class Meta:
         model = ProviderAdvert
         fields = (
-            'id', 'images', 'title', 'description', 'price', 'currency', 'tel', 'scope', 'services',
-            'location', 'created_at', 'user', 'foundation_date', 'comments')
+            'id', 'image', 'title', 'description', 'price', 'currency', 'tel', 'scope', 'services',
+            'location', 'created_at', 'user', 'foundation_date', 'user_data', 'comments')
         depth = 1
 
-    def create(self, validated_data):
-        user_data = validated_data.pop('user')
-        image_set = validated_data.pop('images')
-        images = Album.objects.create(**image_set)
-        images.save()
+    # def create(self, validated_data):
+    #     user = validated_data.pop('user')
+    #     user_id = Connect4ProUser.objects.get(id=user)
+    #     images_data = self.context.get('view').request.FILES
+    #     advert = ProviderAdvert.objects.create(**validated_data, user=user_id)
+    #     for image_data in images_data.values():
+    #         Image.objects.create(advert=advert, image=image_data)
+    #
+    #     return advert
 
-        user = Connect4ProUser.objects.get(id=user_data['id'])
-        advert = ProviderAdvert.objects.create(**validated_data, user=user.provider_profile, images_id=images.id)
-        advert.save()
-        return advert
+

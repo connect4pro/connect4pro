@@ -171,31 +171,52 @@ class UserProviderProfileSerializer(serializers.ModelSerializer):
             'provider_profile')
 
 
-class UpdateBusinessProfile(serializers.ModelSerializer):
+class UpdateBusinessProfile(serializers.HyperlinkedModelSerializer):
     # business_profile = BusinessProfileSerializer(required=False)
+    avatar = serializers.ImageField(required=False)
 
     class Meta:
         model = Connect4ProUser
-        fields = ('first_name', 'last_name', 'birth_date', 'gender', 'country',
-                  'city', 'phone', 'telegram', 'avatar', 'site')# 'business_profile')
+        fields = ('email', 'first_name', 'last_name', 'birth_date', 'gender', 'country',
+                  'city', 'phone', 'telegram', 'avatar', 'site')  # 'business_profile')
 
-    def update(self, instance, validated_data):
-        instance.__dict__.update(validated_data)
-        instance.save()
+    # def update(self, instance, validated_data):
+    #     instance.__dict__.update(validated_data)
+    #     instance.save()
+    #
+    #     return instance
 
-        return instance
 
-
-class UpdateProviderProfile(serializers.ModelSerializer):
+class UpdateProviderProfile(serializers.HyperlinkedModelSerializer):
     # provider_profile = ProviderProfileSerializer(required=True)
+    avatar = serializers.ImageField(required=False)
 
     class Meta:
         model = Connect4ProUser
-        fields = ('first_name', 'last_name', 'birth_date', 'gender', 'country',
-                  'city', 'phone', 'telegram', 'avatar', 'site') #'provider_profile')
+        fields = ('email', 'first_name', 'last_name', 'birth_date', 'gender', 'country',
+                  'city', 'phone', 'telegram', 'avatar', 'site')  # 'provider_profile')
 
-    def update(self, instance, validated_data):
-        instance.__dict__.update(validated_data)
-        instance.save()
+    # def update(self, instance, validated_data):
+    #     instance.__dict__.update(validated_data)
+    #     instance.save()
+    #
+    #     return instance
 
-        return instance
+
+class UpdateUser(serializers.HyperlinkedModelSerializer):
+    avatar = serializers.ImageField(required=False)
+
+    class Meta:
+        model = Connect4ProUser
+        fields = ('email', 'first_name', 'last_name', 'birth_date', 'gender', 'country',
+                  'city', 'phone', 'telegram', 'avatar', 'site')
+
+
+class ChangePasswordSerializer(serializers.Serializer):
+    model = Connect4ProUser
+
+    """
+    Serializer for password change endpoint.
+    """
+    old_password = serializers.CharField(required=True)
+    new_password = serializers.CharField(required=True)

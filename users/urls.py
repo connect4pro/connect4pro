@@ -1,13 +1,13 @@
-from django.urls import path
+from django.urls import path, include
 from django.views.decorators.csrf import csrf_exempt
+from rest_framework.routers import DefaultRouter
 
 from users.views import BusinessUserList, BusinessUserRegister, ProviderUserList, ProviderUserRegister, \
     BusinessProfileDetail, ProviderProfileDetail, ProviderUserUpdate, BusinessUserUpdate, SkillList, KnowledgeList, \
-    MethodList
+    MethodList, ChangePasswordView
 
 from users.views import SectorList
 
-app_name = 'users'
 
 urlpatterns = [
     path('api/users/business', BusinessUserList.as_view(), name='business'),
@@ -22,4 +22,6 @@ urlpatterns = [
     path('api/skill', SkillList.as_view(), name='skill_list'),
     path('api/knowledge', KnowledgeList.as_view(), name='knowledge_list'),
     path('api/method', MethodList.as_view(), name='method_list'),
+    path('api/change-password', ChangePasswordView.as_view(), name='change-password'),
+    path('api/password_reset/', include('django_rest_passwordreset.urls', namespace='password_reset')),
 ]

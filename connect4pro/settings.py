@@ -16,24 +16,25 @@ from pathlib import Path
 from django.template.context_processors import media
 from dotenv import load_dotenv
 
-load_dotenv()
-
 SITE_ID = 1
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
+
+load_dotenv(os.path.join(BASE_DIR, '.env'))
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/3.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = os.environ['SECRET_KEY']
+SECRET_KEY = os.environ.get('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = os.environ['DEBUG']
+DEBUG = os.environ.get('DEBUG')
 # TODO: Закрыть доступ для посторонних айпи
 
 ALLOWED_HOSTS = ['http://localhost:8000', 'http://localhost:3000', 'http://94.228.120.61/', 'http://94.228.120.61',
-                 '94.228.120.61', '127.0.0.1']
+                 '94.228.120.61', '127.0.0.1', 'http://cj28902.tmweb.ru', 'http://connect4.pro', 'connect4.pro',
+                 'cj28902.tmweb.ru', 'https://customer.paybox.money', 'https://api.paybox.money', 'api.paybox.money']
 
 # Application definition
 
@@ -51,6 +52,7 @@ INSTALLED_APPS = [
     'newsletter.apps.NewsletterConfig',
     'payments.apps.PaymentsConfig',
     'social_auth.apps.SocialAuthConfig',
+    'testimage.apps.TestimageConfig',
 
     # Django
     'django.contrib.admin',
@@ -72,6 +74,8 @@ INSTALLED_APPS = [
     'pytils',
     'social_django',
     'corsheaders',
+    'django_rest_passwordreset',
+    'ckeditor',
 ]
 
 MIDDLEWARE = [
@@ -79,7 +83,7 @@ MIDDLEWARE = [
     'django.contrib.sessions.middleware.SessionMiddleware',
     'corsheaders.middleware.CorsMiddleware',
     'django.middleware.common.CommonMiddleware',
-    'django.middleware.csrf.CsrfViewMiddleware',
+    # 'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
@@ -111,14 +115,33 @@ WSGI_APPLICATION = 'connect4pro.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/3.2/ref/settings/#databases
 
+try:
+    import pymysql
+
+    pymysql.version_info = (1, 4, 6, 'final', 0)
+    pymysql.install_as_MySQLdb()
+except:
+    pass
+
+# DATABASES = {
+#     'default': {
+#         'ENGINE': os.environ.get('ENGINE'),
+#         'NAME': os.environ.get('NAME'),
+#         'USER': os.environ.get('USER'),
+#         'PASSWORD': os.environ.get('PASSWORD'),
+#         'HOST': os.environ.get('HOST'),
+#         'PORT': os.environ.get('PORT'),
+#     }
+# }
+
 DATABASES = {
     'default': {
-        'ENGINE': os.environ['ENGINE'],
-        'NAME': os.environ['NAME'],
-        'USER': os.environ['USER'],
-        'PASSWORD': os.environ['PASSWORD'],
-        'HOST': os.environ['HOST'],
-        'PORT': os.environ['PORT'],
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': os.environ.get('NAME'),
+        'USER': os.environ.get('DBUSER'),
+        'PASSWORD': os.environ.get('PASSWORD'),
+        'HOST': 'localhost',  # Or an IP Address that your DB is hosted on
+        'PORT': os.environ.get('MSQL_PORT'),
     }
 }
 
@@ -157,14 +180,14 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/3.2/howto/static-files/
 
 STATIC_URL = '/static/'
-if not DEBUG:
-    STATIC_ROOT = '/var/www/static/'
+STATIC_ROOT = '/home/c/cj28902/public_html/static/'
+REACT_APP = os.path.join(BASE_DIR, 'frontend')
 MEDIA_URL = '/media/'
-MEDIA_ROOT = '/var/www/media/'
-STATICFILES_DIRS = (
-     os.path.join(BASE_DIR, 'front/static'),
-     os.path.join(BASE_DIR, 'front')
-)
+MEDIA_ROOT = '/home/c/cj28902/public_html/media/'
+# STATICFILES_DIRS = (
+#     os.path.join(BASE_DIR, 'frontend/static'),
+# )
+
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
@@ -203,8 +226,8 @@ SWAGGER_SETTINGS = {
 # SOCIAL_AUTH_POSTGRES_JSONFIELD = True
 SOCIAL_AUTH_URL_NAMESPACE = 'social'
 
-SOCIAL_AUTH_FACEBOOK_KEY = os.environ['SOCIAL_AUTH_FACEBOOK_KEY']
-SOCIAL_AUTH_FACEBOOK_SECRET = os.environ['SOCIAL_AUTH_FACEBOOK_SECRET']
+SOCIAL_AUTH_FACEBOOK_KEY = os.environ.get('SOCIAL_AUTH_FACEBOOK_KEY')
+SOCIAL_AUTH_FACEBOOK_SECRET = os.environ.get('SOCIAL_AUTH_FACEBOOK_SECRET')
 
 SOCIAL_AUTH_FACEBOOK_SCOPE = ['email']
 FIELDS_STORED_IN_SESSION = ['user_type']
@@ -214,8 +237,8 @@ SOCIAL_AUTH_FACEBOOK_PROFILE_EXTRA_PARAMS = {
     'fields': 'name, email'
 }
 
-SOCIAL_AUTH_GOOGLE_OAUTH2_KEY = os.environ['SOCIAL_AUTH_GOOGLE_OAUTH2_KEY']
-SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET = os.environ['SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET']
+SOCIAL_AUTH_GOOGLE_OAUTH2_KEY = os.environ.get('SOCIAL_AUTH_GOOGLE_OAUTH2_KEY')
+SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET = os.environ.get('SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET')
 
 SOCIALACCOUNT_PROVIDERS = {
     'google': {
@@ -225,7 +248,7 @@ SOCIALACCOUNT_PROVIDERS = {
         ],
         'AUTH_PARAMS': {
             'access_type': 'online',
-            'redirect_uri': 'http://94.228.120.61/<custom-url>'
+            'redirect_uri': 'http://connect4.pro/<custom-url>'
         }
     }
 }
@@ -237,20 +260,30 @@ SOCIALACCOUNT_PROVIDERS = {
 #
 # )
 
-EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_USE_TLS = True
+EMAIL_PORT = 587
+EMAIL_HOST_USER = 'connect4fund@gmail.com'
+EMAIL_HOST_PASSWORD = os.environ.get('EMAIL_HOST_PASSWORD')
 
-CELERY_BROKER_URL = os.environ['CELERY_BROKER_URL']
+# CELERY_BROKER_URL = os.environ.get('CELERY_BROKER_URL')
 CELERY_IMPORTS = [
     'newsletter.tasks',
 ]
 
-PAYBOX_KEY = os.environ['PAYBOX_KEY']
+PAYBOX_KEY = os.environ.get('PAYBOX_KEY')
 
 CORS_ALLOWED_ORIGINS = [
     'http://94.228.120.61',
     'http://localhost:3000',
     'http://localhost:8000',
     'http://127.0.0.1:3000',
+    'http://cj28902.tmweb.ru',
+    'http://connect4.pro',
+    'https://connect4.pro',
+    'https://customer.paybox.money',
+    'https://api.paybox.money',
 ]
 CORS_ALLOW_METHODS = [
     'DELETE',
@@ -259,6 +292,7 @@ CORS_ALLOW_METHODS = [
     'PATCH',
     'POST',
     'PUT',
+    'FETCH',
 ]
 CORS_ALLOW_HEADERS = [
     'accept',
@@ -273,11 +307,16 @@ CORS_ALLOW_HEADERS = [
 ]
 
 CORS_ORIGIN_ALLOW_ALL = False
-
+CORS_ALLOW_CREDENTIALS = True
 CORS_ORIGIN_WHITELIST = (
     'http://localhost:3000',
     'http://94.228.120.61',
-    'http://94.228.120.61/',
+    'http://94.228.120.61',
+    'http://cj28902.tmweb.ru',
+    'http://connect4.pro',
+    'https://connect4.pro',
+    'https://customer.paybox.money',
+    'https://api.paybox.money',
 )
 
 DJANGORESIZED_DEFAULT_SIZE = [1920, 1080]
@@ -295,3 +334,76 @@ CSRF_USE_SESSIONS = True
 
 SOCIAL_AUTH_REDIRECT_IS_HTTPS = True
 
+BROKER_BACKEND = 'sqlakombu.transport.Transport'
+
+SQLALCHEMY_DATABASE_URI = 'sqla+sqlite:////home/c/cj28902/celerydb.sqlite'
+BROKER_HOST = 'sqla+sqlite:////home/c/cj28902/celerydb.sqlite'
+BROKER_URL = 'sqla+sqlite:////home/c/cj28902/celerydb.sqlite'
+
+
+CKEDITOR_CONFIGS = {
+    'default': {
+        'skin': 'moono',
+        # 'skin': 'office2013',
+        'toolbar_Basic': [
+            ['Source', '-', 'Bold', 'Italic']
+        ],
+        'toolbar_YourCustomToolbarConfig': [
+            # {'name': 'document', 'items': ['Source', '-', 'Save', 'NewPage', 'Preview', 'Print', '-', 'Templates']},
+            # {'name': 'clipboard', 'items': ['Cut', 'Copy', 'Paste', 'PasteText', 'PasteFromWord', '-', 'Undo', 'Redo']},
+            # {'name': 'editing', 'items': ['Find', 'Replace', '-', 'SelectAll']},
+            # {'name': 'forms',
+            #  'items': ['Form', 'Checkbox', 'Radio', 'TextField', 'Textarea', 'Select', 'Button', 'ImageButton',
+            #            'HiddenField']},
+            '/',
+            {'name': 'basicstyles',
+             'items': ['Bold', 'Italic', 'Underline', 'Strike', 'Subscript', 'Superscript', '-', 'RemoveFormat']},
+            {'name': 'paragraph',
+             'items': ['NumberedList', 'BulletedList', '-', 'Outdent', 'Indent', '-', 'Blockquote', '-',
+                       'JustifyLeft', 'JustifyCenter', 'JustifyRight', 'JustifyBlock', '-', 'BidiLtr', 'BidiRtl',
+                       ]},
+            {'name': 'links', 'items': ['Link', 'Unlink', 'Anchor']},
+            {'name': 'insert',
+             'items': ['Image', 'Table', 'HorizontalRule', 'Smiley', 'SpecialChar', 'PageBreak', ]},
+            '/',
+            {'name': 'styles', 'items': ['Styles', 'Format', 'Font', 'FontSize']},
+            {'name': 'colors', 'items': ['TextColor', 'BGColor']},
+            # {'name': 'tools', 'items': ['Maximize', 'ShowBlocks']},
+
+            # '/',  # put this to force next toolbar on new line
+            {'name': 'yourcustomtools', 'items': [
+                # put the name of your editor.ui.addButton here
+                'Preview',
+                'Maximize',
+                'Youtube',
+
+            ]},
+        ],
+        'toolbar': 'YourCustomToolbarConfig',  # put selected toolbar config here
+        # 'toolbarGroups': [{ 'name': 'document', 'groups': [ 'mode', 'document', 'doctools' ] }],
+        # 'height': 291,
+        # 'width': '100%',
+        # 'filebrowserWindowHeight': 725,
+        # 'filebrowserWindowWidth': 940,
+        # 'toolbarCanCollapse': True,
+        # 'mathJaxLib': '//cdn.mathjax.org/mathjax/2.2-latest/MathJax.js?config=TeX-AMS_HTML',
+        'tabSpaces': 4,
+        'extraPlugins': ','.join([
+            # 'uploadimage',  # the upload image feature
+            # your extra plugins here
+            'div',
+            'autolink',
+            'autoembed',
+            'embedsemantic',
+            'autogrow',
+            # 'devtools',
+            'widget',
+            'lineutils',
+            'clipboard',
+            'dialog',
+            'dialogui',
+            'elementspath',
+            # 'youtube',
+        ]),
+    }
+}

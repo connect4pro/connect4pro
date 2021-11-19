@@ -16,8 +16,8 @@ from payments.models import Order, Customer
 from users.models import Connect4ProUser
 
 
-def pay_premium(request):
-    user = request.user
+def pay_premium(request, id):
+    user = Connect4ProUser.objects.get(id=id)
     customer = Customer.objects.get_or_create(user=user)
     order = Order.objects.create(
         amount=100,
@@ -26,8 +26,8 @@ def pay_premium(request):
     )
     order.save()
     payload = {'pg_merchant_id': 540612, 'pg_amount': 100, 'pg_salt': 'string', 'pg_order_id': order.id,
-               'pg_description': 'Оплата премиум-аккаунта на сайте connect4pro.kg',
-               'pg_result_url': 'http://73b24fb81aa0.ngrok.io/paybox-result',
+               'pg_description': 'Оплата премиум-аккаунта на сайте connect4.pro',
+               'pg_result_url': 'http://127.0.0.1:8000/api/paybox-result',
                'pg_success_url_method': 'GET',
                'pg_failure_url_method': 'GET'
                }

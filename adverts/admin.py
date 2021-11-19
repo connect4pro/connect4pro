@@ -1,6 +1,6 @@
 from django.contrib import admin
 from adverts.models import BusinessAdvert, Category, ProviderAdvert, BusinessAdvertComment, ProviderAdvertComment, \
-    Album, Image
+    Image
 
 admin.site.register(Category)
 
@@ -13,7 +13,7 @@ class BusinessAdvertAdmin(admin.ModelAdmin):
 
 @admin.register(ProviderAdvert)
 class ProviderAdvertAdmin(admin.ModelAdmin):
-    list_display = ['user', 'title', 'price', 'currency',]
+    list_display = ['user', 'title', 'price', 'currency', ]
     list_filter = ['currency', ]
 
 
@@ -27,11 +27,12 @@ class ProviderAdvertCommentAdmin(admin.ModelAdmin):
     list_display = ('text', 'user', 'post')
 
 
-@admin.register(Album)
-class AlbumAdmin(admin.ModelAdmin):
-    list_display = ('id',)
+#
+# @admin.register(Album)
+# class AlbumAdmin(admin.ModelAdmin):
+#     list_display = ('id',)
 
 
 @admin.register(Image)
 class ImageAdmin(admin.ModelAdmin):
-    list_display = ('image', 'album')
+    list_display = ('image', 'advert')

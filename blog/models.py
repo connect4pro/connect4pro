@@ -1,3 +1,4 @@
+from ckeditor.fields import RichTextField
 from django.db import models
 
 # Create your models here.
@@ -11,7 +12,7 @@ class BlogPost(models.Model):
 
     title = models.CharField(max_length=100)
     subtitle = models.CharField(max_length=100)
-    description = models.TextField()
+    description = RichTextField()
     created = models.DateTimeField(auto_now=True)
     post_image = ResizedImageField(size=[350, 250], upload_to=f'images/blog_images/%d%m%Y', blank=True,
                                    null=True)
