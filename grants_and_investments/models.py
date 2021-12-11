@@ -42,7 +42,7 @@ class Grant(models.Model):
     sum = models.PositiveIntegerField(verbose_name='Сумма гранта',
                                       validators=[MinValueValidator(1000), MaxValueValidator(10000000)])
     currency = models.CharField(max_length=5, default=kgs, choices=CURRENCY_CHOICES, verbose_name='Валюта')
-    deadline = models.CharField(max_length=20, verbose_name='Срок гранта')
+    deadline = models.CharField(max_length=20, verbose_name='Срок гранта', null=True, blank=True)
     description = RichTextField(verbose_name='Описание гранта')
     location = models.CharField(max_length=60, verbose_name='Локация', blank=True, null=True)
     period = models.CharField(max_length=25, verbose_name='Периодичность', choices=PERIOD_CHOICES, default=no)
