@@ -92,7 +92,8 @@ class UserAdvertSerializer(serializers.ModelSerializer):
 class BusinessAdvertSerializer(serializers.ModelSerializer):
     id = serializers.IntegerField(read_only=True)
     comments = BusinessAdvertCommentSerializer(source='post_comment', many=True, required=False, read_only=True)
-    user = UserAdvertSerializer(required=False)
+    user = serializers.IntegerField(source='user_id', required=False)
+    # UserAdvertSerializer
 
     class Meta:
         model = BusinessAdvert
@@ -100,13 +101,13 @@ class BusinessAdvertSerializer(serializers.ModelSerializer):
                   'suggest', 'tel', 'created_at', 'comments']
         depth = 1
 
-    def create(self, validated_data):
-        user_data = validated_data.pop('user')
-
-        user = Connect4ProUser.objects.get(id=user_data['id'])
-        advert = BusinessAdvert.objects.create(**validated_data, user=user.business_profile)
-        advert.save()
-        return advert
+    # def create(self, validated_data):
+    #     user_data = validated_data.pop('user')
+    #
+    #     user = Connect4ProUser.objects.get(id=user_data['id'])
+    #     advert = BusinessAdvert.objects.create(**validated_data, user=user.business_profile)
+    #     advert.save()
+    #     return advert
 
 
 class ProviderAdvertSerializer(serializers.HyperlinkedModelSerializer):
@@ -117,14 +118,15 @@ class ProviderAdvertSerializer(serializers.HyperlinkedModelSerializer):
     image = serializers.ImageField(required=False)
     # images = ImageSerializer(source='images_set', many=True, required=False)
     # images = ImageSetSerializer(required=False)
-    user_data = UserAdvertSerializer(required=False, source='user', read_only=True)
+    # user_data = UserAdvertSerializer(required=False, source='user', read_only=True)
     user = serializers.IntegerField(source='user_id',required=False)
 
     class Meta:
         model = ProviderAdvert
         fields = (
-            'id', 'image', 'title', 'description', 'price', 'currency', 'tel', 'scope', 'services',
-            'location', 'created_at', 'user', 'foundation_date', 'user_data', 'comments')
+            'id', 'image', 'title', 'description', 'price', 'currency', 'tel',
+            'location', 'created_at', 'user',  'comments')
+        # 'scope', 'services', 'user_data',
         depth = 1
 
     # def create(self, validated_data):
