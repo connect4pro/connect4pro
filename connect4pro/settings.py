@@ -47,12 +47,13 @@ INSTALLED_APPS = [
     'events.apps.EventsConfig',
     'faq.apps.FaqConfig',
     'grants_and_investments.apps.GrantsAndInvestmentsConfig',
-    'forum.apps.ForumConfig',
+    # 'forum.apps.ForumConfig',
     'polls.apps.PollsConfig',
     'newsletter.apps.NewsletterConfig',
     'payments.apps.PaymentsConfig',
     'social_auth.apps.SocialAuthConfig',
-    'testimage.apps.TestimageConfig',
+    'links.apps.LinksConfig',
+    
 
     # Django
     'django.contrib.admin',

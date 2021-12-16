@@ -1,7 +1,6 @@
 from django.contrib import admin
-from django.contrib.admin.options import ModelAdmin
+from faq.forms import PostModelForm
 from faq.models import WriteUs, QuestionsAndAnswers
-# Register your models here.
 
 
 @admin.register(WriteUs)
@@ -12,3 +11,4 @@ class WriteUsAdmin(admin.ModelAdmin):
 @admin.register(QuestionsAndAnswers)
 class QuestionsAndAnswersAdmin(admin.ModelAdmin):
     list_display = ('question', 'answer')
+    form = PostModelForm
