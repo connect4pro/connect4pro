@@ -98,7 +98,7 @@ class BusinessAdvertSerializer(serializers.ModelSerializer):
     class Meta:
         model = BusinessAdvert
         fields = ['id', 'title', 'description', 'price', 'currency', 'completed', 'user', 'needs',
-                  'suggest', 'tel', 'created_at', 'comments']
+                  'suggest', 'tel', 'created_at', 'days', 'comments']
         depth = 1
 
     # def create(self, validated_data):
@@ -125,7 +125,7 @@ class ProviderAdvertSerializer(serializers.HyperlinkedModelSerializer):
         model = ProviderAdvert
         fields = (
             'id', 'image', 'title', 'description', 'price', 'currency', 'tel',
-            'location', 'created_at', 'user',  'comments')
+            'location', 'created_at', 'days', 'user',  'comments')
         # 'scope', 'services', 'user_data',
         depth = 1
 
