@@ -1,7 +1,7 @@
 from datetime import datetime, date
 
 from django.contrib.auth.base_user import BaseUserManager
-from django.contrib.auth.models import AbstractUser, User
+from django.contrib.auth.models import AbstractUser, User, PermissionsMixin
 from django.contrib.sites.models import Site
 from django.core.mail import send_mail
 from django.db import models
@@ -68,7 +68,7 @@ def password_reset_token_created(sender, instance, reset_password_token, *args, 
     )
 
 
-class Connect4ProUser(AbstractUser):
+class Connect4ProUser(AbstractUser, PermissionsMixin):
     """Общая для всех основа пользователя"""
 
     # По умолчанию основное поле - email
