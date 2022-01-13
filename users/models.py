@@ -106,6 +106,11 @@ class Connect4ProUser(AbstractUser):
             'access': str(refresh.access_token)
         }
 
+    @property
+    def is_staff(self):
+        """Is the user a staff member"""
+        return self.is_staff
+
     def __str__(self):
         if self.is_premium and self.is_business:
             return f'{self.email} - Премиум - Бизнес'
