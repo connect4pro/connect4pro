@@ -1,6 +1,4 @@
 from django.contrib import admin
-from django.contrib.auth.admin import UserAdmin
-
 from users.models import Connect4ProUser, BusinessProfile, ProviderProfile, Sector, Skill, Method, Knowledge
 
 
@@ -43,4 +41,3 @@ class KnowledgeAdmin(admin.ModelAdmin):
 
 admin.site.site_title = 'Connect4pro'  # тайтл как <titlle></title>
 admin.site.site_header = 'Connect4pro'  # тайтл вверху админки
-admin.site.register(UserAdmin)
