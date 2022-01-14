@@ -42,8 +42,9 @@ class CustomUserManager(BaseUserManager):
         """
         user = self.create_user(
             email=email,
-            password=password
+            password=password, is_staff=True
         )
+        user.set_password(password)
         user.is_staff = True
         user.is_active = True
         user.save()
@@ -119,11 +120,6 @@ class Connect4ProUser(AbstractUser):
             'refresh': str(refresh),
             'access': str(refresh.access_token)
         }
-
-    @property
-    def is_staff(self):
-        """Is the user a staff member"""
-        return self.is_staff
 
     def __str__(self):
         if self.is_premium and self.is_business:
