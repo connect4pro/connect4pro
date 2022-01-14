@@ -36,18 +36,19 @@ class CustomUserManager(BaseUserManager):
 
         return user
 
-    def create_staffuser(self, email, password):
+    def create_staffuser(self, email, password=None, **extra_fields):
         """
         creates a user with staff permissions
         """
-        user = self.create_user(
-            email=email,
-            password=password, is_staff=True
-        )
+        if not email:
+            raise ValueError(_('Поле email обязательное'))
+        email = self.normalize_email(email)
+        user = self.model(email=email, **extra_fields)
         user.set_password(password)
-        user.is_staff = True
         user.is_active = True
+        user.is_staff = True
         user.save()
+
         return user
 
     def create_superuser(self, email, password):
@@ -119,6 +120,21 @@ class Connect4ProUser(AbstractUser):
             'refresh': str(refresh),
             'access': str(refresh.access_token)
         }
+
+    def has_perm(self, perm, obj=None):
+
+        # Simplest possible answer: Yes, always
+        return True
+
+    def has_module_perms(self, app_label):
+
+        # Simplest possible answer: Yes, always
+        return True
+
+    def is_staff(self):
+
+        # Simplest possible answer: All admins are staff
+        return self.is_staff
 
     def __str__(self):
         if self.is_premium and self.is_business:
