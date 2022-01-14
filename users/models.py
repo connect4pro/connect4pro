@@ -121,21 +121,6 @@ class Connect4ProUser(AbstractUser):
             'access': str(refresh.access_token)
         }
 
-    def has_perm(self, perm, obj=None):
-
-        # Simplest possible answer: Yes, always
-        return True
-
-    def has_module_perms(self, app_label):
-
-        # Simplest possible answer: Yes, always
-        return True
-
-    def is_staff(self):
-
-        # Simplest possible answer: All admins are staff
-        return self.is_staff
-
     def __str__(self):
         if self.is_premium and self.is_business:
             return f'{self.email} - Премиум - Бизнес'
