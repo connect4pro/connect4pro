@@ -88,7 +88,6 @@ class Connect4ProUser(AbstractUser):
     # По умолчанию основное поле - email
     username = None
     email = models.EmailField(_('email address'), unique=True)
-    is_staff = models.BooleanField(default=False)
 
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = []
