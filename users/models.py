@@ -68,7 +68,7 @@ def password_reset_token_created(sender, instance, reset_password_token, *args, 
     )
 
 
-class Connect4ProUser(AbstractUser, PermissionsMixin):
+class Connect4ProUser(AbstractUser):
     """Общая для всех основа пользователя"""
 
     # По умолчанию основное поле - email
