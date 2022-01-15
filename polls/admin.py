@@ -3,7 +3,7 @@ from .models import *
 
 @admin.register(Question)
 class QuestionAdmin(admin.ModelAdmin):
-    list_display = ['id', 'title']
+    list_display = ['title']
 
 @admin.register(Answer)
 class AnswerAdmin(admin.ModelAdmin):
