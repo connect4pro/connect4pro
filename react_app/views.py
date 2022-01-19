@@ -9,7 +9,7 @@ class ReactAppView(View):
     def get(self, request):
         try:
 
-            with open(os.path.join(settings.REACT_APP, 'index.html')) as file:
+            with open(os.path.join(settings.REACT_APP, 'index.html'), encoding="utf-8") as file:
                 return HttpResponse(file.read())
 
         except:
