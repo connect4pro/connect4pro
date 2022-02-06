@@ -32,9 +32,9 @@ SECRET_KEY = os.environ.get('SECRET_KEY')
 DEBUG = os.environ.get('DEBUG')
 # TODO: Закрыть доступ для посторонних айпи
 
-ALLOWED_HOSTS = ['http://localhost:8000', 'http://localhost:3000', 'http://94.228.120.61/', 'http://94.228.120.61',
-                 '94.228.120.61', '127.0.0.1', 'http://cj28902.tmweb.ru', 'http://connect4.pro', 'connect4.pro',
-                 'cj28902.tmweb.ru', 'https://customer.paybox.money', 'https://api.paybox.money', 'api.paybox.money']
+ALLOWED_HOSTS = ['localhost:8000', 'localhost:3000', '94.228.120.61',
+                 '94.228.120.61', '127.0.0.1', 'cj28902.tmweb.ru', 'connect4.pro',
+                 'cj28902.tmweb.ru', 'customer.paybox.money', 'api.paybox.money', 'api.paybox.money']
 
 # Application definition
 

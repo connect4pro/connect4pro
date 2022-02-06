@@ -64,7 +64,7 @@ class BusinessAdvert(models.Model):
     suggest = models.CharField(max_length=1000, verbose_name='Я предлагаю', blank=True, null=True)
     tel = models.CharField(max_length=20, verbose_name='Телефон', blank=True, null=True)
     created_at = models.DateTimeField(auto_now=True)
-    days = models.IntegerField(verbose_name='Сроки работы в днях', max_length=3, default=0)
+    days = models.IntegerField(verbose_name='Сроки работы в днях', default=0)
 
     def __str__(self):
         return f'{self.title}'
@@ -92,7 +92,7 @@ class ProviderAdvert(models.Model):
     services = models.CharField(max_length=100, blank=True, null=True, default='')
     foundation_date = models.DateField(verbose_name='Дата основания', default=date.today, blank=True, null=True)
     created_at = models.DateTimeField(auto_now=True)
-    days = models.IntegerField(verbose_name='Сроки работы в днях', max_length=3, default=0)
+    days = models.IntegerField(verbose_name='Сроки работы в днях', default=0)
 
 
     def __str__(self):

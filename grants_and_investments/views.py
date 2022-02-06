@@ -1,8 +1,9 @@
 from rest_framework.generics import CreateAPIView, ListAPIView, RetrieveAPIView
 
-from grants_and_investments.models import Grant, Investment, GrantComment, InvestmentComment
-from grants_and_investments.serializers import GrantSerializer, InvestmentSerializer, GrantCommentSerializer, \
-    InvestCommentSerializer
+from grants_and_investments.models import Grant, GrantComment
+#, InvestmentComment, Investment,
+from grants_and_investments.serializers import GrantSerializer, GrantCommentSerializer
+# InvestCommentSerializer, InvestmentSerializer,
 
 
 class GrantsList(ListAPIView):
@@ -10,9 +11,9 @@ class GrantsList(ListAPIView):
     serializer_class = GrantSerializer
 
 
-class InvestList(ListAPIView):
-    queryset = Investment.objects.all()
-    serializer_class = InvestmentSerializer
+# class InvestList(ListAPIView):
+#     queryset = Investment.objects.all()
+#     serializer_class = InvestmentSerializer
 
 
 class GrantDetail(RetrieveAPIView):
@@ -21,18 +22,18 @@ class GrantDetail(RetrieveAPIView):
     lookup_field = 'id'
 
 
-class InvestDetail(RetrieveAPIView):
-    queryset = Investment.objects.all()
-    serializer_class = InvestmentSerializer
-    lookup_field = 'id'
+# class InvestDetail(RetrieveAPIView):
+#     queryset = Investment.objects.all()
+#     serializer_class = InvestmentSerializer
+#     lookup_field = 'id'
 
 
 class GrantCommentCreate(CreateAPIView):
     serializer_class = GrantCommentSerializer
 
 
-class InvestmentCommentCreate(CreateAPIView):
-    serializer_class = InvestCommentSerializer
+# class InvestmentCommentCreate(CreateAPIView):
+#     serializer_class = InvestCommentSerializer
 
 
 class GrantCommentList(ListAPIView):
@@ -40,6 +41,6 @@ class GrantCommentList(ListAPIView):
     serializer_class = GrantCommentSerializer
 
 
-class InvestCommentList(ListAPIView):
-    queryset = InvestmentComment.objects.all()
-    serializer_class = InvestCommentSerializer
+# class InvestCommentList(ListAPIView):
+#     queryset = InvestmentComment.objects.all()
+#     serializer_class = InvestCommentSerializer
