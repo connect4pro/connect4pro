@@ -37,10 +37,20 @@ PERIOD_CHOICES = (
 )
 
 
+class GrantTag(models.Model):
+    name = models.CharField(max_length=150, verbose_name='Тег', default='')
+
+    def __str__(self):
+        return self.name
+
+    class Meta:
+        verbose_name = 'Тег'
+        verbose_name_plural = 'Теги'
+
+
 class Grant(models.Model):
     name = models.CharField(max_length=50, verbose_name='Имя гранта/инвестиции')
-    sum = models.PositiveIntegerField(verbose_name='Сумма гранта/инвестиции',
-                                      validators=[MinValueValidator(1000), MaxValueValidator(10000000)])
+    sum = models.CharField(verbose_name='Сумма гранта/инвестиции или другое', max_length=150, default='')
     currency = models.CharField(max_length=5, default=kgs, choices=CURRENCY_CHOICES, verbose_name='Валюта')
     deadline = models.CharField(max_length=20, verbose_name='Срок гранта/инвестиции', null=True, blank=True)
     description = RichTextField(verbose_name='Описание гранта/инвестиции')
@@ -53,7 +63,7 @@ class Grant(models.Model):
     created_at = models.DateTimeField(auto_now=True)
     is_grant = models.BooleanField(verbose_name='Это грант', default=False)
     is_invest = models.BooleanField(verbose_name='Это инвестиция', default=False)
-
+    tag = models.ManyToManyField(GrantTag, verbose_name='Теги', related_name='grant_tags')
 
     def __str__(self):
         return self.name
@@ -100,7 +110,6 @@ class GrantComment(models.Model):
     class Meta:
         verbose_name = 'Комментарий гранта'
         verbose_name_plural = 'Комментарии грантов'
-
 
 # class InvestmentComment(models.Model):
 #     text = models.TextField(max_length=500, verbose_name='Ваш комментарий')
