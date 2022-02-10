@@ -77,6 +77,7 @@ INSTALLED_APPS = [
     'corsheaders',
     'django_rest_passwordreset',
     'ckeditor',
+    'django_filters',
 ]
 
 MIDDLEWARE = [

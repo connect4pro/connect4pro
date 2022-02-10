@@ -69,6 +69,7 @@ class Grant(models.Model):
         return self.name
 
     class Meta:
+        ordering = ('-created_at',)
         verbose_name = 'Грант/Инвестиция'
         verbose_name_plural = 'Гранты/Инвестиции'
 

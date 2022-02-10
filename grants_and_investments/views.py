@@ -1,3 +1,4 @@
+from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework.generics import CreateAPIView, ListAPIView, RetrieveAPIView
 
 from grants_and_investments.models import Grant, GrantComment
@@ -9,6 +10,8 @@ from grants_and_investments.serializers import GrantSerializer, GrantCommentSeri
 class GrantsList(ListAPIView):
     queryset = Grant.objects.all()
     serializer_class = GrantSerializer
+    filter_backends = [DjangoFilterBackend]
+    filterset_fields =['tag__name']
 
 
 # class InvestList(ListAPIView):
