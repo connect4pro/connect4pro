@@ -1,6 +1,10 @@
+from datetime import datetime
+
+from django.utils.timezone import make_aware
 from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework.generics import CreateAPIView, ListAPIView, RetrieveAPIView
 
+from connect4pro import settings
 from grants_and_investments.models import Grant, GrantComment
 #, InvestmentComment, Investment,
 from grants_and_investments.serializers import GrantSerializer, GrantCommentSerializer
@@ -8,10 +12,14 @@ from grants_and_investments.serializers import GrantSerializer, GrantCommentSeri
 
 
 class GrantsList(ListAPIView):
-    queryset = Grant.objects.all()
     serializer_class = GrantSerializer
     filter_backends = [DjangoFilterBackend]
     filterset_fields =['tag__name']
+
+    def get_queryset(self):
+        now = make_aware(datetime.now())
+        print(now)
+        return Grant.objects.filter(publish_at__lte=now)
 
 
 # class InvestList(ListAPIView):

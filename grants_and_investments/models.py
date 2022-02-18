@@ -1,8 +1,10 @@
+from datetime import datetime, timedelta, time
+
 from ckeditor.fields import RichTextField
 from django.db import models
-from django.core.validators import MaxValueValidator, MinValueValidator
-
 # Create your models here.
+from django.utils import timezone
+from django.utils.timezone import make_aware
 from django_resized import ResizedImageField
 
 from users.models import Connect4ProUser
@@ -50,8 +52,8 @@ class GrantTag(models.Model):
 
 class Grant(models.Model):
     name = models.CharField(max_length=50, verbose_name='Имя гранта/инвестиции')
-    sum = models.CharField(verbose_name='Сумма гранта/инвестиции или другое', max_length=150, default='')
-    currency = models.CharField(max_length=5, default=kgs, choices=CURRENCY_CHOICES, verbose_name='Валюта')
+    sum = models.CharField(verbose_name='Сумма гранта/инвестиции или другое', max_length=150, default='', blank=True)
+    currency = models.CharField(max_length=5, default=kgs, choices=CURRENCY_CHOICES, verbose_name='Валюта', blank=True)
     deadline = models.CharField(max_length=20, verbose_name='Срок гранта/инвестиции', null=True, blank=True)
     description = RichTextField(verbose_name='Описание гранта/инвестиции')
     location = models.CharField(max_length=60, verbose_name='Локация', blank=True, null=True)
@@ -63,7 +65,10 @@ class Grant(models.Model):
     created_at = models.DateTimeField(auto_now=True)
     is_grant = models.BooleanField(verbose_name='Это грант', default=False)
     is_invest = models.BooleanField(verbose_name='Это инвестиция', default=False)
-    tag = models.ManyToManyField(GrantTag, verbose_name='Теги', related_name='grant_tags')
+    tag = models.ManyToManyField(GrantTag, verbose_name='Теги', related_name='grant_tags', blank=True)
+    publish_at = models.DateTimeField(verbose_name='Опубликовать не ранее', db_index=True,
+                                      default=datetime.now() - timedelta(seconds=3600))
+
 
     def __str__(self):
         return self.name
