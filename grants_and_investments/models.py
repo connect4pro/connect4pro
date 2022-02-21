@@ -67,8 +67,7 @@ class Grant(models.Model):
     is_invest = models.BooleanField(verbose_name='Это инвестиция', default=False)
     tag = models.ManyToManyField(GrantTag, verbose_name='Теги', related_name='grant_tags', blank=True)
     publish_at = models.DateTimeField(verbose_name='Опубликовать не ранее', db_index=True,
-                                      default=datetime.now() - timedelta(seconds=3600))
-
+                                      default=datetime.now() - timedelta(seconds=3600), blank=True)
 
     def __str__(self):
         return self.name
