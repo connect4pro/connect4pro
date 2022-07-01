@@ -9,12 +9,23 @@ from grants_and_investments.models import Grant, GrantComment
 #, InvestmentComment, Investment,
 from grants_and_investments.serializers import GrantSerializer, GrantCommentSerializer
 # InvestCommentSerializer, InvestmentSerializer,
+from rest_framework.pagination import PageNumberPagination
+from rest_framework import filters
+
+
+class CustomPagination(PageNumberPagination):
+    page_size = 15
+    page_size_query_param = 'page_size'
+    max_page_size = 1000
+
 
 
 class GrantsList(ListAPIView):
     serializer_class = GrantSerializer
-    filter_backends = [DjangoFilterBackend]
+    filter_backends = [DjangoFilterBackend, filters.SearchFilter]
     filterset_fields =['tag__name']
+    pagination_class = CustomPagination
+    search_fields = ('name', 'description')
 
     def get_queryset(self):
         now = make_aware(datetime.now())
